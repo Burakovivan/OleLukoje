@@ -25,7 +25,40 @@ namespace OleLukoje.Models
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
+
+        [Column, Required]
+        [StringLength(20, MinimumLength = 6)]
+        [Display(Name = "User name")]
         public string UserName { get; set; }
+
+        [Column, Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Column, Required]
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Phone number")]
+        public string Phone { get; set; }
+
+        [Column]
+        [Display(Name = "Yours organization")]
+        public string Organization { get; set; }
+
+        /// <summary>
+        /// Связь один-ко-многим с юзером (у одного юзера много обьявлений)
+        /// </summary>
+        public virtual ICollection<Ad> Ads { get; set; }
+        /// <summary>
+        /// Связь один-ко-многим с сообщениями (у одного юзера много сообщений)
+        /// </summary>
+        public virtual ICollection<Message> Messages { get; set; }
+
+        public UserProfile()
+        {
+            Ads = new List<Ad>();
+            Messages = new List<Message>();
+        }
     }
 
     public class RegisterExternalLoginModel
@@ -74,8 +107,14 @@ namespace OleLukoje.Models
     public class RegisterModel
     {
         [Required]
+        [StringLength(20, ErrorMessage = "Name must be at least 6 characters long and maximum - 20.", MinimumLength = 6)]
         [Display(Name = "User name")]
         public string UserName { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
@@ -83,10 +122,19 @@ namespace OleLukoje.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Phone number")]
+        public string Phone { get; set; }
+
+        [Display(Name = "Yours organization")]
+        public string Organization { get; set; }
     }
 
     public class ExternalLogin
