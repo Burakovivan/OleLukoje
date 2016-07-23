@@ -1,1 +1,72 @@
-﻿
+﻿@model OleLukoje.Models.Ad
+
+<hgroup class="title">
+    <h1>Add ad</h1>
+</hgroup>
+
+@using (Html.BeginForm("AddAd", "Ad", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Ad form</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.Header)
+                @Html.TextBoxFor(m => m.Header)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Description)
+                @Html.TextBoxFor(m => m.Description)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Price)
+                @Html.TextBoxFor(m => m.Price)
+            </li>
+            <li>
+                Category
+                @Html.DropDownList("Category", null, new { @onchange = "addCategory()" })
+                <div id="Categories"></div>
+            </li>
+        </ol>
+        <input type="submit" value="Add" />
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    function addCategory() {
+        var e = document.getElementById("Category");
+        var selectItem = e.options[e.selectedIndex].text;
+        if (checkCategory(selectItem)) {
+            var div = getCategories();
+            var buttonCategory = "<button type='button' class='btn btn-primary btn-xs' onclick='deleteCategory(" + selectItem + ");'>" + selectItem + "</button>";
+            var inputCategory = '<input id="SelectCategory" name="SelectCategory" type="hidden" value="' + selectItem + '" />';
+            div.innerHTML = div.innerHTML + '<div id="' + selectItem +'">' + buttonCategory + inputCategory + '</div>';
+        }
+    }
+
+    function checkCategory(category) {
+        var div = getCategories();
+        var elems = div.getElementsByTagName('*');
+        for (var i = 0; i < elems.length; i++) {
+            if (elems[i].id == category) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function deleteCategory(selectItem) {
+        var div = document.getElementById(selectItem);
+        div.removeAttribute();
+    }
+
+    function getCategories() {
+        return document.getElementById('Categories');
+    }
+</script>

@@ -403,5 +403,15 @@ namespace OleLukoje.Controllers
             }
         }
         #endregion
+
+        public ActionResult MyListAd()
+        {
+            return PartialView("_MyListAdPartial");
+        }
+
+        public ActionResult Setting()
+        {
+            return PartialView("_SettingPartial");
+        }
     }
 }

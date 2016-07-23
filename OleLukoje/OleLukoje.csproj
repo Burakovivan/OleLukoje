@@ -329,8 +329,10 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Ad\AddAdView.cshtml" />
-    <Content Include="Views\Ad\ListAdView.cshtml" />
     <Content Include="Views\Ad\SingleAdView.cshtml" />
+    <Content Include="Views\Account\_SettingPartial.cshtml" />
+    <Content Include="Views\Ad\ListAdView.cshtml" />
+    <Content Include="Views\Account\_MyListAdPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
