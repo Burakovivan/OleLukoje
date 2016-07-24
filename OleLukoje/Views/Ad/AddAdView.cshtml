@@ -36,37 +36,37 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
 
-<script>
-    function addCategory() {
-        var e = document.getElementById("Category");
-        var selectItem = e.options[e.selectedIndex].text;
-        if (checkCategory(selectItem)) {
-            var div = getCategories();
-            var buttonCategory = "<button type='button' class='btn btn-primary btn-xs' onclick='deleteCategory(" + selectItem + ");'>" + selectItem + "</button>";
-            var inputCategory = '<input id="SelectCategory" name="SelectCategory" type="hidden" value="' + selectItem + '" />';
-            div.innerHTML = div.innerHTML + '<div id="' + selectItem +'">' + buttonCategory + inputCategory + '</div>';
-        }
-    }
-
-    function checkCategory(category) {
-        var div = getCategories();
-        var elems = div.getElementsByTagName('*');
-        for (var i = 0; i < elems.length; i++) {
-            if (elems[i].id == category) {
-                return false;
+    <script>
+        function addCategory() {
+            var e = document.getElementById("Category");
+            var selectItem = e.options[e.selectedIndex].text;
+            if (checkCategory(selectItem)) {
+                var div = getCategories();
+                var inputCategory = '<input id="SelectCategory" name="SelectCategory" class="' + selectItem + '" value="' + selectItem + '" onclick="deleteCategory(this.value);" readonly/>';
+                div.innerHTML = div.innerHTML + inputCategory;
             }
         }
-        return true;
-    }
 
-    function deleteCategory(selectItem) {
-        var div = document.getElementById(selectItem);
-        div.removeAttribute();
-    }
+        function checkCategory(category) {
+            var div = getCategories();
+            var elems = div.getElementsByTagName('*');
+            for (var i = 0; i < elems.length; i++) {
+                if (elems[i].className == category) {
+                    return false;
+                }
+            }
+            return true;
+        }
 
-    function getCategories() {
-        return document.getElementById('Categories');
-    }
-</script>
+        function deleteCategory(value) {
+            var del = "." + value;
+            $(del).remove();
+        }
+
+        function getCategories() {
+            return document.getElementById('Categories');
+        }
+    </script>
+}
+

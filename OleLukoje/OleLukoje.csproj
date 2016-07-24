@@ -199,6 +199,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Ad.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\OleLukojeDbInitializer.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\OleLukojeContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

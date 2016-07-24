@@ -16,6 +16,7 @@ namespace OleLukoje.Controllers
         // GET: /Ad/
         OleLukojeContext db = new OleLukojeContext();
 
+        [Authorize]
         public ActionResult Index()
         {
             return View();
@@ -25,9 +26,12 @@ namespace OleLukoje.Controllers
         public ActionResult AddAd()
         {
             List<SelectListItem> itemsCategories = new List<SelectListItem>();
-            foreach (Category category in db.Categories)
+            lock (db)
             {
-                itemsCategories.Add(new SelectListItem { Text = category.Name, Value = category.Id.ToString() });
+                foreach (Category category in db.Categories)
+                {
+                    itemsCategories.Add(new SelectListItem { Text = category.Name, Value = category.Id.ToString() });
+                }
             }
             ViewBag.Category = itemsCategories;
             return View("AddAdView");
