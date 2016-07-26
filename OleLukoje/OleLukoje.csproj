@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -20,6 +21,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -209,6 +211,9 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\fa\css\font-awesome.css" />
+    <Content Include="Content\fa\css\font-awesome.min.css" />
+    <Content Include="Content\fa\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -274,6 +279,39 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\fa\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fa\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fa\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fa\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fa\fonts\FontAwesome.otf" />
+    <Content Include="Content\fa\less\animated.less" />
+    <Content Include="Content\fa\less\bordered-pulled.less" />
+    <Content Include="Content\fa\less\core.less" />
+    <Content Include="Content\fa\less\fixed-width.less" />
+    <Content Include="Content\fa\less\font-awesome.less" />
+    <Content Include="Content\fa\less\icons.less" />
+    <Content Include="Content\fa\less\larger.less" />
+    <Content Include="Content\fa\less\list.less" />
+    <Content Include="Content\fa\less\mixins.less" />
+    <Content Include="Content\fa\less\path.less" />
+    <Content Include="Content\fa\less\rotated-flipped.less" />
+    <Content Include="Content\fa\less\screen-reader.less" />
+    <Content Include="Content\fa\less\stacked.less" />
+    <Content Include="Content\fa\less\variables.less" />
+    <Content Include="Content\fa\scss\font-awesome.scss" />
+    <Content Include="Content\fa\scss\_animated.scss" />
+    <Content Include="Content\fa\scss\_bordered-pulled.scss" />
+    <Content Include="Content\fa\scss\_core.scss" />
+    <Content Include="Content\fa\scss\_fixed-width.scss" />
+    <Content Include="Content\fa\scss\_icons.scss" />
+    <Content Include="Content\fa\scss\_larger.scss" />
+    <Content Include="Content\fa\scss\_list.scss" />
+    <Content Include="Content\fa\scss\_mixins.scss" />
+    <Content Include="Content\fa\scss\_path.scss" />
+    <Content Include="Content\fa\scss\_rotated-flipped.scss" />
+    <Content Include="Content\fa\scss\_screen-reader.scss" />
+    <Content Include="Content\fa\scss\_stacked.scss" />
+    <Content Include="Content\fa\scss\_variables.scss" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -341,11 +379,15 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\MyStyle.css" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">

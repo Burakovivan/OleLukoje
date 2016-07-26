@@ -53,5 +53,21 @@ namespace OleLukoje.Controllers
             }
             return View("ListAdView");
         }
+
+        [HttpGet]
+        public ActionResult SingleAdView(int id)
+        {
+            using(OleLukojeContext db = new OleLukojeContext()){
+                Ad n = db.Ads.Single(t => t.Id == id);
+                ViewBag.Ad = n;
+                ViewBag.Categories = n.Categories;
+                using(UsersContext uc = new UsersContext())
+                {
+                    int i = ViewBag.Ad.UserProfileId;
+                    ViewBag.UserName = uc.UserProfiles.Single(t => t.UserId == i).UserName;
+                } 
+            } 
+            return View("SingleAdView");
+        }
     }
 }

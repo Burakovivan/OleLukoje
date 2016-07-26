@@ -1,5 +1,48 @@
 ﻿@{
     ViewBag.Title = "SingleAdView";
+    bool active = ViewBag.Ad.StateAd == OleLukoje.Models.State.Active;
 }
 
+<link rel="stylesheet" href="~/Content/fa/css/font-awesome.css" />
+<link rel="stylesheet" href="~/Content/bootstrap.css" />
+<link rel="stylesheet" href="~/Content/MyStyle.css" />
 <h2>SingleAdView</h2>
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-10 col-sm-12">
+            <div class="row">
+                <div class="header col-sm-8 col-xs-12">@ViewBag.Ad.Header</div>
+                <div class="price col-sm-4 col-xs-12">@ViewBag.Ad.Price‎ ₴</div>
+                @if (!active)
+                {
+                    <i class="fa-check-circle-o"></i>
+                }
+            </div>
+            <div class="row">
+                <div class="author col-sm-12">
+                    by <a>@ViewBag.UserName</a>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-sm-12">
+                    <div class="description ">@ViewBag.Ad.Description</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 categories">
+                    @foreach (var category in ViewBag.Categories)
+                    {
+                        <div class="category">
+                            @category.Name
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="row">
+            </div>
+        </div>
+    </div>
+</div>

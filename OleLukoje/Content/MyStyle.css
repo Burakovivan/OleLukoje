@@ -1,0 +1,43 @@
+﻿.header {
+    font-size: 3em;
+    color: #394d5f;
+    font-family: Verdana;
+}
+
+.description {
+    font-size: 1.7em;
+    background-color: #ddd;
+    border: 1px solid white;
+    border-radius: 0.4em;
+    padding: 0.5em;
+}
+
+.price {
+    text-align: right;
+    font-size: 3em;
+}
+
+.author {
+    font-size: 1em;
+    color: #87857a;
+    font-family: Verdana;
+    font-style: italic;
+}
+
+.category {
+    font-size: 1.2em;
+    background-color: #5fc504;
+    border: 0.2em ridge #026301;
+    width: auto;
+    margin-right: 0.4em;
+    margin-bottom:0.4em;
+    padding: 0.2em;
+    text-align: center;
+    border-radius: 0.5em 0em;
+    color:white;
+    display:inline-block;
+}
+
+.categories {
+    padding-top: 0.8em;
+}
