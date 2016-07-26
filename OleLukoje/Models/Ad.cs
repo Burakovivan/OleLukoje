@@ -58,8 +58,8 @@ namespace OleLukoje.Models
         /// <summary>
         /// Связь один-ко-многим с юзером (у одного юзера много обьявлений)
         /// </summary>
-
-        public int UserProfileId { get; set; }
+        [ForeignKey("UserProfile")]
+        public int UserId { get; set; }
         public virtual UserProfile UserProfile { get; set; }
     }
 }

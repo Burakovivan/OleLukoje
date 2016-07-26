@@ -47,7 +47,7 @@ namespace OleLukoje.Controllers
                 int userId = (int)WebSecurity.CurrentUserId;
                 lock (db)
                 {
-                    db.Ads.Add(new Ad { Header = ad.Header, Description = ad.Description, Price = ad.Price, Categories = categories, StateAd = State.Active, SpecialAd = false, UserProfileId = userId });
+                    db.Ads.Add(new Ad { Header = ad.Header, Description = ad.Description, Price = ad.Price, Categories = categories, StateAd = State.Active, SpecialAd = false, UserId = userId });
                     db.SaveChanges();
                 }
             }
@@ -57,17 +57,56 @@ namespace OleLukoje.Controllers
         [HttpGet]
         public ActionResult SingleAdView(int id)
         {
-            using(OleLukojeContext db = new OleLukojeContext()){
-                Ad n = db.Ads.Single(t => t.Id == id);
-                ViewBag.Ad = n;
-                ViewBag.Categories = n.Categories;
-                using(UsersContext uc = new UsersContext())
-                {
-                    int i = ViewBag.Ad.UserProfileId;
-                    ViewBag.UserName = uc.UserProfiles.Single(t => t.UserId == i).UserName;
-                } 
+            Ad n = db.Ads.Single(t => t.Id == id);
+            ViewBag.Ad = n;
+            ViewBag.Categories = n.Categories;
+            using (UsersContext uc = new UsersContext())
+            {
+                int i = ViewBag.Ad.UserProfileId;
+                ViewBag.UserName = uc.UserProfiles.Single(t => t.UserId == i).UserName;
             } 
             return View("SingleAdView");
+        }
+
+        /// <summary>
+        /// Ads with search
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult ListAd()
+        {
+            return View("ListAdView");
+        }
+
+        /// <summary>
+        /// ads - partial
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [InitializeSimpleMembership]
+        public ActionResult _ListAd(Category category, string userName, State? state, bool? specialAd)
+        {
+            List<Ad> ads = db.Ads.ToList();
+            if (category.Name != null)
+            {
+                ads = ads.Where(ad => ad.Categories.Count(x => x.Name == category.Name) != 0).ToList();
+            }
+            if (userName != null)
+            {
+                ads = ads.Where(ad => ad.UserId == WebSecurity.GetUserId(userName)).ToList();
+            }
+            if (state != null)
+            {
+                ads = ads.Where(ad => ad.StateAd == state).ToList();
+            }
+            if (specialAd != null)
+            {
+                ads = ads.Where(ad => ad.SpecialAd == specialAd).ToList();
+            }
+            ViewBag.Title = userName != null ? userName + " ads" : "All ads";
+            ViewBag.UserName = User.Identity.Name;
+            ads.Reverse();
+            return PartialView("_ListAdPartial", ads);
         }
     }
 }

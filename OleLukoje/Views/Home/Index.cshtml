@@ -1,4 +1,9 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-}
+﻿@using OleLukoje.Models
 
+<div id="ListAds"></div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $('#ListAds').load('@Url.Action("_ListAd", "Ad", new { state = State.Active } )')
+    </script>
+}
