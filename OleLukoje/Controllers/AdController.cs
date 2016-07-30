@@ -62,7 +62,7 @@ namespace OleLukoje.Controllers
             ViewBag.Categories = n.Categories;
             using (UsersContext uc = new UsersContext())
             {
-                int i = ViewBag.Ad.UserProfileId;
+                int i = ViewBag.Ad.UserId;
                 ViewBag.UserName = uc.UserProfiles.Single(t => t.UserId == i).UserName;
             } 
             return View("SingleAdView");
@@ -78,18 +78,25 @@ namespace OleLukoje.Controllers
             return View("ListAdView");
         }
 
+        [HttpGet]
+        public ActionResult _SearchAd()
+        {
+            ViewBag.Categories = db.Categories.ToList();
+            return PartialView("_SearchAdPartial");
+        }
+
         /// <summary>
         /// ads - partial
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         [InitializeSimpleMembership]
-        public ActionResult _ListAd(Category category, string userName, State? state, bool? specialAd)
+        public ActionResult _ListAd(List<string> categories, string userName, State? state, bool? specialAd, int? minPrice, int? maxPrice)
         {
             List<Ad> ads = db.Ads.ToList();
-            if (category.Name != null)
+            if (categories != null)
             {
-                ads = ads.Where(ad => ad.Categories.Count(x => x.Name == category.Name) != 0).ToList();
+                ads = ads.Where(ad => ad.Categories.Where(category => categories.Contains(category.Name)).Count() != 0).ToList();
             }
             if (userName != null)
             {
@@ -99,13 +106,25 @@ namespace OleLukoje.Controllers
             {
                 ads = ads.Where(ad => ad.StateAd == state).ToList();
             }
-            if (specialAd != null)
+            if (specialAd != null && specialAd != false)
             {
                 ads = ads.Where(ad => ad.SpecialAd == specialAd).ToList();
             }
             ViewBag.Title = userName != null ? userName + " ads" : "All ads";
             ViewBag.UserName = User.Identity.Name;
             ads.Reverse();
+            return PartialView("_ListAdPartial", ads);
+        }
+
+        [HttpGet]
+        [InitializeSimpleMembership]
+        public ActionResult _ListAdSearch(string input)
+        {
+            input = input.ToUpper();
+            List<Ad> ads = db.Ads.Where(ad => ad.Description.ToUpper().Contains(input) || ad.Header.ToUpper().Contains(input) || ad.UserProfile.UserName.ToUpper() == input).ToList();
+            ads.Reverse();
+            ViewBag.Title = "Find ads:";
+            ViewBag.UserName = User.Identity.Name;
             return PartialView("_ListAdPartial", ads);
         }
     }

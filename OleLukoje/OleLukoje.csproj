@@ -373,6 +373,7 @@
     <Content Include="Views\Account\_MyListAdPartial.cshtml" />
     <Content Include="Views\Ad\_ListAdPartial.cshtml" />
     <Content Include="Views\Ad\ListAdView.cshtml" />
+    <Content Include="Views\Ad\_SearchAdPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

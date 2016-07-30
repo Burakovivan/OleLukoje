@@ -6,7 +6,7 @@ using System.Web;
 
 namespace OleLukoje.Models
 {
-    public class OleLukojeDbInitializer : DropCreateDatabaseAlways<OleLukojeContext>
+    public class OleLukojeDbInitializer : CreateDatabaseIfNotExists<OleLukojeContext>
     {
         protected override void Seed(OleLukojeContext db)
         {

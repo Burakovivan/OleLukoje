@@ -1,4 +1,9 @@
-﻿.header {
+﻿.container {
+    border: 3px solid #7cb654;
+    border-radius: 10px;
+}
+
+.header {
     font-size: 3em;
     color: #394d5f;
     font-family: Verdana;

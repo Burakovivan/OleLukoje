@@ -1,0 +1,63 @@
+﻿@using OleLukoje.Models
+
+<div class="panel panel-default">
+    <div class="panel-heading">Categories:</div>
+    <div class="panel-body">
+        @foreach (Category category in ViewBag.Categories)
+        {
+            <div class="checkbox">
+                <label><input type="checkbox" value="@category.Name" onclick="searchCategory(this.value)"> @category.Name</label>
+            </div>
+        }
+    </div>
+</div>
+
+@using (Html.BeginForm("_ListAd", "Ad", FormMethod.Get))
+{
+    <div id="SelectCategories"></div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Other:</div>
+        <div class="panel-body">
+            @Html.CheckBox("specialAd", false) Special ad
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">Search</button>
+}
+
+<script>
+    function searchCategory(value){
+        var e = document.getElementById(value);
+        if (e == null || checkCategory(value)) {
+            addCategory(value)
+        }
+        else {
+            deleteCategory(value)
+        }
+    }
+
+    function addCategory(value) {
+        var div = getCategories();
+        var inputCategory = '<input id="categories" name="categories" class="' + value + ' hidden" value="' + value + '"/>';
+        div.innerHTML = div.innerHTML + inputCategory;
+    }
+
+    function deleteCategory(value) {
+        var del = "." + value;
+        $(del).remove();
+    }    
+
+    function checkCategory(category) {
+        var div = getCategories();
+        var elems = div.getElementsByTagName('*');
+        for (var i = 0; i < elems.length; i++) {
+            if (elems[i].className == category) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function getCategories() {
+        return document.getElementById('SelectCategories');
+    }
+</script>

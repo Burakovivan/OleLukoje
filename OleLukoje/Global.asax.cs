@@ -19,7 +19,9 @@ namespace OleLukoje
         protected void Application_Start()
         {
             // set values in database
-            //Database.SetInitializer(new OleLukojeDbInitializer());
+            Database.SetInitializer<OleLukojeContext>(new OleLukojeDbInitializer());
+            OleLukojeContext context = new OleLukojeContext();
+            context.Database.Initialize(true);
 
             AreaRegistration.RegisterAllAreas();
 
