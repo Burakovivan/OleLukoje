@@ -1,0 +1,56 @@
+﻿@using OleLukoje.Models
+
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+        <div id="result">
+            @if (ViewBag.Messages.Count != 0)
+            {
+                foreach (Message x in ViewBag.Messages)
+                {
+                    <blockquote>
+                        @x.Text
+                        <footer>@x.UserProfile.UserName   @x.GetDateTimeString</footer>
+                    </blockquote>
+                    <br>
+                }
+            }
+            else
+            {
+                <h>No messages</h>
+            }
+        </div>
+        <div class="form-group">
+            <textarea id="textMessages" style="display:block; margin-top:10px;margin-bottom:10px; height:auto;  min-width:100%"></textarea>
+            <button type="submit" class="btn btn-success" style=" margin-bottom: 10px;" onclick="AddComment()">Send</button>
+        </div>
+    </div>
+    <div class="col-sm-2"></div>
+</div>
+
+<script>
+    function GetComment(name, date, text) {
+        var result = document.getElementById("result");
+        var textMessages = document.getElementById("textMessages");
+        result.innerHTML = result.innerHTML + "<blockquote>" + text + "<footer>" + name + "  " + date + "</footer></blockquote><br>";
+        textMessages.value = "";
+    };
+
+    function AddComment() {
+        var textMessages = document.getElementById("textMessages").value;
+        var s = { 'text': textMessages, 'idAd' : @ViewBag.IdAd };
+        $.ajax({
+            url: '/Ad/AddMessages',
+            method: 'POST',
+            data: JSON.stringify(s),
+            contentType: 'application/json; charset=utf-8',
+            dataType: "json",
+            success: function (data) {
+                var Date = data.GetDateTimeString;
+                var Name = data.UserName;
+                var Text = data.Text;
+                GetComment(Name, Date, Text);
+            },
+        });
+    }
+</script>

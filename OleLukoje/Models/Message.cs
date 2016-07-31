@@ -16,7 +16,22 @@ namespace OleLukoje.Models
         [Required]
         public string Text { get; set; }
 
-        public int UserProfileId { get; set; }
+        [Column]
+        [Required]
+        public string UserName { get; set; }
+
+        [Column]
+        [Required]
+        [DataType(DataType.DateTime)]
+        public DateTime DateTimeMessage { get; set; }
+
+        public string GetDateTimeString { get { return DateTimeMessage.ToString(); } }
+
+        /// <summary>
+        /// Связь один-ко-многим с юзером (у одного юзера много сообщений)
+        /// </summary>
+        [ForeignKey("UserProfile")]
+        public int UserId { get; set; }
         public virtual UserProfile UserProfile { get; set; }
 
         public int AdId { get; set; }

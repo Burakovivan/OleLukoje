@@ -46,3 +46,13 @@
         </div>
     </div>
 </div>
+
+<div id="Messages"></div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $('#Messages').load('@Url.Action("_GetMessages", "Ad", new { idAd = ViewBag.Ad.Id })')
+        });
+    </script>
+}

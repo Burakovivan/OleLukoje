@@ -47,7 +47,7 @@ namespace OleLukoje.Controllers
                 int userId = (int)WebSecurity.CurrentUserId;
                 lock (db)
                 {
-                    db.Ads.Add(new Ad { Header = ad.Header, Description = ad.Description, Price = ad.Price, Categories = categories, StateAd = State.Active, SpecialAd = false, UserId = userId });
+                    db.Ads.Add(new Ad { Header = ad.Header, Description = ad.Description, Price = ad.Price, Categories = categories, StateAd = State.Active, SpecialAd = false, UserId = userId, DateAd = DateTime.Now.Date });
                     db.SaveChanges();
                 }
             }
@@ -57,9 +57,9 @@ namespace OleLukoje.Controllers
         [HttpGet]
         public ActionResult SingleAdView(int id)
         {
-            Ad n = db.Ads.Single(t => t.Id == id);
-            ViewBag.Ad = n;
-            ViewBag.Categories = n.Categories;
+            Ad ad = db.Ads.Single(t => t.Id == id);
+            ViewBag.Ad = ad;
+            ViewBag.Categories = ad.Categories;
             using (UsersContext uc = new UsersContext())
             {
                 int i = ViewBag.Ad.UserId;
@@ -126,6 +126,34 @@ namespace OleLukoje.Controllers
             ViewBag.Title = "Find ads:";
             ViewBag.UserName = User.Identity.Name;
             return PartialView("_ListAdPartial", ads);
+        }
+
+        [HttpGet]
+        public ActionResult _GetMessages(int idAd)
+        {
+            lock (db)
+            {
+                ViewBag.Messages = db.Messages.ToList();
+                ViewBag.IdAd = idAd;
+            }
+            return PartialView("_MessagesPartial");
+        }
+
+        [HttpPost]
+        [Authorize]
+        [InitializeSimpleMembership]
+        public ActionResult AddMessages(int idAd, string text)
+        {
+            lock (db)
+            {
+                Message message = new Message { Text = text, DateTimeMessage = DateTime.Now, AdId = idAd, UserId = WebSecurity.GetUserId(User.Identity.Name), UserName = User.Identity.Name };
+                lock (db)
+                {
+                    db.Messages.Add(message);
+                    db.SaveChanges();
+                }
+                return Json(message, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

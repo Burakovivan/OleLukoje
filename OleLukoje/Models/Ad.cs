@@ -39,6 +39,11 @@ namespace OleLukoje.Models
         [Required]
         public bool SpecialAd { get; set; }
 
+        [Column]
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime DateAd { get; set; }
+
         /// <summary>
         /// Многие-ко-многим с категориями (у категории много обьявлений и у обьявления много категорий)
         /// </summary>
