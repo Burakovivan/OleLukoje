@@ -12,7 +12,7 @@
     </div>
 </div>
 
-@using (Html.BeginForm("_ListAd", "Ad", FormMethod.Get))
+@using (Ajax.BeginForm("_ListAd", "Ad", new AjaxOptions { UpdateTargetId = "ListAds", HttpMethod = "get" }))
 {
     <div id="SelectCategories"></div>
     <div class="panel panel-default">
@@ -26,8 +26,7 @@
 
 <script>
     function searchCategory(value){
-        var e = document.getElementById(value);
-        if (e == null || checkCategory(value)) {
+        if (!checkCategory(value)) {
             addCategory(value)
         }
         else {
@@ -50,11 +49,11 @@
         var div = getCategories();
         var elems = div.getElementsByTagName('*');
         for (var i = 0; i < elems.length; i++) {
-            if (elems[i].className == category) {
-                return false;
+            if (elems[i].value == category) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     function getCategories() {
