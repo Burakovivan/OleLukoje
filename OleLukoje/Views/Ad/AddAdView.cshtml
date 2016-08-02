@@ -4,7 +4,7 @@
     <h1>Add ad</h1>
 </hgroup>
 
-@using (Html.BeginForm("AddAd", "Ad", FormMethod.Post))
+@using (Html.BeginForm("AddAd", "Ad", FormMethod.Post, new { enctype="multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
@@ -28,6 +28,9 @@
                 Category
                 @Html.DropDownList("Category", null, new { @onchange = "addCategory()" })
                 <div id="Categories"></div>
+            </li>
+            <li>
+                <input type="file" name="uploads" multiple accept="image/*,image/jpeg" />
             </li>
         </ol>
         <input type="submit" value="Add" />

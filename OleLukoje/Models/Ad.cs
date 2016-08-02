@@ -50,14 +50,20 @@ namespace OleLukoje.Models
         public virtual ICollection<Category> Categories { get; set; }
 
         /// <summary>
-        /// Связь один-ко-многим с юзером (у одного юзера много обьявлений)
+        /// Связь один-ко-многим с сообщениями (у одного обьявления много сообщений)
         /// </summary>
         public virtual ICollection<Message> Messages { get; set; }
+
+        /// <summary>
+        /// Связь один-ко-многим с файлами (у одного обьявления много файлов)
+        /// </summary>
+        public virtual ICollection<File> Files { get; set; }
 
         public Ad()
         {
             Categories = new List<Category>();
             Messages = new List<Message>();
+            Files = new List<File>();
         }
 
         /// <summary>

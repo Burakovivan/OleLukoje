@@ -22,16 +22,39 @@ namespace OleLukoje.Controllers
             return View();
         }
 
+        public void Upload(IEnumerable<HttpPostedFileBase> uploads, int adId)
+        {
+            using (OleLukojeContext db = new OleLukojeContext())
+            {
+                foreach (var file in uploads)
+                {
+                    if (file != null)
+                    {
+                        // получаем путь к файлу
+                        string filePath = "~/Files/" + System.IO.Path.GetFileName(file.FileName);
+                        // сохраняем файл в папку Files в проекте
+                        file.SaveAs(Server.MapPath(filePath));
+                        lock (db)
+                        {
+                            db.Files.Add(new File { AdId = adId, Path = filePath });
+                            db.SaveChanges();
+                        }
+                    }
+                }
+            }
+        }
+
         [HttpGet]
         public ActionResult AddAd()
         {
             List<SelectListItem> itemsCategories = new List<SelectListItem>();
-            lock (db)
+            foreach (Category category in db.Categories)
             {
-                foreach (Category category in db.Categories)
+                itemsCategories.Add(new SelectListItem
                 {
-                    itemsCategories.Add(new SelectListItem { Text = category.Name, Value = category.Id.ToString() });
-                }
+                    Text = category.Name,
+                    Value = category.Id.ToString()
+                });
             }
             ViewBag.Category = itemsCategories;
             return View("AddAdView");
@@ -39,16 +62,28 @@ namespace OleLukoje.Controllers
 
         [HttpPost]
         [InitializeSimpleMembership]
-        public ActionResult AddAd(List<string> SelectCategory, Ad ad)
+        public ActionResult AddAd(List<string> SelectCategory, Ad ad, IEnumerable<HttpPostedFileBase> uploads)
         {
             if (ad != null)
             {
-                List<Category> categories = db.Categories.Where(category => SelectCategory.Contains(category.Name)).ToList();
-                int userId = (int)WebSecurity.CurrentUserId;
                 lock (db)
                 {
-                    db.Ads.Add(new Ad { Header = ad.Header, Description = ad.Description, Price = ad.Price, Categories = categories, StateAd = State.Active, SpecialAd = false, UserId = userId, DateAd = DateTime.Now.Date });
+                    List<Category> categories = db.Categories.Where(category => SelectCategory.Contains(category.Name)).ToList();
+                    int userId = (int)WebSecurity.CurrentUserId;
+                    int adId = db.Ads.Count() + 1;
+                    db.Ads.Add(new Ad
+                    {
+                        Header = ad.Header,
+                        Description = ad.Description,
+                        Price = ad.Price,
+                        Categories = categories,
+                        StateAd = State.Active,
+                        SpecialAd = false,
+                        UserId = userId,
+                        DateAd = DateTime.Now.Date
+                    });
                     db.SaveChanges();
+                    Upload(uploads, adId);
                 }
             }
             return View("ListAdView");
@@ -146,7 +181,14 @@ namespace OleLukoje.Controllers
         {
             lock (db)
             {
-                Message message = new Message { Text = text, DateTimeMessage = DateTime.Now, AdId = idAd, UserId = WebSecurity.GetUserId(User.Identity.Name), UserName = User.Identity.Name };
+                Message message = new Message 
+                { 
+                    Text = text, 
+                    DateTimeMessage = DateTime.Now, 
+                    AdId = idAd, 
+                    UserId = WebSecurity.GetUserId(User.Identity.Name), 
+                    UserName = User.Identity.Name 
+                };
                 lock (db)
                 {
                     db.Messages.Add(message);

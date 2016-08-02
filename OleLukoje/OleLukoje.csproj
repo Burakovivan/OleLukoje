@@ -201,6 +201,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Ad.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\File.cs" />
     <Compile Include="Models\OleLukojeDbInitializer.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\OleLukojeContext.cs" />
@@ -378,6 +379,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Files\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
