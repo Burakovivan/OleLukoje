@@ -89,6 +89,18 @@ namespace OleLukoje.Controllers
             return View("ListAdView");
         }
 
+        [HttpPost]
+        public ActionResult DeleteAd(int idAd)
+        {
+            lock (db)
+            {
+                Ad deleteAd = db.Ads.Single(ad => ad.Id == idAd);
+                db.Ads.Remove(deleteAd);
+                db.SaveChanges();
+            }
+            return Json(idAd, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpGet]
         public ActionResult SingleAdView(int id)
         {
@@ -145,6 +157,7 @@ namespace OleLukoje.Controllers
             {
                 ads = ads.Where(ad => ad.SpecialAd == specialAd).ToList();
             }
+            ViewBag.MyAds = userName != null;
             ViewBag.Title = userName != null ? userName + " ads" : "All ads";
             ViewBag.UserName = User.Identity.Name;
             ads.Reverse();
@@ -179,23 +192,19 @@ namespace OleLukoje.Controllers
         [InitializeSimpleMembership]
         public ActionResult AddMessages(int idAd, string text)
         {
+            Message message = new Message
+            {
+                Text = text,
+                DateTimeMessage = DateTime.Now,
+                AdId = idAd,
+                UserName = User.Identity.Name
+            };
             lock (db)
             {
-                Message message = new Message 
-                { 
-                    Text = text, 
-                    DateTimeMessage = DateTime.Now, 
-                    AdId = idAd, 
-                    UserId = WebSecurity.GetUserId(User.Identity.Name), 
-                    UserName = User.Identity.Name 
-                };
-                lock (db)
-                {
-                    db.Messages.Add(message);
-                    db.SaveChanges();
-                }
-                return Json(message, JsonRequestBehavior.AllowGet);
+                db.Messages.Add(message);
+                db.SaveChanges();
             }
+            return Json(message, JsonRequestBehavior.AllowGet);
         }
     }
 }

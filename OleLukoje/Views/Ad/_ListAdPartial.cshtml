@@ -13,11 +13,11 @@
 {
     foreach (Ad ad in Model)
     {
-        <div class="container col-md-12">
+        <div class="container col-md-12" id="@ad.Id">
             <div class="row">
                 <div class="col-md-10 col-sm-12">
                     <div class="row">
-                        <div class="header col-sm-8 col-xs-12">@Html.ActionLink(ad.Header, "SingleAdView", "Ad" ,new { Id = ad.Id }, null)</div>
+                        <div class="header col-sm-8 col-xs-12">@Html.ActionLink(ad.Header, "SingleAdView", "Ad", new { Id = ad.Id }, null)</div>
                         <div class="price col-sm-4 col-xs-12">@ad.Price ₴</div>
                     </div>
                     <div class="row">
@@ -35,6 +35,12 @@
                             }
                         </div>
                     </div>
+                    @if (ViewBag.MyAds)
+                    {
+                        <div class="row">
+                            <button type="button" class="btn btn-danger" value="@ad.Id" onclick="DeleteAd(this.value)">Delete</button>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
@@ -44,3 +50,20 @@ else
 {
     <h1>Ads is not found</h1>
 }
+
+<script>
+    function DeleteAd(value) {
+        var s = { 'idAd': value };
+        $.ajax({
+            url: '/Ad/DeleteAd',
+            method: 'POST',
+            data: JSON.stringify(s),
+            contentType: 'application/json; charset=utf-8',
+            dataType: "json",
+            success: function (idAd) {
+                var del = "#" + idAd;
+                $(del).remove();
+            },
+        });
+    }
+</script>

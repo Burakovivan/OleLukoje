@@ -49,15 +49,10 @@ namespace OleLukoje.Models
         /// Связь один-ко-многим с юзером (у одного юзера много обьявлений)
         /// </summary>
         public virtual ICollection<Ad> Ads { get; set; }
-        /// <summary>
-        /// Связь один-ко-многим с сообщениями (у одного юзера много сообщений)
-        /// </summary>
-        public virtual ICollection<Message> Messages { get; set; }
 
         public UserProfile()
         {
             Ads = new List<Ad>();
-            Messages = new List<Message>();
         }
     }
 

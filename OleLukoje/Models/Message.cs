@@ -28,12 +28,8 @@ namespace OleLukoje.Models
         public string GetDateTimeString { get { return DateTimeMessage.ToString(); } }
 
         /// <summary>
-        /// Связь один-ко-многим с юзером (у одного юзера много сообщений)
+        /// Связь один-ко-многим с обьявлением (у одного обьявления много сообщений)
         /// </summary>
-        [ForeignKey("UserProfile")]
-        public int UserId { get; set; }
-        public virtual UserProfile UserProfile { get; set; }
-
         public int AdId { get; set; }
         public virtual Ad Ad { get; set; }
     }
