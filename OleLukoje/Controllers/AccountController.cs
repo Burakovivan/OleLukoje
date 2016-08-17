@@ -413,5 +413,29 @@ namespace OleLukoje.Controllers
         {
             return PartialView("_SettingPartial");
         }
+
+        [HttpGet]
+        public ActionResult UserProfile(int? id)
+        {
+            if (id == null)
+            {
+                id = WebSecurity.CurrentUserId;
+            }
+            using (UsersContext usdb = new UsersContext())
+            {
+                if (!usdb.UserProfiles.Any(u => u.UserId == id))
+                    return View("UserNotFound");
+               UserProfile user = usdb.UserProfiles.Single(u => u.UserId == id);
+
+               ViewBag.UserId = user.UserId;
+               ViewBag.UserName = user.UserName;
+               ViewBag.Organization = user.Organization;
+               ViewBag.Phone = user.Phone;
+               ViewBag.Email = user.Email;
+            }
+
+            return View("UserProfile");
+        }
+
     }
 }

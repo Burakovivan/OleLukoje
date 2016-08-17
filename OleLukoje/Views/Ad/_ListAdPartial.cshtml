@@ -1,6 +1,7 @@
 ﻿@using OleLukoje.Models
 @model IEnumerable<Ad>
 
+<div style="margin-top:3em;"></div>
 <hgroup class="title">
     <h1>@ViewBag.Title</h1>
 </hgroup>
@@ -13,8 +14,14 @@
 {
     foreach (Ad ad in Model)
     {
-        <div class="container col-md-12" id="@ad.Id">
+        <div class="container col-md-12 white-section" id="@ad.Id">
             <div class="row">
+                @if (ViewBag.MyAds)
+                {
+                    <div class="delete-my-add-btn">
+                        <button type="button" class="btn btn-danger" value="@ad.Id" onclick="DeleteAd(this.value)">X</button>
+                    </div>
+                }
                 <div class="col-md-10 col-sm-12">
                     <div class="row">
                         <div class="header col-sm-8 col-xs-12">@Html.ActionLink(ad.Header, "SingleAdView", "Ad", new { Id = ad.Id }, null)</div>
@@ -35,12 +42,7 @@
                             }
                         </div>
                     </div>
-                    @if (ViewBag.MyAds)
-                    {
-                        <div class="row">
-                            <button type="button" class="btn btn-danger" value="@ad.Id" onclick="DeleteAd(this.value)">Delete</button>
-                        </div>
-                    }
+
                 </div>
             </div>
         </div>

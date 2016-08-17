@@ -1,7 +1,7 @@
-﻿.container {
+﻿/*.container {
     border: 3px solid #7cb654;
     border-radius: 10px;
-}
+}*/
 
 .header {
     font-size: 3em;
@@ -11,10 +11,11 @@
 
 .description {
     font-size: 1.7em;
-    background-color: #ddd;
-    border: 1px solid white;
-    border-radius: 0.4em;
-    padding: 0.5em;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 0.2em;
+    padding: 0.3em;
+    color: darkcyan;
 }
 
 .price {
@@ -31,18 +32,40 @@
 
 .category {
     font-size: 1.2em;
-    background-color: #5fc504;
-    border: 0.2em ridge #026301;
+    background-color: #e2e2e2;
+    border: 0.1em solid lightgray;
     width: auto;
     margin-right: 0.4em;
     margin-bottom:0.4em;
     padding: 0.2em;
     text-align: center;
-    border-radius: 0.5em 0em;
+    border-radius: 0.2em;
     color:white;
     display:inline-block;
 }
 
 .categories {
     padding-top: 0.8em;
+}
+
+.white-section{
+    margin:2em 0 0 0;
+    border: 0.1em solid lightgray;
+    border-radius: 0.2em;
+    padding:1em 2em;
+    background: white;
+}
+
+.delete-my-add-btn{
+    float:right;
+}
+.userprofile-label{
+    color: lightgray;
+    font-size: 2em;
+    font-family:Batang;
+}
+.userprofile-content{
+    
+    font-size: 2em;
+    font-family:Batang;
 }

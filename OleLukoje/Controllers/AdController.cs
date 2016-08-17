@@ -104,6 +104,8 @@ namespace OleLukoje.Controllers
         [HttpGet]
         public ActionResult SingleAdView(int id)
         {
+            if (!db.Ads.Any(t => t.Id == id))
+               return View("AddNotFound");
             Ad ad = db.Ads.Single(t => t.Id == id);
             ViewBag.Ad = ad;
             ViewBag.Categories = ad.Categories;
@@ -158,7 +160,7 @@ namespace OleLukoje.Controllers
                 ads = ads.Where(ad => ad.SpecialAd == specialAd).ToList();
             }
             ViewBag.MyAds = userName != null;
-            ViewBag.Title = userName != null ? userName + " ads" : "All ads";
+            ViewBag.Title = userName != null ? userName == User.Identity.Name?"My ads": userName + " ads" : "All ads";
             ViewBag.UserName = User.Identity.Name;
             ads.Reverse();
             return PartialView("_ListAdPartial", ads);
@@ -181,7 +183,7 @@ namespace OleLukoje.Controllers
         {
             lock (db)
             {
-                ViewBag.Messages = db.Messages.ToList();
+                ViewBag.Messages = db.Messages.Where(t=>t.AdId == idAd).ToList();
                 ViewBag.IdAd = idAd;
             }
             return PartialView("_MessagesPartial");

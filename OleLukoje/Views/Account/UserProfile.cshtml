@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "UserProfile";
+    string userName = ViewBag.UserName;
+    string userId = ViewBag.UserId.ToString();
+}
+<link rel="stylesheet" href="~/Content/bootstrap.css" />
+<link rel="stylesheet" href="~/Content/MyStyle.css" />
+<h2>UserProfile</h2>
+
+<div class="container">
+    <div class="white-section">
+        <div class="table">
+            <div class="row">
+                <div class="userprofile-label col-sm-4">@Html.ActionLink(userName, "UserProfile", "Account", userId, new object())</div>
+            </div>
+        </div>
+        <div class="row ">
+            <span class="userprofile-label col-sm-4">Organization:</span>
+            <span class="userprofile-content col-sm-8">@ViewBag.Organization</span>
+        </div>
+        <div class="row">
+            <span class="userprofile-label col-sm-4">Phone:</span>
+            <span class="userprofile-content col-sm-8">@ViewBag.Phone</span>
+        </div>
+        <div class="row">
+            <span class="userprofile-label col-sm-4">Email:</span>
+            <span class="userprofile-content col-sm-8">@ViewBag.Email</span>
+        </div>
+    </div>
+        <div id="ListAds"></div>
+
+    </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $('#ListAds').load('@Url.Action("_ListAd", "Ad", new { userName = userName } )')
+        });
+    </script>
+}
