@@ -1,13 +1,7 @@
-﻿@{
-    int userid = WebSecurity.CurrentUserId;
-}
-
-
-@if (Request.IsAuthenticated) {
+﻿@if (Request.IsAuthenticated) {
     <text>
         @Html.ActionLink("Add ad", "AddAd", "Ad")
-        @Html.ActionLink("My ad", "ListAd", "Ad")
-        Hello, @Html.ActionLink(User.Identity.Name, "UserProfile", "Account", null, new { @class = "username", title = "Manage" })!
+        Hello, @Html.ActionLink(User.Identity.Name, "UserProfile", "Account")!
         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
             @Html.AntiForgeryToken()
             <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>

@@ -1,19 +1,20 @@
 ﻿@using OleLukoje.Models
 
-<input type="search" class="form-control" id="search" name="search" oninput="searchAd()" placeholder="Search...">
-<br>
-<div id="SearchAds"></div>
-<div id="ListAds"></div>
+<div class="row">
+    <div class="col-sm-2">
+        <div id="Filter"></div>
+    </div>
+    <div class="col-sm-10">
+        <div id="Search"></div>
+        <div id="ListAds"></div>
+    </div>
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-        $('#SearchAds').load('@Url.Action("_SearchAd", "Ad")')
-        $('#ListAds').load('@Url.Action("_ListAd", "Ad", new { state = State.Active } )')
-
-        function searchAd() {
-            var value = $('#search').val();
-            $('#ListAds').load('@Url.Action("_ListAdSearch", "Ad")?input=' + value)
-        };
+        $('#Filter').load('@Url.Action("_FilterAds", "Ad")')
+        $('#Search').load('@Url.Action("_SearchAds", "Ad")')
+        $('#ListAds').load('@Url.Action("_ListAds", "Ad", new { state = State.Active } )')
     </script>
 }

@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="~/Content/fa/css/font-awesome.css" />
 <link rel="stylesheet" href="~/Content/bootstrap.css" />
 <link rel="stylesheet" href="~/Content/MyStyle.css" />
-<h2>SingleAdView</h2>
 
 <div class="container">
     <div class="row">
@@ -52,7 +51,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $(document).ready(function () {
-            $('#Messages').load('@Url.Action("_GetMessages", "Ad", new { idAd = ViewBag.Ad.Id })')
+            $('#Messages').load('@Url.Action("_GetComments", "Ad", new { idAd = ViewBag.Ad.Id })')
         });
     </script>
 }

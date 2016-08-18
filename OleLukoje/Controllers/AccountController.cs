@@ -415,7 +415,16 @@ namespace OleLukoje.Controllers
         }
 
         [HttpGet]
-        public ActionResult UserProfile(int? id)
+        [InitializeSimpleMembership]
+        public ActionResult UserProfile()
+        {
+            ViewBag.UserName = User.Identity.Name;
+            ViewBag.UserId = WebSecurity.GetUserId(ViewBag.UserName);
+            return View("UserProfile");
+        }
+
+        [HttpGet]
+        public ActionResult _UserProfileInfo(int? id)
         {
             if (id == null)
             {
@@ -425,17 +434,15 @@ namespace OleLukoje.Controllers
             {
                 if (!usdb.UserProfiles.Any(u => u.UserId == id))
                     return View("UserNotFound");
-               UserProfile user = usdb.UserProfiles.Single(u => u.UserId == id);
+                UserProfile user = usdb.UserProfiles.Single(u => u.UserId == id);
 
-               ViewBag.UserId = user.UserId;
-               ViewBag.UserName = user.UserName;
-               ViewBag.Organization = user.Organization;
-               ViewBag.Phone = user.Phone;
-               ViewBag.Email = user.Email;
+                ViewBag.UserId = user.UserId;
+                ViewBag.UserName = user.UserName;
+                ViewBag.Organization = user.Organization;
+                ViewBag.Phone = user.Phone;
+                ViewBag.Email = user.Email;
             }
-
-            return View("UserProfile");
+            return PartialView("_UserProfileInfoPartial");
         }
-
     }
 }

@@ -1,15 +1,8 @@
 ﻿@using OleLukoje.Models
 @model IEnumerable<Ad>
-
-<div style="margin-top:3em;"></div>
-<hgroup class="title">
-    <h1>@ViewBag.Title</h1>
-</hgroup>
-
 <link rel="stylesheet" href="~/Content/fa/css/font-awesome.css" />
 <link rel="stylesheet" href="~/Content/bootstrap.css" />
 <link rel="stylesheet" href="~/Content/MyStyle.css" />
-
 @if (Model.ToList().Count != 0)
 {
     foreach (Ad ad in Model)

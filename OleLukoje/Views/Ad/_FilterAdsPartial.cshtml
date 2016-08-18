@@ -12,7 +12,7 @@
     </div>
 </div>
 
-@using (Ajax.BeginForm("_ListAd", "Ad", new AjaxOptions { UpdateTargetId = "ListAds", HttpMethod = "get" }))
+@using (Ajax.BeginForm("_Filter", "Ad", new AjaxOptions { UpdateTargetId = "ListAds", HttpMethod = "get" }))
 {
     <div id="SelectCategories"></div>
     <div class="panel panel-default">
@@ -21,7 +21,7 @@
             @Html.CheckBox("specialAd", false) Special ad
         </div>
     </div>
-    <button type="submit" class="btn btn-success">Search</button>
+    <button type="submit" class="btn btn-success btn-lg btn-block">Search</button>
 }
 
 <script>

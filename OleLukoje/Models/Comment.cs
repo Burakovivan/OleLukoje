@@ -7,7 +7,7 @@ using System.Text;
 
 namespace OleLukoje.Models
 {
-    public class Message
+    public class Comment
     {
         [Key]
         public int Id { get; set; }

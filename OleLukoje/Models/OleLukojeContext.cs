@@ -14,7 +14,7 @@ namespace OleLukoje.Models
         { }
         public DbSet<Ad> Ads { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Message> Messages { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         public DbSet<File> Files { get; set; }
 
         /*protected override void OnModelCreating(DbModelBuilder modelBuilder)

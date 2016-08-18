@@ -4,24 +4,24 @@
     <div class="col-sm-2"></div>
     <div class="col-sm-8">
         <div id="result">
-            @if (ViewBag.Messages.Count != 0)
+            @if (ViewBag.Comments.Count != 0)
             {
-                foreach (Message x in ViewBag.Messages)
+                foreach (Comment comm in ViewBag.Comments)
                 {
                     <blockquote>
-                        @x.Text
-                        <footer>@x.UserName   @x.GetDateTimeString</footer>
+                        @comm.Text
+                        <footer>@comm.UserName   @comm.GetDateTimeString</footer>
                     </blockquote>
                     <br>
                 }
             }
             else
             {
-                <h>No messages</h>
+                <h>No Comments</h>
             }
         </div>
         <div class="form-group">
-            <textarea id="textMessages" style="display:block; margin-top:10px;margin-bottom:10px; height:auto;  min-width:100%"></textarea>
+            <textarea id="textComment" style="display:block; margin-top:10px;margin-bottom:10px; height:auto;  min-width:100%"></textarea>
             <button type="submit" class="btn btn-success" style=" margin-bottom: 10px;" onclick="AddComment()">Send</button>
         </div>
     </div>
@@ -31,16 +31,16 @@
 <script>
     function GetComment(name, date, text) {
         var result = document.getElementById("result");
-        var textMessages = document.getElementById("textMessages");
+        var textComment = document.getElementById("textComment");
         result.innerHTML = result.innerHTML + "<blockquote>" + text + "<footer>" + name + "  " + date + "</footer></blockquote><br>";
-        textMessages.value = "";
+        textComment.value = "";
     };
 
     function AddComment() {
-        var textMessages = document.getElementById("textMessages").value;
-        var s = { 'text': textMessages, 'idAd' : @ViewBag.IdAd };
+        var textComment = document.getElementById("textComment").value;
+        var s = { 'text': textComment, 'idAd' : @ViewBag.IdAd };
         $.ajax({
-            url: '/Ad/AddMessages',
+            url: '/Ad/AddComment',
             method: 'POST',
             data: JSON.stringify(s),
             contentType: 'application/json; charset=utf-8',

@@ -1,0 +1,15 @@
+﻿<div class="row">
+    <div class="col-md-10">
+        <input type="search" class="form-control" id="search" name="search" placeholder="Input...">
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-default" onclick="searchAd()">Search</button>
+    </div>
+</div>
+
+<script>
+    function searchAd() {
+        var value = $('#search').val();
+        $('#ListAds').load('@Url.Action("_Search", "Ad")?input=' + value)
+    };
+</script>
