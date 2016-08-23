@@ -1,0 +1,35 @@
+﻿@using OleLukoje.Models
+@model IEnumerable<Application>
+
+<div class="panel-group">
+    @foreach (Application application in Model)
+    {
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                @application.Header
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-2">
+                        Text: @application.Text
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        Contact: @application.Contact
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-2">
+                        Sender: @application.UserName
+                    </div>
+                    <div class="col-sm-10">
+                        @application.GetDateTimeString
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

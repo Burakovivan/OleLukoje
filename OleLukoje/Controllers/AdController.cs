@@ -65,8 +65,9 @@ namespace OleLukoje.Controllers
             using (UsersContext uc = new UsersContext())
             {
                 int i = ViewBag.Ad.UserId;
-                ViewBag.UserName = uc.UserProfiles.Single(t => t.UserId == i).UserName;
+                ViewBag.UserNameSeller = uc.UserProfiles.Single(t => t.UserId == i).UserName;
             }
+            ViewBag.UserName = User.Identity.Name;
             return View("SingleAdView");
         }
 
@@ -216,7 +217,7 @@ namespace OleLukoje.Controllers
             Comment comment = new Comment
             {
                 Text = text,
-                DateTimeMessage = DateTime.Now,
+                DateTimeComment = DateTime.Now,
                 AdId = idAd,
                 UserName = User.Identity.Name
             };
@@ -226,6 +227,27 @@ namespace OleLukoje.Controllers
                 db.SaveChanges();
             }
             return Json(comment, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [InitializeSimpleMembership]
+        public ActionResult AddApplication(Application application)
+        {
+            try
+            {
+                lock (db)
+                {
+                    application.DateTimeApplication = DateTime.Now.Date;
+                    application.UserName = application.UserName == string.Empty ? "Anonim" : application.UserName;
+                    db.Applications.Add(application);
+                    db.SaveChanges();
+                }
+                return Json(new { Message = "Application was submitted." }, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(new { Message = "Error! The application was not sent." }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

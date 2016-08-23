@@ -416,33 +416,41 @@ namespace OleLukoje.Controllers
 
         [HttpGet]
         [InitializeSimpleMembership]
-        public ActionResult UserProfile()
+        public ActionResult UserProfile(string userName)
         {
-            ViewBag.UserName = User.Identity.Name;
-            ViewBag.UserId = WebSecurity.GetUserId(ViewBag.UserName);
+            userName = userName ?? WebSecurity.CurrentUserName;
+            ViewBag.UserName = userName;
+            using (UsersContext usdb = new UsersContext())
+            {
+                if (!usdb.UserProfiles.Any(u => u.UserName == userName))
+                {
+                    return View("UserNotFound");
+                }
+            }
             return View("UserProfile");
         }
 
         [HttpGet]
-        public ActionResult _UserProfileInfo(int? id)
+        public ActionResult _UserProfileInfo(string userName)
         {
-            if (id == null)
-            {
-                id = WebSecurity.CurrentUserId;
-            }
+            UserProfile userProfile = new UserProfile();
             using (UsersContext usdb = new UsersContext())
             {
-                if (!usdb.UserProfiles.Any(u => u.UserId == id))
-                    return View("UserNotFound");
-                UserProfile user = usdb.UserProfiles.Single(u => u.UserId == id);
-
-                ViewBag.UserId = user.UserId;
-                ViewBag.UserName = user.UserName;
-                ViewBag.Organization = user.Organization;
-                ViewBag.Phone = user.Phone;
-                ViewBag.Email = user.Email;
+                userProfile = usdb.UserProfiles.Single(u => u.UserName == userName);
             }
-            return PartialView("_UserProfileInfoPartial");
+            return PartialView("_UserProfileInfoPartial", userProfile);
+        }
+
+        [HttpGet]
+        [InitializeSimpleMembership]
+        public ActionResult _UserProfileApplication(string userName)
+        {
+            List<Application> applications = new List<Application>();
+            using (OleLukojeContext db = new OleLukojeContext())
+            {
+                applications = db.Applications.Where(application => application.Ad.UserProfile.UserName == userName).ToList();
+            }
+            return PartialView("_UserProfileApplicationPartial", applications);
         }
     }
 }

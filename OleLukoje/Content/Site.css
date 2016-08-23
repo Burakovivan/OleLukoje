@@ -753,15 +753,5 @@ tr.pager td {
         footer p {
             margin: 0;
         }
-
-
-    /*                               Add ad
-        -----------------------------------------------------------------
-    */
-    #SelectCategory {
-        background-color: lightgreen;
-        text-align: center;
-        cursor: pointer;
-    }
-
+    
 }

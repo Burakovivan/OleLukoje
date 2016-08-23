@@ -47,23 +47,30 @@ namespace OleLukoje.Models
         /// <summary>
         /// Многие-ко-многим с категориями (у категории много обьявлений и у обьявления много категорий)
         /// </summary>
+        [Required]
         public virtual ICollection<Category> Categories { get; set; }
 
         /// <summary>
         /// Связь один-ко-многим с сообщениями (у одного обьявления много сообщений)
         /// </summary>
-        public virtual ICollection<Comment> Messages { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
 
         /// <summary>
         /// Связь один-ко-многим с файлами (у одного обьявления много файлов)
         /// </summary>
         public virtual ICollection<File> Files { get; set; }
 
+        /// <summary>
+        /// Связь один-ко-многим с order
+        /// </summary>
+        public virtual ICollection<Application> Applications { get; set; }
+
         public Ad()
         {
             Categories = new List<Category>();
-            Messages = new List<Comment>();
+            Comments = new List<Comment>();
             Files = new List<File>();
+            Applications = new List<Application>();
         }
 
         /// <summary>

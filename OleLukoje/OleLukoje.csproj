@@ -205,6 +205,7 @@
     <Compile Include="Models\OleLukojeDbInitializer.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\OleLukojeContext.cs" />
+    <Compile Include="Models\Application.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -371,13 +372,14 @@
     <Content Include="Views\Ad\AddAdView.cshtml" />
     <Content Include="Views\Ad\SingleAdView.cshtml" />
     <Content Include="Views\Account\_SettingPartial.cshtml" />
-    <Content Include="Views\Account\_MyListAdPartial.cshtml" />
+    <Content Include="Views\Account\_UserProfileListAdPartial.cshtml" />
     <Content Include="Views\Ad\_ListAdsPartial.cshtml" />
     <Content Include="Views\Ad\_FilterAdsPartial.cshtml" />
     <Content Include="Views\Ad\_CommentsPartial.cshtml" />
     <Content Include="Views\Account\UserProfile.cshtml" />
     <Content Include="Views\Ad\_SearchAdsPartial.cshtml" />
     <Content Include="Views\Account\_UserProfileInfoPartial.cshtml" />
+    <Content Include="Views\Account\_UserProfileApplicationPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -16,6 +16,7 @@ namespace OleLukoje.Models
         public DbSet<Category> Categories { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<File> Files { get; set; }
+        public DbSet<Application> Applications { get; set; }
 
         /*protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
