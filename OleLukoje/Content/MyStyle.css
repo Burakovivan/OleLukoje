@@ -1,7 +1,6 @@
-﻿/*.container {
-    border: 3px solid #7cb654;
-    border-radius: 10px;
-}*/
+﻿.container {
+    padding-bottom: 1em;
+}
 
 .header {
     font-size: 3em;
@@ -32,8 +31,8 @@
 
 .category {
     font-size: 1.2em;
-    background-color: #e2e2e2;
-    border: 0.1em solid lightgray;
+    background-color: #87857a;
+    border: 0.1em solid black;
     width: auto;
     margin-right: 0.4em;
     margin-bottom:0.4em;

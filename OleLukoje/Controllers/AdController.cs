@@ -57,7 +57,7 @@ namespace OleLukoje.Controllers
         {
             if (!db.Ads.Any(t => t.Id == id))
             {
-                return View("AddNotFound");
+                return View("Error");
             }
             Ad ad = db.Ads.Single(t => t.Id == id);
             ViewBag.Ad = ad;
@@ -84,29 +84,22 @@ namespace OleLukoje.Controllers
             return PartialView("_FilterAdsPartial");
         }
 
-        [HttpGet]
-        public ActionResult _SearchAds()
-        {
-            return PartialView("_SearchAdsPartial");
-        }
-
         /// <summary>
         /// All/user`s ads
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         [InitializeSimpleMembership]
-        public ActionResult _ListAds(string userName)
+        public ActionResult _ListAds(string userName, List<Ad> inputAds)
         {
             int userId = userName != null ? WebSecurity.GetUserId(userName) : -1;
             List<Ad> ads = userId != -1 ?
                 db.Ads.Where(ad => ad.UserId == userId).ToList() :
-                db.Ads.Where(ad => ad.StateAd == State.Active).ToList();
+                inputAds ?? db.Ads.Where(ad => ad.StateAd == State.Active).ToList();
             ads.Reverse();
             ViewBag.MyAds = userName == User.Identity.Name;
             return PartialView("_ListAdsPartial", ads);
         }
-
 
         /// <summary>
         /// Filter by parametrs
@@ -147,7 +140,6 @@ namespace OleLukoje.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [InitializeSimpleMembership]
         public ActionResult _Search(string input)
         {
             input = input.ToUpper();
@@ -210,7 +202,6 @@ namespace OleLukoje.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         [InitializeSimpleMembership]
         public ActionResult AddComment(int idAd, string text)
         {
@@ -219,7 +210,7 @@ namespace OleLukoje.Controllers
                 Text = text,
                 DateTimeComment = DateTime.Now,
                 AdId = idAd,
-                UserName = User.Identity.Name
+                UserName = User.Identity.Name == string.Empty ? "Anonim" : User.Identity.Name
             };
             lock (db)
             {

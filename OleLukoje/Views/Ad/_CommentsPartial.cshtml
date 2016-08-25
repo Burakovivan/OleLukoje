@@ -8,11 +8,10 @@
             {
                 foreach (Comment comm in ViewBag.Comments)
                 {
-                    <blockquote>
-                        @comm.Text
-                        <footer>@comm.UserName   @comm.GetDateTimeString</footer>
-                    </blockquote>
-                    <br>
+                    <dl>
+                        <dt>@comm.Text</dt>
+                        <dd>@comm.UserName, @comm.GetDateTimeString</dd>
+                    </dl>
                 }
             }
             else
@@ -31,8 +30,8 @@
 <script>
     function GetComment(name, date, text) {
         var result = document.getElementById("result");
-        var textComment = document.getElementById("textComment");
-        result.innerHTML = result.innerHTML + "<blockquote>" + text + "<footer>" + name + "  " + date + "</footer></blockquote><br>";
+        var d = document.getElementById("textComment");
+        result.innerHTML = result.innerHTML + "<dl><dt>" + text + "</dt><dd>" + name + ", " + date + "</dd></dl>";
         textComment.value = "";
     };
 
@@ -50,7 +49,7 @@
                 var Name = data.UserName;
                 var Text = data.Text;
                 GetComment(Name, Date, Text);
-            },
+            }
         });
     }
 </script>

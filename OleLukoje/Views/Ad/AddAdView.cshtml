@@ -1,75 +1,98 @@
 ﻿@model OleLukoje.Models.Ad
 
-<hgroup class="title">
-    <h1>Add ad</h1>
-</hgroup>
+<div class="col-md-4"></div>
+<div class="col-md-4">
+    @using (Html.BeginForm("AddAd", "Ad", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
 
-@using (Html.BeginForm("AddAd", "Ad", FormMethod.Post, new { enctype="multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary()
-
-    <fieldset>
-        <legend>Ad form</legend>
-        <ol>
-            <li>
+        <div class="row">
+            <div class="col-md-4">
                 @Html.LabelFor(m => m.Header)
+            </div>
+            <div class="col-md-8">
                 @Html.TextBoxFor(m => m.Header)
-            </li>
-            <li>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
                 @Html.LabelFor(m => m.Description)
+            </div>
+            <div class="col-md-8">
                 @Html.TextBoxFor(m => m.Description)
-            </li>
-            <li>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
                 @Html.LabelFor(m => m.Price)
+            </div>
+            <div class="col-md-8">
                 @Html.TextBoxFor(m => m.Price)
-            </li>
-            <li>
-                Category
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                @Html.Label("Category")
+            </div>
+            <div class="col-md-8">
                 @Html.DropDownList("Category", null, new { @onchange = "addCategory()" })
-                <div id="Categories"></div>
-            </li>
-            <li>
+            </div>
+        </div>
+        <div id="Categories"></div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                @Html.Label("Photo")
+            </div>
+            <div class="col-md-8">
                 <input type="file" name="uploads" multiple accept="image/*,image/jpeg" />
-            </li>
-        </ol>
-        <input type="submit" value="Add" />
-    </fieldset>
-}
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-block btn-success">Add</button>
+            </div>
+        </div>
+    }
+</div>
+<div class="col-md-4"></div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-
-    <script>
-        function addCategory() {
-            var e = document.getElementById("Category");
-            var selectItem = e.options[e.selectedIndex].text;
-            if (checkCategory(selectItem)) {
-                var div = getCategories();
-                var inputCategory = '<input id="SelectCategory" name="SelectCategory" class="' + selectItem + '" value="' + selectItem + '" onclick="deleteCategory(this.value);" readonly/>';
-                div.innerHTML = div.innerHTML + inputCategory;
-            }
-        }
-
-        function checkCategory(category) {
+<script>
+    function addCategory() {
+        var e = document.getElementById("Category");
+        var selectItem = e.options[e.selectedIndex].text;
+        if (checkCategory(selectItem)) {
             var div = getCategories();
-            var elems = div.getElementsByTagName('*');
-            for (var i = 0; i < elems.length; i++) {
-                if (elems[i].className == category) {
-                    return false;
-                }
+            var inputCategory = '<input id="SelectCategory" name="SelectCategory" class="' + selectItem + '" value="' + selectItem + '" onclick="deleteCategory(this.value);" readonly/>';
+            div.innerHTML = div.innerHTML + inputCategory;
+        }
+    }
+
+    function checkCategory(category) {
+        var div = getCategories();
+        var elems = div.getElementsByTagName('*');
+        for (var i = 0; i < elems.length; i++) {
+            if (elems[i].className == category) {
+                return false;
             }
-            return true;
         }
+        return true;
+    }
 
-        function deleteCategory(value) {
-            var del = "." + value;
-            $(del).remove();
-        }
+    function deleteCategory(value) {
+        var del = "." + value;
+        $(del).remove();
+    }
 
-        function getCategories() {
-            return document.getElementById('Categories');
-        }
-    </script>
-}
+    function getCategories() {
+        return document.getElementById('Categories');
+    }
+</script>
+
+
 

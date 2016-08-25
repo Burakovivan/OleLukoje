@@ -10,44 +10,44 @@
 @Scripts.Render("~/Scripts/bootstrap.min.js")
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-10 col-sm-12">
-            <div class="row">
-                <div class="header col-sm-8 col-xs-12">@ViewBag.Ad.Header</div>
-                <div class="price col-sm-4 col-xs-12">
-                    @ViewBag.Ad.Price‎ ₴
-                    @if (ViewBag.UserName != ViewBag.UserNameSeller)
-                    {
-                        <button class="btn btn-info btn-lg modalbox" type="button" data-toggle="modal" data-target="#WriteSeller">Write the seller</button>
-                    }
-                </div>
-                @if (ViewBag.Ad.StateAd == OleLukoje.Models.State.Active)
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <div class="row">
+            <div class="header col-sm-8 col-xs-12">@ViewBag.Ad.Header</div>
+            <div class="price col-sm-4 col-xs-12">
+                @ViewBag.Ad.Price‎ ₴
+                @if (ViewBag.UserName != ViewBag.UserNameSeller)
                 {
-                    <i class="fa-check-circle-o"></i>
+                    <button class="btn btn-info btn-lg modalbox" type="button" data-toggle="modal" data-target="#WriteSeller">Write the seller</button>
                 }
             </div>
-            <div class="row">
-                <div class="author col-sm-12">
-                    by <a>@ViewBag.UserNameSeller</a>
-                </div>
+            @if (ViewBag.Ad.StateAd == OleLukoje.Models.State.Active)
+            {
+                <i class="fa-check-circle-o"></i>
+            }
+        </div>
+        <div class="row">
+            <div class="author col-sm-12">
+                by <a>@ViewBag.UserNameSeller</a>
             </div>
-            <div class="row ">
-                <div class="col-sm-12">
-                    <div class="description ">@ViewBag.Ad.Description</div>
-                </div>
+        </div>
+        <div class="row ">
+            <div class="col-sm-12">
+                <div class="description ">@ViewBag.Ad.Description</div>
             </div>
-            <div class="row">
-                <div class="col-sm-12 categories">
-                    @foreach (var category in ViewBag.Categories)
-                    {
-                        <div class="category">
-                            @category.Name
-                        </div>
-                    }
-                </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 categories">
+                @foreach (var category in ViewBag.Categories)
+                {
+                    <div class="category">
+                        @category.Name
+                    </div>
+                }
             </div>
         </div>
     </div>
+    <div class="col-md-1"></div>
 </div>
 
 <!-- MODAL WINDOW - write the seller -->
@@ -113,7 +113,6 @@
     </div>
 </div>
 <!-- END MODAL WINDOW -->
-
 <!-- MODAL WINDOW - order was sent -->
 <button id="ShowMessage" class="modalbox hidden" type="button" data-toggle="modal" data-target="#WasSend"></button>
 <div id="WasSend" class="modal fade">

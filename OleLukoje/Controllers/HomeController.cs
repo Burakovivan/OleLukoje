@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OleLukoje.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +9,10 @@ namespace OleLukoje.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string input)
         {
-            return View();
+            ViewBag.Search = input;
+            return View("Index");
         }
     }
 }

@@ -1,41 +1,35 @@
 ﻿@using OleLukoje.Models
 @model IEnumerable<Ad>
-<link rel="stylesheet" href="~/Content/fa/css/font-awesome.css" />
-<link rel="stylesheet" href="~/Content/bootstrap.css" />
-<link rel="stylesheet" href="~/Content/MyStyle.css" />
+
 @if (Model.ToList().Count != 0)
 {
     foreach (Ad ad in Model)
     {
-        <div class="container col-md-12 white-section" id="@ad.Id">
-            <div class="row">
+        <div class="container col-md-10" id="@ad.Id">
+            <div class="white-section">
                 @if (ViewBag.MyAds)
                 {
-                    <div class="delete-my-add-btn">
-                        <button type="button" class="btn btn-danger" value="@ad.Id" onclick="DeleteAd(this.value)">X</button>
-                    </div>
+                    <div class="col-md-11"></div>
+                    <button type="button" class="btn btn-danger col-md-1" value="@ad.Id" onclick="DeleteAd(this.value)">X</button>
                 }
-                <div class="col-md-10 col-sm-12">
-                    <div class="row">
-                        <div class="header col-sm-8 col-xs-12">@Html.ActionLink(ad.Header, "SingleAdView", "Ad", new { Id = ad.Id }, null)</div>
-                        <div class="price col-sm-4 col-xs-12">@ad.Price ₴</div>
+                <div class="row">
+                    <div class="header col-md-8">@Html.ActionLink(ad.Header, "SingleAdView", "Ad", new { Id = ad.Id }, null)</div>
+                    <div class="price col-md-4">@ad.Price ₴</div>
+                </div>
+                <div class="row">
+                    <div class="author col-md-12">
+                        by <a>@ad.UserProfile.UserName</a>
                     </div>
-                    <div class="row">
-                        <div class="author col-sm-12">
-                            by <a>@ad.UserProfile.UserName</a>
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 categories">
+                        @foreach (var category in ad.Categories.ToList())
+                        {
+                            <div class="category">
+                                @category.Name
+                            </div>
+                        }
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12 categories">
-                            @foreach (var category in ad.Categories.ToList())
-                            {
-                                <div class="category">
-                                    @category.Name
-                                </div>
-                            }
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
