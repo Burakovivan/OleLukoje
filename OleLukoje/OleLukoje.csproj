@@ -206,6 +206,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\OleLukojeContext.cs" />
     <Compile Include="Models\Application.cs" />
+    <Compile Include="Controllers\SortAds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -366,7 +367,6 @@
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Ad\AddAdView.cshtml" />
@@ -378,6 +378,7 @@
     <Content Include="Views\Account\UserProfile.cshtml" />
     <Content Include="Views\Account\_UserProfileInfoPartial.cshtml" />
     <Content Include="Views\Account\_UserProfileApplicationPartial.cshtml" />
+    <Content Include="Views\Account\_LogInPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -36,9 +36,9 @@
                         }
                         else
                         {
-                            <li>@Html.ActionLink("Add ad", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                            <li>@Ajax.ActionLink("Add ad", "Login", "Account", null, new AjaxOptions { UpdateTargetId = "LogInResult" }, htmlAttributes: new { id = "loginLink", onclick = "ShowLogIn()" })</li>
                             <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-                            <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                            <li>@Ajax.ActionLink("Log in", "Login", "Account", null, new AjaxOptions { UpdateTargetId = "LogInResult", LoadingElementId = "inTurnFadingTextG" }, htmlAttributes: new { id = "loginLink", onclick = "ShowLogIn()" })</li>
                         }
                     </ul>
                 </div>
@@ -53,3 +53,38 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+<!-- MODAL WINDOW FOR LOG IN -->
+<button id="ShowLogIn" class="modalbox hidden" type="button" data-toggle="modal" data-target="#LogIn"></button>
+<div id="LogIn" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal">×</button>
+                <h2>Log in</h2>
+            </div>
+            <div id="LogInResult"></div>
+            <div id="inTurnFadingTextG">
+                <div class="modal-body text-center">
+                    <div id="inTurnFadingTextG_1" class="inTurnFadingTextG">L</div>
+                    <div id="inTurnFadingTextG_2" class="inTurnFadingTextG">o</div>
+                    <div id="inTurnFadingTextG_3" class="inTurnFadingTextG">a</div>
+                    <div id="inTurnFadingTextG_4" class="inTurnFadingTextG">d</div>
+                    <div id="inTurnFadingTextG_5" class="inTurnFadingTextG">i</div>
+                    <div id="inTurnFadingTextG_6" class="inTurnFadingTextG">n</div>
+                    <div id="inTurnFadingTextG_7" class="inTurnFadingTextG">g</div>
+                    <div id="inTurnFadingTextG_8" class="inTurnFadingTextG">.</div>
+                    <div id="inTurnFadingTextG_9" class="inTurnFadingTextG">.</div>
+                    <div id="inTurnFadingTextG_10" class="inTurnFadingTextG">.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MODAL WINDOW -->
+
+<script type="text/javascript">
+    function ShowLogIn() {
+        $("#ShowLogIn").click();
+    }
+</script>

@@ -150,6 +150,14 @@ namespace OleLukoje.Controllers
         }
 
         [HttpGet]
+        public ActionResult _Sort(List<int> AdsId, SortBy sortBy)
+        {
+            ViewBag.MyAds = false;
+            List<Ad> ads = db.Ads.Where(ad => AdsId.Contains(ad.Id)).ToList();
+            return PartialView("_ListAdsPartial", SortAds.SortAdsBy(ads, sortBy));
+        }
+
+        [HttpGet]
         public ActionResult _GetComments(int idAd)
         {
             lock (db)

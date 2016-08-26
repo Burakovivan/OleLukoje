@@ -1,0 +1,48 @@
+﻿@model OleLukoje.Models.LoginModel
+<link href="~/Content/MyStyle.css" rel="stylesheet" />
+@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-xs-7 col-sm-7 col-md-7 login-box" style="border-right: 1px solid #b2b2b2">
+                <div class="input-group">
+                    @Html.LabelFor(m => m.UserName)
+                    @Html.TextBoxFor(m => m.UserName)
+                    @Html.ValidationMessageFor(m => m.UserName)
+                </div>
+                <div class="input-group">
+                    @Html.LabelFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password)
+                    @Html.ValidationMessageFor(m => m.Password)
+                </div>
+                <div class="input-group">
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                    @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+                </div>
+                <h>You don`t have account?</h> @Html.ActionLink("Register", "Register")
+            </div>
+            <div class="col-xs-5 col-sm-5 col-md-5 separator social-login-box">
+                <div class="input-group">
+                    @Html.Label("Log in with Google")
+                    <button type="button" class="btn btn-default btn-block">Google</button>
+                </div>
+                <div class="input-group">
+                    @Html.Label("Log in with Facebook")
+                    <button type="button" class="btn btn-default btn-block">Facebook</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-xs-8 col-sm-8 col-md-8"></div>
+            <div class="col-xs-4 col-sm-4 col-md-4">
+                <button type="submit" class="btn btn-success btn-block">
+                    Log in   <i class="glyphicon glyphicon-ok"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+}

@@ -3,46 +3,80 @@
     ViewBag.Title = "Register";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>Create a new account.</h2>
-</hgroup>
-
-@using (Html.BeginForm()) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary()
-
-    <fieldset>
-        <legend>Registration Form</legend>
-        <ol>
-            <li>
+<div class="col-md-4"></div>
+<div class="col-md-5">
+    <hgroup class="title">
+        <h1>@ViewBag.Title.</h1>
+        <h2>Create a new account.</h2>
+    </hgroup>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+        <div class="row">
+            <div class="col-md-4">
                 @Html.LabelFor(m => m.UserName)
+            </div>
+            <div class="col-md-8">
                 @Html.TextBoxFor(m => m.UserName)
-            </li>
-            <li>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
                 @Html.LabelFor(m => m.Password)
+            </div>
+            <div class="col-md-8">
                 @Html.PasswordFor(m => m.Password)
-            </li>
-            <li>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
                 @Html.LabelFor(m => m.ConfirmPassword)
+            </div>
+            <div class="col-md-8">
                 @Html.PasswordFor(m => m.ConfirmPassword)
-            </li>
-            <li>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
                 @Html.LabelFor(m => m.Phone)
+            </div>
+            <div class="col-md-8">
                 @Html.TextBoxFor(m => m.Phone)
-            </li>
-            <li>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
                 @Html.LabelFor(m => m.Email)
+            </div>
+            <div class="col-md-8">
                 @Html.TextBoxFor(m => m.Email)
-            </li>
-            <li>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
                 @Html.LabelFor(m => m.Organization)
+            </div>
+            <div class="col-md-8">
                 @Html.TextBoxFor(m => m.Organization)
-            </li>
-        </ol>
-        <input type="submit" value="Register" />
-    </fieldset>
-}
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-block btn-success">Register</button>
+            </div>
+        </div>
+    }
+</div>
+<div class="col-md-3"></div>
+
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

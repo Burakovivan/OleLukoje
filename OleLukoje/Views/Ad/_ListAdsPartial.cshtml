@@ -1,34 +1,42 @@
 ﻿@using OleLukoje.Models
-@model IEnumerable<Ad>
+@model List<Ad>
 
 @if (Model.ToList().Count != 0)
 {
-    foreach (Ad ad in Model)
+    for (int indexAd = 0; indexAd < Model.Count(); indexAd++)
     {
-        <div class="container col-md-10" id="@ad.Id">
+        <div class="container col-md-10" id="@Model[indexAd].Id">
+            <input type="hidden" name="AdsId" id="AdsId" value="@Model[indexAd].Id" />
             <div class="white-section">
                 @if (ViewBag.MyAds)
                 {
                     <div class="col-md-11"></div>
-                    <button type="button" class="btn btn-danger col-md-1" value="@ad.Id" onclick="DeleteAd(this.value)">X</button>
+                    <button type="button" class="btn btn-danger col-md-1" value="@Model[indexAd].Id" onclick="DeleteAd(this.value)">X</button>
                 }
                 <div class="row">
-                    <div class="header col-md-8">@Html.ActionLink(ad.Header, "SingleAdView", "Ad", new { Id = ad.Id }, null)</div>
-                    <div class="price col-md-4">@ad.Price ₴</div>
-                </div>
-                <div class="row">
-                    <div class="author col-md-12">
-                        by <a>@ad.UserProfile.UserName</a>
+                    <div class="header col-md-8">
+                        @Html.ActionLink(Model[indexAd].Header, "SingleAdView", "Ad", new { Id = Model[indexAd].Id }, null)
+                    </div>
+                    <div class="price col-md-4">
+                        @Model[indexAd].Price ₴
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12 categories">
-                        @foreach (var category in ad.Categories.ToList())
+                    <div class="author col-md-12">
+                        by <a>@Model[indexAd].UserProfile.UserName</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 categories">
+                        @foreach (var category in Model[indexAd].Categories.ToList())
                         {
                             <div class="category">
                                 @category.Name
                             </div>
                         }
+                    </div>
+                    <div class="col-md-2">
+                        @Model[indexAd].DateAd
                     </div>
                 </div>
             </div>
