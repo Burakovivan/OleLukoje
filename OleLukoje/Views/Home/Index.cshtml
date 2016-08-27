@@ -49,15 +49,15 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $('#Filter').load('@Url.Action("_FilterAds", "Ad")')
-        if("@ViewBag.Search" == ""){
-            $('#ListAds').load('@Url.Action("_ListAds", "Ad")')
-        }
-        else{
-            $('#ListAds').load('@Url.Action("_Search", "Ad", new { input = ViewBag.Search })')
-        }
-
-        function SortAds(value)
-        {
+        $(document).ready(function () {
+            if ("@ViewBag.Search" == "") {
+                $('#ListAds').load('@Url.Action("_ListAds", "Ad")')
+            }
+            else {
+                $('#ListAds').load('@Url.Action("_Search", "Ad", new { input = ViewBag.Search })')
+            }
+        });
+        function SortAds(value) {
             var sortParametr = document.getElementById("sortParametr");
             sortParametr.innerHTML = '<input type="hidden" value="' + value + '" id="sortBy" name="sortBy" />';
             $('#sortSubmit').click();

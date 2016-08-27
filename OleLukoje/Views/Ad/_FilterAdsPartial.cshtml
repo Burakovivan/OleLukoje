@@ -16,6 +16,19 @@
 {
     <div id="SelectCategories"></div>
     <div class="panel panel-default">
+        <div class="panel-heading">Price:</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-4">Min:</div>
+                <input pattern="[0-9]+" class="col-md-7" type="text" name="minPrice" id="minPrice" />
+            </div>
+            <div class="row">
+                <div class="col-md-4">Max:</div>
+                <input pattern="[0-9]+" class="col-md-7" type="text" name="maxPrice" id="maxPrice" />
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
         <div class="panel-heading">Other:</div>
         <div class="panel-body">
             @Html.CheckBox("specialAd", false) Special ad

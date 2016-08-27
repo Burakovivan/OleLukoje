@@ -49,6 +49,8 @@ else
 }
 
 <script>
+    $('#maxPrice').val('@ViewBag.MaxPrice');
+    $('#minPrice').val('@ViewBag.MinPrice');
     function DeleteAd(value) {
         var s = { 'idAd': value };
         $.ajax({

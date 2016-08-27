@@ -21,9 +21,8 @@ namespace OleLukoje.Controllers
         // GET: /Account/Login
 
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login()
         {
-            ViewBag.ReturnUrl = returnUrl;
             return PartialView("_LogInPartial");
         }
 
@@ -33,16 +32,15 @@ namespace OleLukoje.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model, string returnUrl)
+        public ActionResult Login(LoginModel model)
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
-                return RedirectToLocal(returnUrl);
+                return Content("<script>document.location.reload(true)</script>");
             }
-
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
-            return View(model);
+            return PartialView("_LogInPartial", model);
         }
 
         public ActionResult LogOff()

@@ -14,6 +14,16 @@ namespace OleLukoje.Controllers
     {
         OleLukojeContext db = new OleLukojeContext();
 
+        private int GetMinPrice(List<Ad> ads)
+        {
+            return ads == null || ads.Count == 0 ? 0 : ads.Min(ad => ad.Price);
+        }
+
+        private int GetMaxPrice(List<Ad> ads)
+        {
+            return ads == null || ads.Count == 0 ? 0 : ads.Max(ad => ad.Price);
+        }
+
         public void Upload(IEnumerable<HttpPostedFileBase> uploads, int adId)
         {
             using (OleLukojeContext db = new OleLukojeContext())
@@ -72,12 +82,6 @@ namespace OleLukoje.Controllers
         }
 
         [HttpGet]
-        public ActionResult ListAds()
-        {
-            return View("ListAdsView");
-        }
-
-        [HttpGet]
         public ActionResult _FilterAds()
         {
             ViewBag.Categories = db.Categories.ToList();
@@ -98,6 +102,8 @@ namespace OleLukoje.Controllers
                 inputAds ?? db.Ads.Where(ad => ad.StateAd == State.Active).ToList();
             ads.Reverse();
             ViewBag.MyAds = userName == User.Identity.Name;
+            ViewBag.MinPrice = GetMinPrice(ads);
+            ViewBag.MaxPrice = GetMaxPrice(ads);
             return PartialView("_ListAdsPartial", ads);
         }
 
@@ -132,6 +138,8 @@ namespace OleLukoje.Controllers
             }
             ads.Reverse();
             ViewBag.MyAds = false;
+            ViewBag.MinPrice = minPrice ?? GetMinPrice(ads);
+            ViewBag.MaxPrice = maxPrice ?? GetMaxPrice(ads);
             return PartialView("_ListAdsPartial", ads);
         }
 
@@ -146,6 +154,8 @@ namespace OleLukoje.Controllers
             List<Ad> ads = db.Ads.Where(ad => ad.Description.ToUpper().Contains(input) || ad.Header.ToUpper().Contains(input) || ad.UserProfile.UserName.ToUpper() == input).ToList();
             ads.Reverse();
             ViewBag.MyAds = false;
+            ViewBag.MinPrice = GetMinPrice(ads);
+            ViewBag.MaxPrice = GetMaxPrice(ads);
             return PartialView("_ListAdsPartial", ads);
         }
 
@@ -154,6 +164,8 @@ namespace OleLukoje.Controllers
         {
             ViewBag.MyAds = false;
             List<Ad> ads = db.Ads.Where(ad => AdsId.Contains(ad.Id)).ToList();
+            ViewBag.MinPrice = GetMinPrice(ads);
+            ViewBag.MaxPrice = GetMaxPrice(ads);
             return PartialView("_ListAdsPartial", SortAds.SortAdsBy(ads, sortBy));
         }
 

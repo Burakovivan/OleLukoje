@@ -49,7 +49,6 @@ namespace OleLukoje.Models
                     }
                 default: return ads;
             }
-
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿@model OleLukoje.Models.LoginModel
 <link href="~/Content/MyStyle.css" rel="stylesheet" />
-@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+@using (Ajax.BeginForm("Login", "Account", null, new AjaxOptions { UpdateTargetId = "LogInResult" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
