@@ -78,6 +78,7 @@ namespace OleLukoje.Controllers
                 ViewBag.UserNameSeller = uc.UserProfiles.Single(t => t.UserId == i).UserName;
             }
             ViewBag.UserName = User.Identity.Name;
+            ViewBag.CountReviews = ad.Reviews.Count;
             return View("SingleAdView");
         }
 
@@ -170,14 +171,18 @@ namespace OleLukoje.Controllers
         }
 
         [HttpGet]
-        public ActionResult _GetComments(int idAd)
+        public ActionResult _GetAdInformation(int idAd)
         {
-            lock (db)
-            {
-                ViewBag.Comments = db.Comments.Where(comm => comm.AdId == idAd).ToList();
-                ViewBag.IdAd = idAd;
-            }
-            return PartialView("_CommentsPartial");
+            return PartialView("_AdInformationPartial", (Ad)db.Ads.First(ad => ad.Id == idAd));
+        }
+
+        [HttpGet]
+        public ActionResult _GetReviews(int idAd)
+        {
+            List<Review> reviews = db.Reviews.Where(review => review.AdId == idAd).ToList();
+            reviews.Reverse();
+            ViewBag.AdId = idAd;
+            return PartialView("_ReviewsPartial", reviews);
         }
 
         [HttpPost]
@@ -223,21 +228,27 @@ namespace OleLukoje.Controllers
 
         [HttpPost]
         [InitializeSimpleMembership]
-        public ActionResult AddComment(int idAd, string text)
+        public ActionResult AddReview(int idAd, string text, string dignity, string defects, string name, int? stars)
         {
-            Comment comment = new Comment
+            List<Review> reviews = new List<Review>();
+            Review review = new Review
             {
                 Text = text,
-                DateTimeComment = DateTime.Now,
+                Dignity = dignity,
+                Defects = defects,
+                Stars = stars,
+                DateTimeReview = DateTime.Now,
                 AdId = idAd,
-                UserName = User.Identity.Name == string.Empty ? "Anonim" : User.Identity.Name
+                UserName = name == string.Empty ? "Anonim" : name
             };
             lock (db)
             {
-                db.Comments.Add(comment);
+                db.Reviews.Add(review);
                 db.SaveChanges();
+                reviews = db.Reviews.ToList();
+                reviews.Reverse();
             }
-            return Json(comment, JsonRequestBehavior.AllowGet);
+            return PartialView("_ReviewsPartial", reviews);
         }
 
         [HttpPost]

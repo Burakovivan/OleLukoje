@@ -14,7 +14,7 @@ namespace OleLukoje.Models
         { }
         public DbSet<Ad> Ads { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Review> Reviews { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<Application> Applications { get; set; }
 

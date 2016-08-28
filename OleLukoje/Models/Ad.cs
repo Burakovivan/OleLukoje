@@ -53,7 +53,7 @@ namespace OleLukoje.Models
         /// <summary>
         /// Связь один-ко-многим с сообщениями (у одного обьявления много сообщений)
         /// </summary>
-        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
 
         /// <summary>
         /// Связь один-ко-многим с файлами (у одного обьявления много файлов)
@@ -68,7 +68,7 @@ namespace OleLukoje.Models
         public Ad()
         {
             Categories = new List<Category>();
-            Comments = new List<Comment>();
+            Reviews = new List<Review>();
             Files = new List<File>();
             Applications = new List<Application>();
         }

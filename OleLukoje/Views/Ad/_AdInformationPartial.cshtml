@@ -1,0 +1,63 @@
+﻿@using OleLukoje.Models
+@model Ad
+
+<br />
+<div class="col-md-8">
+    <div class="col-md-6">
+        <img src="~/Files/default.jpg" class="img-responsive" alt="@Model.Header">
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Description:</h4>
+            </div>
+            <div class="col-md-8 text-justify">
+                <h4>@Model.Description</h4>
+            </div>
+            <br />
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Categories:</h4>
+            </div>
+            <div class="col-md-8 text-justify">
+                @foreach (Category category in Model.Categories)
+                {
+                    <div class="category">
+                        @category.Name
+                    </div>
+                }
+            </div>
+            <br />
+        </div>
+    </div>
+</div>
+<div class="col-md-4" style="border-left: 1px solid lightgrey">
+    <!-- SELLER -->
+    <p><h4 class="text-center">Information about seller</h4></p>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Name:</h4>
+        </div>
+        <div class="col-md-8">
+            <h4>@Html.ActionLink(Model.UserProfile.UserName, "UserProfile", "Account", new { userName = Model.UserProfile.UserName }, new { @class = "author" })</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Phone:</h4>
+        </div>
+        <div class="col-md-8">
+            <h4>@Model.UserProfile.Phone</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Email:</h4>
+        </div>
+        <div class="col-md-8">
+            <h4>@Model.UserProfile.Email</h4>
+        </div>
+    </div>
+</div>

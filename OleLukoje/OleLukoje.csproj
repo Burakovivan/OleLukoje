@@ -203,7 +203,7 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\OleLukojeDbInitializer.cs" />
-    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Review.cs" />
     <Compile Include="Models\OleLukojeContext.cs" />
     <Compile Include="Models\Application.cs" />
     <Compile Include="Controllers\SortAds.cs" />
@@ -217,6 +217,8 @@
     <Content Include="Content\fa\css\font-awesome.css" />
     <Content Include="Content\fa\css\font-awesome.min.css" />
     <Content Include="Content\fa\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Load.css" />
+    <Content Include="Content\Stars.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -272,6 +274,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="Files\default.jpg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -373,15 +376,15 @@
     <Content Include="Views\Account\_SettingPartial.cshtml" />
     <Content Include="Views\Ad\_ListAdsPartial.cshtml" />
     <Content Include="Views\Ad\_FilterAdsPartial.cshtml" />
-    <Content Include="Views\Ad\_CommentsPartial.cshtml" />
+    <Content Include="Views\Ad\_ReviewsPartial.cshtml" />
     <Content Include="Views\Account\UserProfile.cshtml" />
     <Content Include="Views\Account\_UserProfileInfoPartial.cshtml" />
     <Content Include="Views\Account\_UserProfileApplicationPartial.cshtml" />
     <Content Include="Views\Account\_LogInPartial.cshtml" />
+    <Content Include="Views\Ad\_AdInformationPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Files\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

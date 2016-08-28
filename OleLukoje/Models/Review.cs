@@ -7,14 +7,22 @@ using System.Text;
 
 namespace OleLukoje.Models
 {
-    public class Comment
+    public class Review
     {
         [Key]
         public int Id { get; set; }
 
         [Column]
-        [Required]
         public string Text { get; set; }
+
+        [Column]
+        public string Dignity { get; set; }
+
+        [Column]
+        public string Defects { get; set; }
+
+        [Column]
+        public int? Stars { get; set; }
 
         [Column]
         [Required]
@@ -23,9 +31,9 @@ namespace OleLukoje.Models
         [Column]
         [Required]
         [DataType(DataType.DateTime)]
-        public DateTime DateTimeComment { get; set; }
+        public DateTime DateTimeReview { get; set; }
 
-        public string GetDateTimeString { get { return DateTimeComment.ToString(); } }
+        public string GetDateTime { get { return DateTimeReview.ToString(); } }
 
         /// <summary>
         /// Связь один-ко-многим с ad

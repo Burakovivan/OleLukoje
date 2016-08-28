@@ -408,6 +408,7 @@ namespace OleLukoje.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [InitializeSimpleMembership]
         public ActionResult UserProfile(string userName)
         {
@@ -424,6 +425,7 @@ namespace OleLukoje.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult _UserProfileInfo(string userName)
         {
             UserProfile userProfile = new UserProfile();
@@ -435,6 +437,7 @@ namespace OleLukoje.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [InitializeSimpleMembership]
         public ActionResult _UserProfileApplication(string userName)
         {
