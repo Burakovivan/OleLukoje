@@ -49,16 +49,7 @@ namespace OleLukoje.Controllers
         [HttpGet]
         public ActionResult AddAd()
         {
-            List<SelectListItem> itemsCategories = new List<SelectListItem>();
-            foreach (Category category in db.Categories)
-            {
-                itemsCategories.Add(new SelectListItem
-                {
-                    Text = category.Name,
-                    Value = category.Id.ToString()
-                });
-            }
-            ViewBag.Category = itemsCategories;
+            ViewBag.Categories = db.Categories.ToList();
             return View("AddAdView");
         }
 
@@ -187,15 +178,19 @@ namespace OleLukoje.Controllers
 
         [HttpPost]
         [InitializeSimpleMembership]
-        public RedirectToRouteResult AddAd(List<string> SelectCategory, Ad ad, IEnumerable<HttpPostedFileBase> uploads)
+        public RedirectToRouteResult AddAd(List<string> selectCategories, Ad ad, IEnumerable<HttpPostedFileBase> uploads)
         {
             if (ad != null)
             {
                 lock (db)
                 {
-                    List<Category> categories = db.Categories.Where(category => SelectCategory.Contains(category.Name)).ToList();
-                    int userId = (int)WebSecurity.CurrentUserId;
                     int adId = db.Ads.Count() + 1;
+                    foreach (AdCharacteristic adCharacteristic in ad.AdCharacteristics)
+                    {
+                        adCharacteristic.AdId = adId;
+                        db.AdsCharacteristics.Add(adCharacteristic);
+                    }
+                    List<Category> categories = db.Categories.Where(category => selectCategories.Contains(category.Name)).ToList();
                     db.Ads.Add(new Ad
                     {
                         Header = ad.Header,
@@ -204,7 +199,7 @@ namespace OleLukoje.Controllers
                         Categories = categories,
                         StateAd = State.Active,
                         SpecialAd = false,
-                        UserId = userId,
+                        UserId = (int)WebSecurity.CurrentUserId,
                         DateAd = DateTime.Now.Date
                     });
                     db.SaveChanges();
@@ -212,6 +207,22 @@ namespace OleLukoje.Controllers
                 }
             }
             return RedirectToAction("UserProfile", "Account");
+        }
+
+        [HttpGet]
+        public JsonResult GetPhotoPath()
+        {
+            string path_photo = "";
+            foreach (string file in Request.Files)
+            {
+                var upload = Request.Files[file];
+                if (upload != null)
+                {
+                    path_photo = System.IO.Path.GetFullPath(upload.FileName);
+                }
+            }
+
+            return Json(new { path = path_photo }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -253,7 +264,7 @@ namespace OleLukoje.Controllers
 
         [HttpPost]
         [InitializeSimpleMembership]
-        public ActionResult AddApplication(Application application)
+        public JsonResult AddApplication(Application application)
         {
             try
             {

@@ -44,7 +44,30 @@
 }
 
 .categories {
-    padding-top: 0.8em;
+    margin-bottom: 20px;
+    border: 1px solid white;
+    border-radius: 10px 10px;
+}
+
+.categories:hover {
+    border: 1px solid #5cff2c;
+    cursor: pointer;
+}
+
+.characteristic {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.add_photo {
+    margin-bottom: 20px;
+    border: 1px solid white;
+    border-radius: 10px 10px;
+}
+
+.add_photo:hover {
+    border: 1px solid #87857a;
+    cursor: pointer;
 }
 
 .white-section {

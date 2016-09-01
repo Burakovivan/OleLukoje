@@ -45,18 +45,23 @@ namespace OleLukoje.Models
         public DateTime DateAd { get; set; }
 
         /// <summary>
-        /// Многие-ко-многим с категориями (у категории много обьявлений и у обьявления много категорий)
+        /// Многие-ко-многим с категориями
         /// </summary>
         [Required]
         public virtual ICollection<Category> Categories { get; set; }
 
         /// <summary>
-        /// Связь один-ко-многим с сообщениями (у одного обьявления много сообщений)
+        /// Многие-ко-многим с характеристиками
+        /// </summary>
+        public virtual ICollection<AdCharacteristic> AdCharacteristics { get; set; }
+
+        /// <summary>
+        /// Связь один-ко-многим с сообщениями 
         /// </summary>
         public virtual ICollection<Review> Reviews { get; set; }
 
         /// <summary>
-        /// Связь один-ко-многим с файлами (у одного обьявления много файлов)
+        /// Связь один-ко-многим с файлами
         /// </summary>
         public virtual ICollection<File> Files { get; set; }
 
@@ -68,6 +73,7 @@ namespace OleLukoje.Models
         public Ad()
         {
             Categories = new List<Category>();
+            AdCharacteristics = new List<AdCharacteristic>();
             Reviews = new List<Review>();
             Files = new List<File>();
             Applications = new List<Application>();

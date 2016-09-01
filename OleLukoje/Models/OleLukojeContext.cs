@@ -17,6 +17,7 @@ namespace OleLukoje.Models
         public DbSet<Review> Reviews { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<Application> Applications { get; set; }
+        public DbSet<AdCharacteristic> AdsCharacteristics { get; set; }
 
         /*protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

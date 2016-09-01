@@ -2,37 +2,56 @@
 @model Ad
 
 <br />
-<div class="col-md-8">
-    <div class="col-md-6">
-        <img src="~/Files/default.jpg" class="img-responsive" alt="@Model.Header">
-    </div>
-    <div class="col-md-6">
-        <div class="row">
-            <div class="col-md-4">
-                <h4>Description:</h4>
-            </div>
-            <div class="col-md-8 text-justify">
-                <h4>@Model.Description</h4>
-            </div>
-            <br />
+<div class="col-md-8" style="border-right: 1px solid lightgrey">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="~/Files/default.jpg" class="img-responsive" alt="@Model.Header">
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <h4>Categories:</h4>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Description:</h4>
+                </div>
+                <div class="col-md-8 text-justify">
+                    <h4>@Model.Description</h4>
+                </div>
+                <br />
             </div>
-            <div class="col-md-8 text-justify">
-                @foreach (Category category in Model.Categories)
-                {
-                    <div class="category">
-                        @category.Name
-                    </div>
-                }
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Categories:</h4>
+                </div>
+                <div class="col-md-8 text-justify">
+                    @foreach (Category category in Model.Categories)
+                    {
+                        <div class="category">
+                            @category.Name
+                        </div>
+                    }
+                </div>
+                <br />
             </div>
-            <br />
         </div>
     </div>
+    @if (Model.AdCharacteristics.Count != 0)
+    {
+        <h3 class="text-center">Characteristics</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered col-md-12">
+                <tbody>
+                    @foreach (AdCharacteristic adCharacteristic in Model.AdCharacteristics)
+                    {
+                        <tr>
+                            <td style="font-weight: bold; width: 200px">@adCharacteristic.Name</td>
+                            <td>@adCharacteristic.Description</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
 </div>
-<div class="col-md-4" style="border-left: 1px solid lightgrey">
+<div class="col-md-4">
     <!-- SELLER -->
     <p><h4 class="text-center">Information about seller</h4></p>
     <hr />

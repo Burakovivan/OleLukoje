@@ -201,6 +201,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Ad.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\AdCharacteristic.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\OleLukojeDbInitializer.cs" />
     <Compile Include="Models\Review.cs" />
@@ -274,6 +275,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="Files\add_file.png" />
     <Content Include="Files\default.jpg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -319,6 +321,7 @@
     <Content Include="Content\fa\scss\_stacked.scss" />
     <Content Include="Content\fa\scss\_variables.scss" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Files\default_category.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />

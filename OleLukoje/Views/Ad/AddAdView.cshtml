@@ -1,98 +1,172 @@
-﻿@model OleLukoje.Models.Ad
+﻿@using OleLukoje.Models
+@model Ad
 
-<div class="col-md-4"></div>
-<div class="col-md-4">
-    @using (Html.BeginForm("AddAd", "Ad", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary()
+<link href="~/Content/MyStyle.css" rel="stylesheet" />
 
+@using (Html.BeginForm("AddAd", "Ad", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <div class="col-md-2"></div>
+    <div class="col-md-6" style="border-right: 1px solid lightgrey">
+        <h3 class="text-center">Infomations</h3>
+        <br />
         <div class="row">
-            <div class="col-md-4">
-                @Html.LabelFor(m => m.Header)
+            <div class="col-md-2">Heared:</div>
+            <div class="col-md-10">
+                <input name="Header" style="display:block; height:auto; max-width:100%;  min-width:100%" type="text" />
             </div>
-            <div class="col-md-8">
-                @Html.TextBoxFor(m => m.Header)
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-2">Price:</div>
+            <div class="col-md-10">
+                <input name="Price" pattern="[0-9]+" style="display:block; height:auto; max-width:100%;  min-width:100%" type="text" />
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-2">Description:</div>
+            <div class="col-md-10">
+                <textarea name="Description" style="display:block; height:auto; max-width:100%;  min-width:100%"></textarea>
+            </div>
+        </div>
+        <hr />
+        <h3 class="text-center">Add characteristics</h3>
+        <div class="row">
+            <div class="col-md-1">Name:</div>
+            <div class="col-md-3">
+                <input id="nameCharacteristic" style="display:block; height:auto; max-width:100%;  min-width:100%" type="text" />
+            </div>
+            <div class="col-md-1">Text:</div>
+            <div class="col-md-5">
+                <input id="textCharacteristic" style="display:block; height:auto; max-width:100%;  min-width:100%" type="text" />
+            </div>
+            <div class="col-md-2">
+                <button onclick="AddCharacteristic()" type="button" class="btn btn-block btn-default">Add</button>
+            </div>
+        </div>
+        <div id="characteristics"></div>
+        <hr />
+        <h3 class="text-center">Select categories</h3>
+        <div class="row">
+            @foreach (Category category in ViewBag.Categories)
+            {
+                <div class="col-md-3 col-sm-4 text-center categories" id="categories-@category.Id" onclick="AddCategory('@category.Name', '@category.Id')">
+                    <div id="row" style="margin-top:5px;">
+                        <img src="~/Files/default_category.png" style="width: 50px; height: 50px;" />
+                    </div>
+                    <div id="row" style="margin-bottom:5px;">
+                        @category.Name
+                    </div>
+                </div>
+            }
+            <div id="select_categories"></div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-block btn-success">Post</button>
             </div>
         </div>
         <br>
-        <div class="row">
-            <div class="col-md-4">
-                @Html.LabelFor(m => m.Description)
+    </div>
+    <div class="col-md-4">
+        <h3 class="text-center">Load photo</h3>
+        <br />
+        @for (int i = 0; i < 8; i++)
+        {
+            <div class="col-md-6 col-sm-4 text-center add_photo" onclick="ChoosePhoto(@i)">
+                <div id="row" style="margin-top: 5px; margin-bottom: 5px;">
+                    <img id="photo-@i" src="~/Files/add_file.png" style="width: 100px; height: 100px;" />
+                </div>
+                <div id="path-file-@i" class="hidden"></div>
+                <button style="margin-bottom: 5px;" id="delete-file-@i" class="hidden btn-block btn-sm col-md-4" onclick="DeletePhoto(@i)">delete</button>
             </div>
-            <div class="col-md-8">
-                @Html.TextBoxFor(m => m.Description)
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-4">
-                @Html.LabelFor(m => m.Price)
-            </div>
-            <div class="col-md-8">
-                @Html.TextBoxFor(m => m.Price)
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-4">
-                @Html.Label("Category")
-            </div>
-            <div class="col-md-8">
-                @Html.DropDownList("Category", null, new { @onchange = "addCategory()" })
-            </div>
-        </div>
-        <div id="Categories"></div>
-        <br>
-        <div class="row">
-            <div class="col-md-4">
-                @Html.Label("Photo")
-            </div>
-            <div class="col-md-8">
-                <input type="file" name="uploads" multiple accept="image/*,image/jpeg" />
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-4">
-                <button type="submit" class="btn btn-block btn-success">Add</button>
-            </div>
-        </div>
-    }
-</div>
-<div class="col-md-4"></div>
-
-<script>
-    function addCategory() {
-        var e = document.getElementById("Category");
-        var selectItem = e.options[e.selectedIndex].text;
-        if (checkCategory(selectItem)) {
-            var div = getCategories();
-            var inputCategory = '<input id="SelectCategory" name="SelectCategory" class="' + selectItem + '" value="' + selectItem + '" onclick="deleteCategory(this.value);" readonly/>';
-            div.innerHTML = div.innerHTML + inputCategory;
+            <input id="input-file-@i" onchange="AddFile(@i)" class="hidden" type="file" name="uploads" accept="image/*,image/jpeg" />
         }
-    }
+    </div>
+}
 
-    function checkCategory(category) {
-        var div = getCategories();
-        var elems = div.getElementsByTagName('*');
-        for (var i = 0; i < elems.length; i++) {
-            if (elems[i].className == category) {
-                return false;
+@section Scripts {
+    <script>
+        var indexCh = 0;
+
+        function AddCharacteristic() {
+            var name = $('#nameCharacteristic').val();
+            var text = $('#textCharacteristic').val();
+            if (!($('#characteristic-' + name).length) && name != "" && text != "") {
+                var text = $('#textCharacteristic').val();
+                var characteristic =
+                    "<div class='row characteristic' id='characteristic-" + name + "'>" +
+                    "<div class='col-md-4'>" + name + ":" + "</div><input class='NameCh' name='AdCharacteristics[" + indexCh + "].Name' type='hidden' value='" + name + "'/>" +
+                    "<div class='col-md-6'>" + text + "</div><input class='TextCh' name='AdCharacteristics[" + indexCh + "].Description' type='hidden' value='" + text + "'/>" +
+                    "<div class='col-md-2'><button onclick='DeleteCharacteristic(" + '"characteristic-' + name + '"' + ")' type='button' class='btn btn-block btn-danger'>Delete</button></div></div>";
+                $('#characteristics').append(characteristic);
+                $('#nameCharacteristic').val("");
+                $('#textCharacteristic').val("");
+                indexCh++;
             }
         }
-        return true;
-    }
 
-    function deleteCategory(value) {
-        var del = "." + value;
-        $(del).remove();
-    }
+        function DeleteCharacteristic(value) {
+            $('#' + value).remove();
+            indexCh--;
+            var nameChs = $(".NameCh");
+            var textChs = $(".TextCh");
+            for (var i = 0; i < indexCh; i++) {
+                $(nameChs[i]).attr('name', "AdCharacteristics[" + i + "].Name");
+                $(textChs[i]).attr('name', "AdCharacteristics[" + i + "].Description");
+            }
+        }
 
-    function getCategories() {
-        return document.getElementById('Categories');
-    }
-</script>
+        function ChoosePhoto(value) {
+            $("#input-file-" + value).click();
+        }
 
+        function AddFile(value) {
+            //todo
+            var files = document.getElementById('input-file-' + value).files;
+            if (files.length > 0) {
+                if (window.FormData !== undefined) {
+                    var data = new FormData();
+                    for (var x = 0; x < files.length; x++) {
+                        data.append("file" + x, files[x]);
+                    }
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetPhotoPath", "Ad")',
+                        contentType: false,
+                        processData: false,
+                        data: data,
+                        success: function (result) {
+                            alert(result.path);
+                        },
+                    });
+                } else {
+                    alert("Error!");
+                }
+            }
+        }
 
+        function DeletePhoto(value) {
+            $("delete-file-" + value).hide();
+            //todo
+        }
 
+        function AddCategory(name, id) {
+            var category = document.getElementById(id);
+            var select_categories = document.getElementById("select_categories")
+            if (category == null) {
+                select_categories.innerHTML = select_categories.innerHTML +
+                    "<input value='" + name + "' id='" + id + "' type='hidden' name='selectCategories' />";
+                $("#categories-" + id).css({ 'backgroundColor': '#c1ffa4' });
+            }
+            else {
+                $("#" + id).remove();
+                $("#categories-" + id).css({ 'backgroundColor': 'white' });
+            }
+        }
+    </script>
+}
