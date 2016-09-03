@@ -1,7 +1,7 @@
 ﻿@using OleLukoje.Models
 @model List<Ad>
 
-@if (Model.ToList().Count != 0)
+@if (Model != null && Model.ToList().Count != 0)
 {
     for (int indexAd = 0; indexAd < Model.Count(); indexAd++)
     {
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-10 categories">
+                    <div class="col-md-10">
                         @foreach (var category in Model[indexAd].Categories.ToList())
                         {
                             <div class="category">

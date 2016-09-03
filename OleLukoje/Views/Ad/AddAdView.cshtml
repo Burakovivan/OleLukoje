@@ -77,12 +77,13 @@
         <br />
         @for (int i = 0; i < 8; i++)
         {
-            <div class="col-md-6 col-sm-4 text-center add_photo" onclick="ChoosePhoto(@i)">
-                <div id="row" style="margin-top: 5px; margin-bottom: 5px;">
-                    <img id="photo-@i" src="~/Files/add_file.png" style="width: 100px; height: 100px;" />
+            <div class="col-md-6 col-sm-4 text-center">
+                <div id="row" style="margin-top: 5px;">
+                    <img id="photo-@i" src="~/Files/add_file.png" style="width: auto; height: 100px;" class="add_photo" onclick="ChoosePhoto(@i)" />
                 </div>
-                <div id="path-file-@i" class="hidden"></div>
-                <button style="margin-bottom: 5px;" id="delete-file-@i" class="hidden btn-block btn-sm col-md-4" onclick="DeletePhoto(@i)">delete</button>
+                <div id="row" style="margin-bottom: 5px;">
+                    <button style="visibility: hidden;" id="delete-file-@i" type="button" class="btn btn-block btn-danger btn-sm" onclick="DeletePhoto(@i)">delete</button>
+                </div>
             </div>
             <input id="input-file-@i" onchange="AddFile(@i)" class="hidden" type="file" name="uploads" accept="image/*,image/jpeg" />
         }
@@ -126,33 +127,21 @@
         }
 
         function AddFile(value) {
-            //todo
-            var files = document.getElementById('input-file-' + value).files;
-            if (files.length > 0) {
-                if (window.FormData !== undefined) {
-                    var data = new FormData();
-                    for (var x = 0; x < files.length; x++) {
-                        data.append("file" + x, files[x]);
-                    }
-                    $.ajax({
-                        type: "GET",
-                        url: '@Url.Action("GetPhotoPath", "Ad")',
-                        contentType: false,
-                        processData: false,
-                        data: data,
-                        success: function (result) {
-                            alert(result.path);
-                        },
-                    });
-                } else {
-                    alert("Error!");
-                }
+            var input_file = document.getElementById('input-file-' + value);
+            if (input_file.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#photo-' + value).attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input_file.files[0]);
+                $('#delete-file-' + value).css({ 'visibility': 'visible' });
             }
         }
 
         function DeletePhoto(value) {
-            $("delete-file-" + value).hide();
-            //todo
+            $('#delete-file-' + value).css({ 'visibility': 'hidden' });
+            $("#input-file-").replaceWith($("#input-file-").clone(true));
+            $('#photo-' + value).attr('src', '/Files/add_file.png');
         }
 
         function AddCategory(name, id) {

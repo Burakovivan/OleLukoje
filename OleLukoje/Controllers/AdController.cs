@@ -24,26 +24,19 @@ namespace OleLukoje.Controllers
             return ads == null || ads.Count == 0 ? 0 : ads.Max(ad => ad.Price);
         }
 
-        public void Upload(IEnumerable<HttpPostedFileBase> uploads, int adId)
+        public List<File> Upload(IEnumerable<HttpPostedFileBase> uploads, int adId)
         {
-            using (OleLukojeContext db = new OleLukojeContext())
+            List<File> files = new List<File>();
+            foreach (var file in uploads)
             {
-                foreach (var file in uploads)
+                if (file != null)
                 {
-                    if (file != null)
-                    {
-                        // получаем путь к файлу
-                        string filePath = "~/Files/" + System.IO.Path.GetFileName(file.FileName);
-                        // сохраняем файл в папку Files в проекте
-                        file.SaveAs(Server.MapPath(filePath));
-                        lock (db)
-                        {
-                            db.Files.Add(new File { AdId = adId, Path = filePath });
-                            db.SaveChanges();
-                        }
-                    }
+                    string filePath = "~/Files/" + adId + "-" + files.Count + System.IO.Path.GetExtension(file.FileName);
+                    file.SaveAs(Server.MapPath(filePath));
+                    files.Add(new File { AdId = adId, Path = filePath });
                 }
             }
+            return files;
         }
 
         [HttpGet]
@@ -155,10 +148,19 @@ namespace OleLukoje.Controllers
         public ActionResult _Sort(List<int> AdsId, SortBy sortBy)
         {
             ViewBag.MyAds = false;
-            List<Ad> ads = db.Ads.Where(ad => AdsId.Contains(ad.Id)).ToList();
-            ViewBag.MinPrice = GetMinPrice(ads);
-            ViewBag.MaxPrice = GetMaxPrice(ads);
-            return PartialView("_ListAdsPartial", SortAds.SortAdsBy(ads, sortBy));
+            if (AdsId != null)
+            {
+                List<Ad> ads = db.Ads.Where(ad => AdsId.Contains(ad.Id)).ToList();
+                ViewBag.MinPrice = GetMinPrice(ads);
+                ViewBag.MaxPrice = GetMaxPrice(ads);
+                return PartialView("_ListAdsPartial", SortAds.SortAdsBy(ads, sortBy));
+            }
+            else
+            {
+                ViewBag.MinPrice = 0;
+                ViewBag.MaxPrice = 0;
+                return PartialView("_ListAdsPartial", null);
+            }
         }
 
         [HttpGet]
@@ -185,11 +187,6 @@ namespace OleLukoje.Controllers
                 lock (db)
                 {
                     int adId = db.Ads.Count() + 1;
-                    foreach (AdCharacteristic adCharacteristic in ad.AdCharacteristics)
-                    {
-                        adCharacteristic.AdId = adId;
-                        db.AdsCharacteristics.Add(adCharacteristic);
-                    }
                     List<Category> categories = db.Categories.Where(category => selectCategories.Contains(category.Name)).ToList();
                     db.Ads.Add(new Ad
                     {
@@ -200,29 +197,14 @@ namespace OleLukoje.Controllers
                         StateAd = State.Active,
                         SpecialAd = false,
                         UserId = (int)WebSecurity.CurrentUserId,
-                        DateAd = DateTime.Now.Date
+                        DateAd = DateTime.Now.Date,
+                        AdCharacteristics = ad.AdCharacteristics,
+                        Files = Upload(uploads, adId)
                     });
                     db.SaveChanges();
-                    Upload(uploads, adId);
                 }
             }
             return RedirectToAction("UserProfile", "Account");
-        }
-
-        [HttpGet]
-        public JsonResult GetPhotoPath()
-        {
-            string path_photo = "";
-            foreach (string file in Request.Files)
-            {
-                var upload = Request.Files[file];
-                if (upload != null)
-                {
-                    path_photo = System.IO.Path.GetFullPath(upload.FileName);
-                }
-            }
-
-            return Json(new { path = path_photo }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
