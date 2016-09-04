@@ -28,21 +28,37 @@ namespace OleLukoje.Models
 
         [Column, Required]
         [StringLength(20, MinimumLength = 6)]
-        [Display(Name = "User name")]
+        [Display(Name = "User nameL")]
         public string UserName { get; set; }
 
         [Column, Required]
         [DataType(DataType.EmailAddress)]
-        [Display(Name = "Email")]
+        [Display(Name = "Email:")]
         public string Email { get; set; }
 
         [Column, Required]
         [DataType(DataType.PhoneNumber)]
-        [Display(Name = "Phone number")]
+        [Display(Name = "Phone number:")]
         public string Phone { get; set; }
 
         [Column]
-        [Display(Name = "Yours organization")]
+        [Display(Name = "Your name:")]
+        public string Name { get; set; }
+
+        [Column]
+        [Display(Name = "Yours surname:")]
+        public string Surname { get; set; }
+
+        [Column]
+        [Display(Name = "Country:")]
+        public string Country { get; set; }
+
+        [Column]
+        [Display(Name = "City:")]
+        public string City { get; set; }
+
+        [Column]
+        [Display(Name = "Yours organization:")]
         public string Organization { get; set; }
 
         /// <summary>
@@ -69,17 +85,17 @@ namespace OleLukoje.Models
     {
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Display(Name = "Current password:")]
         public string OldPassword { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "New password:")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
+        [Display(Name = "Confirm new password:")]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
@@ -87,12 +103,12 @@ namespace OleLukoje.Models
     public class LoginModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "User name:")]
         public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Password:")]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
@@ -103,32 +119,44 @@ namespace OleLukoje.Models
     {
         [Required]
         [StringLength(20, ErrorMessage = "Name must be at least 6 characters long and maximum - 20.", MinimumLength = 6)]
-        [Display(Name = "User name")]
+        [Display(Name = "User name:")]
         public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.EmailAddress)]
-        [Display(Name = "Email")]
+        [Display(Name = "Email:")]
         public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Password:")]
         public string Password { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Confirm password:")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         [Required]
         [DataType(DataType.PhoneNumber)]
-        [Display(Name = "Phone number")]
+        [Display(Name = "Phone number:")]
         public string Phone { get; set; }
 
-        [Display(Name = "Yours organization")]
+        [Display(Name = "Your name:")]
+        public string Name { get; set; }
+
+        [Display(Name = "Yours surname:")]
+        public string Surname { get; set; }
+
+        [Display(Name = "Country:")]
+        public string Country { get; set; }
+
+        [Display(Name = "City:")]
+        public string City { get; set; }
+
+        [Display(Name = "Yours organization:")]
         public string Organization { get; set; }
     }
 

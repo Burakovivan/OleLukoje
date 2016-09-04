@@ -72,7 +72,16 @@ namespace OleLukoje.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, propertyValues: new { Email = model.Email, Phone = model.Phone, Organization = model.Organization });
+                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, propertyValues: new 
+                    { 
+                        Email = model.Email, 
+                        Phone = model.Phone, 
+                        Organization = model.Organization,
+                        Name = model.Name,
+                        Surname = model.Surname,
+                        Country = model.Country,
+                        City = model.City
+                    });
                     WebSecurity.Login(model.UserName, model.Password);
                     return RedirectToAction("Index", "Home");
                 }
