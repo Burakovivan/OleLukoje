@@ -30,11 +30,7 @@
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="information">
                 <!-- ALL INFORMATION -->
-                <script>
-                    $(document).ready(function () {
-                        $('#information').load('@Url.Action("_GetAdInformation", "Ad", new { idAd = ViewBag.Ad.Id })')
-                    });
-                </script>
+                @{ Html.RenderAction("_GetAdInformation", "Ad", new { idAd = ViewBag.Ad.Id }); }
             </div>
             <div role="tabpanel" class="tab-pane" id="photo">
                 <!-- PHOTO -->
@@ -59,13 +55,13 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-sm-2">
+                    <div class="col-md-4">
                         @Html.LabelFor(m => m.UserName)
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-md-8">
                         @if ((string)ViewBag.UserName == "")
                         {
-                            @Html.TextBoxFor(m => m.UserName)
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
                         }
                         else
                         {
@@ -76,29 +72,29 @@
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-sm-2">
+                    <div class="col-md-4">
                         @Html.LabelFor(m => m.Header)
                     </div>
-                    <div class="col-sm-4">
-                        @Html.TextBoxFor(m => m.Header)
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.Header, new { @class = "form-control" })
                     </div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-sm-2">
+                    <div class="col-md-4">
                         @Html.LabelFor(m => m.Contact)
                     </div>
-                    <div class="col-sm-4">
-                        @Html.TextBoxFor(m => m.Contact)
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.Contact, new { @class = "form-control" })
                     </div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-sm-2">
+                    <div class="col-md-4">
                         @Html.LabelFor(m => m.Text)
                     </div>
-                    <div class="col-sm-4">
-                        @Html.TextBoxFor(m => m.Text)
+                    <div class="col-md-8">
+                        @Html.TextAreaFor(m => m.Text, new { @class = "form-control" })
                     </div>
                 </div>
             </div>
@@ -110,6 +106,7 @@
     </div>
 </div>
 <!-- END MODAL WINDOW -->
+
 <!-- MODAL WINDOW - order was sent -->
 <button id="ShowMessage" class="modalbox hidden" type="button" data-toggle="modal" data-target="#WasSend"></button>
 <div id="WasSend" class="modal fade">

@@ -323,6 +323,8 @@
     <Content Include="Content\fa\scss\_variables.scss" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Files\default_category.png" />
+    <Content Include="Images\bootstrap-formhelpers-countries.flags.png" />
+    <Content Include="Scripts\bootstrap-formhelpers-countries.js" />
     <Content Include="Scripts\bootstrap-formhelpers-phone.js" />
     <Content Include="Scripts\bootstrap-formhelpers-states.js" />
     <Content Include="Scripts\bootstrap-formhelpers.min.js" />

@@ -5,7 +5,9 @@
 
 <div class="row">
     <div class="col-md-2" style="border-right: 1px solid lightgrey">
-        <div id="Filter"></div>
+        <div id="Filter">
+            @{ Html.RenderAction("_FilterAds", "Ad"); }
+        </div>
     </div>
     <div class="col-md-10">
         <div class="dropdown">
@@ -13,7 +15,9 @@
                 Sorted by...
             </button>
             <ul class="dropdown-menu">
-
+                <li>
+                    <a href="#" onclick="SortAds('@SortBy.byPriceMin')">Sort by price (min-max)</a>
+                </li>
                 <li>
                     <a href="#" onclick="SortAds('@SortBy.byPriceMax')">Sort by price (max-min)</a>
                 </li>
@@ -36,7 +40,14 @@
         <hr style="border-bottom: 1px solid lightgrey">
         @using (@Ajax.BeginForm("_Sort", "Ad", null, new AjaxOptions { UpdateTargetId = "ListAds" }, new { method = "get" }))
         {
-            <div id="ListAds"></div>
+            <div id="ListAds">
+                @if (ViewBag.Search == null) {
+                    Html.RenderAction("_ListAds", "Ad");
+                }
+                else {
+                    Html.RenderAction("_Search", "Ad", new { input = ViewBag.Search });
+                }
+            </div>
             <div id="sortParametr"></div>
             <input type="submit" class="hidden" id="sortSubmit" />
         }
@@ -46,15 +57,6 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-        $('#Filter').load('@Url.Action("_FilterAds", "Ad")')
-        $(document).ready(function () {
-            if ("@ViewBag.Search" == "") {
-                $('#ListAds').load('@Url.Action("_ListAds", "Ad")')
-            }
-            else {
-                $('#ListAds').load('@Url.Action("_Search", "Ad", new { input = ViewBag.Search })')
-            }
-        });
         function SortAds(value) {
             var sortParametr = document.getElementById("sortParametr");
             sortParametr.innerHTML = '<input type="hidden" value="' + value + '" id="sortBy" name="sortBy" />';
