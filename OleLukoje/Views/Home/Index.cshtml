@@ -60,8 +60,8 @@
 @section Scripts {
     <script>
         function SortAds(value) {
-            var sortParametr = document.getElementById("sortParametr");
-            sortParametr.innerHTML = '<input type="hidden" value="' + value + '" name="sortBy" />';
+            sortParametr = '<input type="hidden" value="' + value + '" name="sortBy" />';
+            $('#sortParametr').empty().append(sortParametr)
             $('#getListAds').click();
         }
     </script>
