@@ -1,0 +1,54 @@
+﻿@using OleLukoje.Models
+@model FilterAd
+
+<div class="panel panel-default">
+    <div class="panel-heading">Categories:</div>
+    <div class="panel-body">
+        @foreach (Category category in ViewBag.Categories)
+        {
+            <div class="checkbox">
+                <label>
+                    <label><input type="checkbox" onclick="addCategory('@category.Id', '@category.Name')"/> @category.Name</label>
+                </label>
+            </div>
+        }
+        <div id="categoriesFilter"></div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">Price:</div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-4">Min:</div>
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.MinPrice, new { @pattern = "[0-9]+", @class = "form-control", @value = ViewBag.MinPrice })
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-4">Max:</div>
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.MaxPrice, new { @pattern = "[0-9]+", @class = "form-control", @value = ViewBag.MaxPrice })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">Other:</div>
+    <div class="panel-body">
+        @Html.CheckBox("SpecialAd", false) Special ad
+    </div>
+</div>
+<input class="btn btn-block btn-success" type="submit" value="Filter"/>
+
+<script>
+    function addCategory(id, name) {
+        if ($("#" + id).length != 0) {
+            $("#" + id).remove();
+        }
+        else {
+            var category = '<input name="Categories" class="hidden" value="' + name + '" id = "' + id + '" />';
+            $("#categoriesFilter").append(category);
+        }
+    }
+</script>

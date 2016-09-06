@@ -405,57 +405,5 @@ namespace OleLukoje.Controllers
             }
         }
         #endregion
-
-        public ActionResult MyListAd()
-        {
-            return PartialView("_MyListAdPartial");
-        }
-
-        public ActionResult Setting()
-        {
-            return PartialView("_SettingPartial");
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        [InitializeSimpleMembership]
-        public ActionResult UserProfile(string userName)
-        {
-            userName = userName ?? WebSecurity.CurrentUserName;
-            ViewBag.UserName = userName;
-            using (UsersContext usdb = new UsersContext())
-            {
-                if (!usdb.UserProfiles.Any(u => u.UserName == userName))
-                {
-                    return View("UserNotFound");
-                }
-            }
-            return View("UserProfile");
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public ActionResult _UserProfileInfo(string userName)
-        {
-            UserProfile userProfile = new UserProfile();
-            using (UsersContext usdb = new UsersContext())
-            {
-                userProfile = usdb.UserProfiles.Single(u => u.UserName == userName);
-            }
-            return PartialView("_UserProfileInfoPartial", userProfile);
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        [InitializeSimpleMembership]
-        public ActionResult _UserProfileApplication(string userName)
-        {
-            List<Application> applications = new List<Application>();
-            using (OleLukojeContext db = new OleLukojeContext())
-            {
-                applications = db.Applications.Where(application => application.Ad.UserProfile.UserName == userName).ToList();
-            }
-            return PartialView("_UserProfileApplicationPartial", applications);
-        }
     }
 }

@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Profile";
+}
+<link rel="stylesheet" href="~/Content/bootstrap.css" />
+<link rel="stylesheet" href="~/Content/MyStyle.css" />
+
+<script src="~/Scripts/jquery-1.9.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<div class="row">
+    <div class="col-sm-2">
+        <div class="row">
+            @Ajax.ActionLink("Information", "_UserProfileInfo", "UserProfile", new { UserName = ViewBag.UserName }, new AjaxOptions { UpdateTargetId = "Profile_information" }, new { @class = "btn btn-default btn-lg btn-block" })
+        </div>
+        <div class="row">
+            @Ajax.ActionLink("Ads", "_UserProfileAds", "UserProfile", new { userName = ViewBag.UserName }, new AjaxOptions { UpdateTargetId = "Profile_information" }, new { @class = "btn btn-default btn-lg btn-block" })
+        </div>
+        <div class="row">
+            @Ajax.ActionLink("Applications", "_UserProfileApplication", "UserProfile", new { userName = ViewBag.UserName }, new AjaxOptions { UpdateTargetId = "Profile_information" }, new { @class = "btn btn-default btn-lg btn-block" })
+        </div>
+    </div>
+    <div class="col-sm-10" id="Profile_information">
+        @{ Html.RenderAction("_UserProfileInfo", "UserProfile", new { userName= ViewBag.UserName} ); }
+    </div>
+</div>

@@ -31,7 +31,7 @@
                         @if (Request.IsAuthenticated)
                         {
                             <li>@Html.ActionLink("Add ad", "AddAd", "Ad")</li>
-                            <li>@Html.ActionLink(User.Identity.Name, "UserProfile", "Account")</li>
+                            <li>@Html.ActionLink(User.Identity.Name, "UserProfile", "UserProfile")</li>
                             <li>@Html.ActionLink("Log Off", "LogOff", "Account")</li>
                         }
                         else

@@ -4,9 +4,9 @@
 <link rel="stylesheet" href="~/Content/bootstrap.css" />
 <link rel="stylesheet" href="~/Content/MyStyle.css" />
 
-<script src="~/Scripts/jquery-1.9.1.min.js"></script>
+<script src="~/Scripts/jquery-1.9.1.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 
 <div class="col-md-1"></div>
 <div class="col-md-10">
@@ -20,7 +20,7 @@
                 <a href="#photo" aria-controls="photo" role="tab" data-toggle="tab" onclick="GetPhoto()">Photo</a>
             </li>
             <li>
-                <a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab" onclick="GetReviews()">Reviews <span class="badge">@ViewBag.CountReviews</span></a>
+                <a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab" onclick="GetReviews()">Reviews <span id="countReviews" class="badge">@ViewBag.CountReviews</span></a>
             </li>
             @if (ViewBag.UserName != ViewBag.UserNameSeller)
             {
@@ -94,7 +94,7 @@
                         @Html.LabelFor(m => m.Text)
                     </div>
                     <div class="col-md-8">
-                        @Html.TextAreaFor(m => m.Text, new { @class = "form-control" })
+                        @Html.TextAreaFor(m => m.Text, new { @class = "form-control", @style = "display:block; height:auto; max-width:100%;  min-width:100%" })
                     </div>
                 </div>
             </div>

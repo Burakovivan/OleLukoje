@@ -15,10 +15,8 @@ namespace OleLukoje.Models
         byDataOld
     }
 
-    public class SortAds
+    public class SortFilterAds
     {
-        private OleLukojeContext db = new OleLukojeContext();
-
         public static List<Ad> SortAdsBy(List<Ad> ads, SortBy sortBy)
         {
             switch (sortBy)
@@ -49,6 +47,27 @@ namespace OleLukoje.Models
                     }
                 default: return ads;
             }
+        }
+
+        public static List<Ad> Filter(List<Ad> ads, FilterAd filter)
+        {
+            if (filter.Categories != null)
+            {
+                ads = ads.Where(ad => ad.Categories.Where(category => filter.Categories.Contains(category.Name)).Count() != 0).ToList();
+            }
+            if (filter.SpecialAd != false)
+            {
+                ads = ads.Where(ad => ad.SpecialAd == filter.SpecialAd).ToList();
+            }
+            if (filter.MinPrice != null)
+            {
+                ads = ads.Where(ad => ad.Price >= filter.MinPrice).ToList();
+            }
+            if (filter.MaxPrice != null && filter.MaxPrice != 0)
+            {
+                ads = ads.Where(ad => ad.Price <= filter.MaxPrice).ToList();
+            }
+            return ads;
         }
     }
 }

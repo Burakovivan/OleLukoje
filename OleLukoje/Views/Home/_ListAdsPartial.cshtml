@@ -1,0 +1,48 @@
+﻿@using OleLukoje.Models
+@model List<Ad>
+
+@if (Model != null && Model.ToList().Count != 0)
+{
+    foreach(Ad ad in Model)
+    {
+        <div class="container col-md-10" id="@ad.Id">
+            <div class="white-section">
+                <div class="row">
+                    <div class="header col-md-8">
+                        @Html.ActionLink(ad.Header, "SingleAdView", "Ad", new { Id = ad.Id }, null)
+                    </div>
+                    <div class="price col-md-4">
+                        @ad.Price ₴
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="author col-md-12">
+                        by <a>@ad.UserProfile.UserName</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        @foreach (var category in ad.Categories.ToList())
+                        {
+                            <div class="category">
+                                @category.Name
+                            </div>
+                        }
+                    </div>
+                    <div class="col-md-2">
+                        @ad.DateAd.ToShortDateString()
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <h1 class="text-center">Ads is not found</h1>
+}
+
+<script>
+    $('#MaxPrice').val('@ViewBag.MaxPrice');
+    $('#MinPrice').val('@ViewBag.MinPrice');
+</script>

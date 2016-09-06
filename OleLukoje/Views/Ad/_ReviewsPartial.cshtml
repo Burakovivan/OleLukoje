@@ -92,14 +92,14 @@
             <div class="row">
                 <div class="col-md-3">Your name:</div>
                 <div class="col-md-9">
-                    <input name="name" style="display:block; height:auto; max-width:100%;  min-width:100%" type="text" />
+                    <input name="UserName" style="display:block; height:auto; max-width:100%;  min-width:100%" type="text" />
                 </div>
             </div>
             <br />
         }
         else
         {
-            <input name="name" type="hidden" value="@User.Identity.Name" />
+            <input name="UserName" type="hidden" value="@User.Identity.Name" />
         }
         <div class="row">
             <div class="col-md-2">Text:</div>
@@ -136,12 +136,16 @@
                     <input onclick="SetStars(0)" id="star-0" type="radio" name="reviewStars" />
                     <label title="bad" for="star-0"></label>
                 </div>
-                <input id="stars" name="stars" value="" type="hidden" />
+                <input id="stars" name="Stars" value="" type="hidden" />
             </div>
             <div class="col-md-4">
-                <input id="idAd" name="idAd" value="@ViewBag.AdId" type="hidden" />
+                <input name="AdId" value="@ViewBag.AdId" type="hidden" />
                 <button type="submit" class="btn btn-block btn-success">Post</button>
             </div>
         </div>
     }
 </div>
+
+<script>
+    $("#countReviews").empty().append("@Model.Count");
+</script>

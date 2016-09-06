@@ -194,6 +194,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -203,11 +204,12 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\AdCharacteristic.cs" />
     <Compile Include="Models\File.cs" />
+    <Compile Include="Models\FilterAd.cs" />
     <Compile Include="Models\OleLukojeDbInitializer.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\OleLukojeContext.cs" />
     <Compile Include="Models\Application.cs" />
-    <Compile Include="Controllers\SortAds.cs" />
+    <Compile Include="Controllers\SortFilterAds.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -386,14 +388,15 @@
     <Content Include="Views\Ad\AddAdView.cshtml" />
     <Content Include="Views\Ad\SingleAdView.cshtml" />
     <Content Include="Views\Account\_SettingPartial.cshtml" />
-    <Content Include="Views\Ad\_ListAdsPartial.cshtml" />
-    <Content Include="Views\Ad\_FilterAdsPartial.cshtml" />
+    <Content Include="Views\Home\_ListAdsPartial.cshtml" />
+    <Content Include="Views\Home\_FilterAdsPartial.cshtml" />
     <Content Include="Views\Ad\_ReviewsPartial.cshtml" />
-    <Content Include="Views\Account\UserProfile.cshtml" />
-    <Content Include="Views\Account\_UserProfileInfoPartial.cshtml" />
-    <Content Include="Views\Account\_UserProfileApplicationPartial.cshtml" />
+    <Content Include="Views\UserProfile\UserProfile.cshtml" />
+    <Content Include="Views\UserProfile\_UserProfileInfoPartial.cshtml" />
+    <Content Include="Views\UserProfile\_UserProfileApplicationPartial.cshtml" />
     <Content Include="Views\Account\_LogInPartial.cshtml" />
     <Content Include="Views\Ad\_AdInformationPartial.cshtml" />
+    <Content Include="Views\UserProfile\_UserProfileAdsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

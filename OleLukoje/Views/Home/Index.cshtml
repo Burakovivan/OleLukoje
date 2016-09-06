@@ -2,65 +2,67 @@
 
 <script src="~/Scripts/jquery-1.9.1.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
-<div class="row">
-    <div class="col-md-2" style="border-right: 1px solid lightgrey">
-        <div id="Filter">
-            @{ Html.RenderAction("_FilterAds", "Ad"); }
+@using (@Ajax.BeginForm("_ListAds", "Home", null, new AjaxOptions { UpdateTargetId = "ListAds" }, new { method = "get" }))
+{
+    <div class="row">
+        <div class="col-md-3" style="border-right: 1px solid lightgrey">
+            <div id="Filter">
+                @{ Html.RenderAction("_FilterAds", "Home"); }
+            </div>
         </div>
-    </div>
-    <div class="col-md-10">
-        <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                Sorted by...
-            </button>
-            <ul class="dropdown-menu">
-                <li>
-                    <a href="#" onclick="SortAds('@SortBy.byPriceMin')">Sort by price (min-max)</a>
-                </li>
-                <li>
-                    <a href="#" onclick="SortAds('@SortBy.byPriceMax')">Sort by price (max-min)</a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="#" onclick="SortAds('@SortBy.byHeaderA')">Sort by header (A-Z)</a>
-                </li>
-                <li>
-                    <a href="#" onclick="SortAds('@SortBy.byHeaderZ')">Sort by header (Z-A)</a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="#" onclick="SortAds('@SortBy.byDataOld')">Sort by date (old-new)</a>
-                </li>
-                <li>
-                    <a href="#" onclick="SortAds('@SortBy.byDataNew')">Sort by date (new-old)</a>
-                </li>
-            </ul>
-        </div>
-        <hr style="border-bottom: 1px solid lightgrey">
-        @using (@Ajax.BeginForm("_Sort", "Ad", null, new AjaxOptions { UpdateTargetId = "ListAds" }, new { method = "get" }))
-        {
-            <div id="ListAds">
-                @if (ViewBag.Search == null) {
-                    Html.RenderAction("_ListAds", "Ad");
-                }
-                else {
-                    Html.RenderAction("_Search", "Ad", new { input = ViewBag.Search });
-                }
+        <div class="col-md-9">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    Sorted by...
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#" onclick="SortAds('@SortBy.byPriceMin')">Sort by price (min-max)</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="SortAds('@SortBy.byPriceMax')">Sort by price (max-min)</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#" onclick="SortAds('@SortBy.byHeaderA')">Sort by header (A-Z)</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="SortAds('@SortBy.byHeaderZ')">Sort by header (Z-A)</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#" onclick="SortAds('@SortBy.byDataOld')">Sort by date (old-new)</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="SortAds('@SortBy.byDataNew')">Sort by date (new-old)</a>
+                    </li>
+                </ul>
             </div>
             <div id="sortParametr"></div>
-            <input type="submit" class="hidden" id="sortSubmit" />
-        }
+            <hr style="border-bottom: 1px solid lightgrey">
+            <div id="ListAds">
+                @if (ViewBag.Search == null)
+                {
+                    Html.RenderAction("_ListAds", "Home");
+                }
+                else
+                {
+                    Html.RenderAction("_Search", "Home", new { input = ViewBag.Search });
+                }
+            </div>
+        </div>
     </div>
-</div>
+    <input type="submit" class="hidden" id="getListAds" />
+}
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
     <script>
         function SortAds(value) {
             var sortParametr = document.getElementById("sortParametr");
-            sortParametr.innerHTML = '<input type="hidden" value="' + value + '" id="sortBy" name="sortBy" />';
-            $('#sortSubmit').click();
+            sortParametr.innerHTML = '<input type="hidden" value="' + value + '" name="sortBy" />';
+            $('#getListAds').click();
         }
     </script>
 }

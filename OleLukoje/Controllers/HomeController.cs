@@ -1,4 +1,5 @@
-﻿using OleLukoje.Models;
+﻿using OleLukoje.Filters;
+using OleLukoje.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,57 @@ namespace OleLukoje.Controllers
 {
     public class HomeController : Controller
     {
+        OleLukojeContext db = new OleLukojeContext();
+
+        public int GetMinPrice(List<Ad> ads)
+        {
+            return ads == null || ads.Count == 0 ? 0 : ads.Min(ad => ad.Price);
+        }
+
+        public int GetMaxPrice(List<Ad> ads)
+        {
+            return ads == null || ads.Count == 0 ? 0 : ads.Max(ad => ad.Price);
+        }
+
         public ActionResult Index(string input)
         {
             ViewBag.Search = input;
             return View("Index");
+        }
+
+        [HttpGet]
+        public ActionResult _ListAds(List<int> inputAds, FilterAd filter, SortBy? sortBy)
+        {
+            List<Ad> ads = db.Ads.Where(ad => ad.StateAd == State.Active).ToList();
+            if (ads.Count != 0)
+            {
+                ads = SortFilterAds.SortAdsBy(SortFilterAds.Filter(ads, filter), sortBy ?? SortBy.byDataNew);
+            }
+            ViewBag.MinPrice = GetMinPrice(ads);
+            ViewBag.MaxPrice = GetMaxPrice(ads);
+            return PartialView("_ListAdsPartial", ads);
+        }
+
+        [HttpGet]
+        public ActionResult _FilterAds()
+        {
+            ViewBag.Categories = db.Categories.ToList();
+            return PartialView("_FilterAdsPartial");
+        }
+
+        /// <summary>
+        /// Search by line
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult _Search(string input)
+        {
+            input = input.ToUpper();
+            List<Ad> ads = db.Ads.Where(ad => ad.Description.ToUpper().Contains(input) || ad.Header.ToUpper().Contains(input) || ad.UserProfile.UserName.ToUpper() == input).ToList();
+            ads.Reverse();
+            ViewBag.MinPrice = GetMinPrice(ads);
+            ViewBag.MaxPrice = GetMaxPrice(ads);
+            return PartialView("_ListAdsPartial", ads);
         }
     }
 }
