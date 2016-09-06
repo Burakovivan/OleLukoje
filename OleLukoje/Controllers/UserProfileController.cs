@@ -58,11 +58,23 @@ namespace OleLukoje.Controllers
         [HttpGet]
         [AllowAnonymous]
         [InitializeSimpleMembership]
-        public PartialViewResult _UserProfileAds(string userName)
+        public PartialViewResult _UserProfileListAds(string userName)
         {
             List<Ad> ads = db.Ads.Where(ad => ad.UserProfile.UserName == userName).ToList();
             ads.Reverse();
-            return PartialView("_ListAdsPartial", ads);
+            return PartialView("_UserProfileListAdsPartial", ads);
+        }
+
+        [HttpPost]
+        public PartialViewResult DeleteAd(int idAd)
+        {
+            lock (db)
+            {
+                Ad deleteAd = db.Ads.Single(ad => ad.Id == idAd);
+                db.Ads.Remove(deleteAd);
+                db.SaveChanges();
+            }
+            return PartialView("_UserProfileListAdsPartial", db.Ads.Where(ad => ad.UserProfile.UserName == User.Identity.Name).ToList());
         }
     }
 }

@@ -1,0 +1,63 @@
+﻿@using OleLukoje.Models
+@model List<Ad>
+
+<link href="~/Content/bootstrap-formhelpers.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-formhelpers.min.js"></script>
+<script src="~/Scripts/bootstrap-formhelpers-countries.js"></script>
+<script src="~/Scripts/bootstrap-formhelpers-states.js"></script>
+
+@if (Model != null && Model.ToList().Count != 0)
+{
+    foreach (Ad ad in Model)
+    {
+        <div class="row" style="margin-bottom: 20px;">
+            <div class=" col-md-9 col-sm-9" style="border: 1px solid lightgrey; border-radius: 5px 5px; margin-left: 30px;">
+                <div class="row">
+                    <div class=" col-md-4 col-sm-4" style="border-right: 1px solid lightgrey; border-radius: 5px 5px;">
+                        <img src="~/Files/default.jpg" class="img-responsive" alt="@ad.Header" style="height: 200px; width: auto;">
+                    </div>
+                    <div class="col-md-8 col-sm-8">
+                        <div class="row">
+                            <div class="col-md-10 col-sm-6">
+                                <h2>
+                                    @Html.ActionLink(ad.Header, "SingleAdView", "Ad", new { Id = ad.Id }, new { @style = "color: #0098d0;" })
+                                </h2>
+                            </div>
+                            <div class="col-md-2 col-sm-6 text-right">
+                                <h1 style="">@ad.Price ₴</h1>
+                            </div>
+                        </div>
+                        <div class="row" style="font-size: 14pt; margin-top: 80px;">
+                            <div class="col-md-9 col-sm-6">
+                                <span class="bfh-countries" data-country="@ad.UserProfile.Country" data-flags="true"></span>
+                                @if (ad.UserProfile.City != null)
+                                {
+                                    <text>, <span class="bfh-states" data-country="@ad.UserProfile.Country" data-state="@ad.UserProfile.City"></span></text>
+                                }
+                            </div>
+                            <div class="col-md-3 col-sm-6 text-right">
+                                <span>@ad.DateAd.ToShortDateString()</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if (ad.UserProfile.UserName == User.Identity.Name)
+            {
+                <div class="col-md-1 col-sm-1">
+                    @using (Ajax.BeginForm("DeleteAd", "UserProfile", new { idAd = ad.Id }, new AjaxOptions { UpdateTargetId = "Profile_information" }, null))
+                    {
+                        <button type="submit" class="btn btn-block btn-danger" style="height: 200px;">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </button>
+                    }
+                </div>
+            }
+            <div class=" col-md-2 col-sm-1"></div>
+        </div>
+    }
+}
+else
+{
+    <h2 class="text-center">Ads is not found</h2>
+}

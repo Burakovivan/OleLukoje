@@ -101,18 +101,6 @@ namespace OleLukoje.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeleteAd(int idAd)
-        {
-            lock (db)
-            {
-                Ad deleteAd = db.Ads.Single(ad => ad.Id == idAd);
-                db.Ads.Remove(deleteAd);
-                db.SaveChanges();
-            }
-            return Json(idAd, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
         [InitializeSimpleMembership]
         public ActionResult AddReview(Review review)
         {
