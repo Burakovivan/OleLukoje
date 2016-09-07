@@ -3,6 +3,7 @@
 <script src="~/Scripts/jquery-1.9.1.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<link href="~/Content/MyStyle.css" rel="stylesheet" />
 
 @using (@Ajax.BeginForm("_ListAds", "Home", null, new AjaxOptions { UpdateTargetId = "ListAds" }, new { method = "get" }))
 {
@@ -40,8 +41,8 @@
                     </li>
                 </ul>
             </div>
-            <div id="sortParametr"></div>
             <hr style="border-bottom: 1px solid lightgrey">
+            <div id="sortParametr"></div>
             <div id="ListAds">
                 @if (ViewBag.Search == null)
                 {
@@ -57,12 +58,10 @@
     <input type="submit" class="hidden" id="getListAds" />
 }
 
-@section Scripts {
-    <script>
-        function SortAds(value) {
-            sortParametr = '<input type="hidden" value="' + value + '" name="sortBy" />';
-            $('#sortParametr').empty().append(sortParametr)
-            $('#getListAds').click();
-        }
-    </script>
-}
+<script>
+    function SortAds(value) {
+        sortParametr = '<input type="hidden" value="' + value + '" name="sortBy" />';
+        $('#sortParametr').empty().append(sortParametr)
+        $('#getListAds').click();
+    }
+</script>

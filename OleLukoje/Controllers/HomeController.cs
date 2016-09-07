@@ -1,5 +1,6 @@
 ﻿using OleLukoje.Filters;
 using OleLukoje.Models;
+using OleLukoje.Helpers.Page;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace OleLukoje.Controllers
         }
 
         [HttpGet]
-        public ActionResult _ListAds(List<int> inputAds, FilterAd filter, SortBy? sortBy)
+        public ActionResult _ListAds(List<int> inputAds, FilterAd filter, SortBy? sortBy, int pageNumber = 1, int pageSize = 3)
         {
             List<Ad> ads = db.Ads.Where(ad => ad.StateAd == State.Active).ToList();
             if (ads.Count != 0)
@@ -38,7 +39,7 @@ namespace OleLukoje.Controllers
             }
             ViewBag.MinPrice = GetMinPrice(ads);
             ViewBag.MaxPrice = GetMaxPrice(ads);
-            return PartialView("_ListAdsPartial", ads);
+            return PartialView("_ListAdsPartial", new Page<Ad>(ads, pageNumber, pageSize));
         }
 
         [HttpGet]
@@ -60,7 +61,7 @@ namespace OleLukoje.Controllers
             ads.Reverse();
             ViewBag.MinPrice = GetMinPrice(ads);
             ViewBag.MaxPrice = GetMaxPrice(ads);
-            return PartialView("_ListAdsPartial", ads);
+            return PartialView("_ListAdsPartial", new Page<Ad>(ads));
         }
     }
 }

@@ -8,7 +8,7 @@
         {
             <div class="checkbox">
                 <label>
-                    <label><input type="checkbox" onclick="addCategory('@category.Id', '@category.Name')"/> @category.Name</label>
+                    <label><input type="checkbox" onclick="addCategory('@category.Id', '@category.Name')" /> @category.Name</label>
                 </label>
             </div>
         }
@@ -21,14 +21,16 @@
         <div class="row">
             <div class="col-md-4">Min:</div>
             <div class="col-md-8">
-                @Html.TextBoxFor(m => m.MinPrice, new { @pattern = "[0-9]+", @class = "form-control", @value = ViewBag.MinPrice })
+                @Html.TextBoxFor(m => m.MinPrice, new { @pattern = "[0-9]+", @class = "form-control", @onfocus = "SetMinMaxPrice()" })
+                <input id="min" type="hidden"/>
             </div>
         </div>
-        <br/>
+        <br />
         <div class="row">
             <div class="col-md-4">Max:</div>
             <div class="col-md-8">
-                @Html.TextBoxFor(m => m.MaxPrice, new { @pattern = "[0-9]+", @class = "form-control", @value = ViewBag.MaxPrice })
+                @Html.TextBoxFor(m => m.MaxPrice, new { @pattern = "[0-9]+", @class = "form-control", @onfocus = "SetMinMaxPrice()" })
+                <input id="max" type="hidden" />
             </div>
         </div>
     </div>
@@ -39,7 +41,7 @@
         @Html.CheckBox("SpecialAd", false) Special ad
     </div>
 </div>
-<input class="btn btn-block btn-success" type="submit" value="Filter"/>
+<input class="btn btn-block btn-success" type="submit" value="Filter" />
 
 <script>
     function addCategory(id, name) {
@@ -49,6 +51,13 @@
         else {
             var category = '<input name="Categories" class="hidden" value="' + name + '" id = "' + id + '" />';
             $("#categoriesFilter").append(category);
+        }
+    }
+
+    function SetMinMaxPrice() {
+        if ($('#MinPrice').val() == "" && $('#MinPrice').val() == "") {
+            $('#MinPrice').val($('#min').val());
+            $('#MaxPrice').val($('#max').val());
         }
     }
 </script>

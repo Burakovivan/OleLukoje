@@ -1,41 +1,63 @@
 ﻿@using OleLukoje.Models
-@model List<Ad>
+@using OleLukoje.Helpers.Page
+@model Page<Ad>
 
-@if (Model != null && Model.ToList().Count != 0)
+@if (Model.Items != null && Model.Items.ToList().Count != 0)
 {
-    foreach(Ad ad in Model)
+    foreach (Ad ad in Model.Items.ToList())
     {
-        <div class="container col-md-10" id="@ad.Id">
-            <div class="white-section">
-                <div class="row">
-                    <div class="header col-md-8">
-                        @Html.ActionLink(ad.Header, "SingleAdView", "Ad", new { Id = ad.Id }, null)
+        <div class="row">
+            <div class="container col-md-10" id="@ad.Id">
+                <div class="white-section">
+                    <div class="row">
+                        <div class="header col-md-8">
+                            @Html.ActionLink(ad.Header, "SingleAdView", "Ad", new { Id = ad.Id }, null)
+                        </div>
+                        <div class="price col-md-4">
+                            @ad.Price ₴
+                        </div>
                     </div>
-                    <div class="price col-md-4">
-                        @ad.Price ₴
+                    <div class="row">
+                        <div class="author col-md-12">
+                            by <a>@ad.UserProfile.UserName</a>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="author col-md-12">
-                        by <a>@ad.UserProfile.UserName</a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-10">
-                        @foreach (var category in ad.Categories.ToList())
-                        {
-                            <div class="category">
-                                @category.Name
-                            </div>
-                        }
-                    </div>
-                    <div class="col-md-2">
-                        @ad.DateAd.ToShortDateString()
+                    <div class="row">
+                        <div class="col-md-10">
+                            @foreach (var category in ad.Categories.ToList())
+                            {
+                                <div class="category">
+                                    @category.Name
+                                </div>
+                            }
+                        </div>
+                        <div class="col-md-2">
+                            @ad.DateAd.ToShortDateString()
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     }
+    <br />
+    <div class="row">
+        <div class="col-md-10 text-center">
+            <ul class="pagination">
+                @for (int i = 1; i <= Model.PageInfo.CountPages; i++)
+                {
+                    if (i == Model.PageInfo.PageNumber)
+                    {
+                        <li><a href="#" onselect="true">@i</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="#" onclick="GetPage('@i')">@i</a></li>
+                    }
+                }
+            </ul>
+            <input name="pageNumber" id="pageNumber" type="hidden" />
+        </div>
+    </div>
 }
 else
 {
@@ -43,6 +65,11 @@ else
 }
 
 <script>
-    $('#MaxPrice').val('@ViewBag.MaxPrice');
-    $('#MinPrice').val('@ViewBag.MinPrice');
+    $('#max').val('@ViewBag.MaxPrice');
+    $('#min').val('@ViewBag.MinPrice');
+
+    function GetPage(number) {
+        $('#pageNumber').val(number);
+        $('#getListAds').click();
+    }
 </script>
