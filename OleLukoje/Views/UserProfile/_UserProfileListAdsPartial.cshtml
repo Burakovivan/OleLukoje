@@ -1,14 +1,15 @@
 ﻿@using OleLukoje.Models
-@model List<Ad>
+@using OleLukoje.Helpers.Page
+@model Page<Ad>
 
 <link href="~/Content/bootstrap-formhelpers.min.css" rel="stylesheet" />
 <script src="~/Scripts/bootstrap-formhelpers.min.js"></script>
 <script src="~/Scripts/bootstrap-formhelpers-countries.js"></script>
 <script src="~/Scripts/bootstrap-formhelpers-states.js"></script>
 
-@if (Model != null && Model.ToList().Count != 0)
+@if (Model.Items != null && Model.Items.ToList().Count != 0)
 {
-    foreach (Ad ad in Model)
+    foreach (Ad ad in Model.Items.ToList())
     {
         <div class="row" style="margin-bottom: 20px;">
             <div class=" col-md-9 col-sm-9" style="border: 1px solid lightgrey; border-radius: 5px 5px; margin-left: 30px;">
@@ -56,6 +57,24 @@
             <div class=" col-md-2 col-sm-1"></div>
         </div>
     }
+    <br />
+    <div class="row">
+        <div class="col-md-10 text-center">
+            <ul class="pagination">
+                @for (int i = 1; i <= Model.PageInfo.CountPages; i++)
+                {
+                    if (i == Model.PageInfo.PageNumber)
+                    {
+                        <li><a class="btn btn-primary disabled">@i</a></li>
+                    }
+                    else
+                    {
+                        <li>@Ajax.ActionLink(i.ToString(), "_UserProfileListAds", "UserProfile", new { userName = ViewBag.UserName, pageNumber = i }, new AjaxOptions { UpdateTargetId = "Profile_information" }, null)</li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
 }
 else
 {

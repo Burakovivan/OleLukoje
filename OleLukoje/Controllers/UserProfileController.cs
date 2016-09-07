@@ -1,4 +1,5 @@
 ﻿using OleLukoje.Filters;
+using OleLukoje.Helpers.Page;
 using OleLukoje.Models;
 using System;
 using System.Collections.Generic;
@@ -45,24 +46,26 @@ namespace OleLukoje.Controllers
         [HttpGet]
         [AllowAnonymous]
         [InitializeSimpleMembership]
-        public ActionResult _UserProfileApplication(string userName)
+        public ActionResult _UserProfileApplication(string userName, int pageNumber = 1)
         {
+            ViewBag.UserName = userName;
             List<Application> applications = new List<Application>();
             using (OleLukojeContext db = new OleLukojeContext())
             {
                 applications = db.Applications.Where(application => application.Ad.UserProfile.UserName == userName).ToList();
             }
-            return PartialView("_UserProfileApplicationPartial", applications);
+            return PartialView("_UserProfileApplicationPartial", new Page<Application>(applications, pageNumber, 3));
         }
 
         [HttpGet]
         [AllowAnonymous]
         [InitializeSimpleMembership]
-        public PartialViewResult _UserProfileListAds(string userName)
+        public PartialViewResult _UserProfileListAds(string userName, int pageNumber = 1)
         {
+            ViewBag.UserName = userName;
             List<Ad> ads = db.Ads.Where(ad => ad.UserProfile.UserName == userName).ToList();
             ads.Reverse();
-            return PartialView("_UserProfileListAdsPartial", ads);
+            return PartialView("_UserProfileListAdsPartial", new Page<Ad>(ads, pageNumber, 3));
         }
 
         [HttpPost]
@@ -74,7 +77,8 @@ namespace OleLukoje.Controllers
                 db.Ads.Remove(deleteAd);
                 db.SaveChanges();
             }
-            return PartialView("_UserProfileListAdsPartial", db.Ads.Where(ad => ad.UserProfile.UserName == User.Identity.Name).ToList());
+            List<Ad> ads = db.Ads.Where(ad => ad.UserProfile.UserName == User.Identity.Name).ToList();
+            return PartialView("_UserProfileListAdsPartial", new Page<Ad>(ads, 1, 3));
         }
     }
 }

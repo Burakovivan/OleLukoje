@@ -10,7 +10,7 @@ namespace OleLukoje.Helpers.Page
         public IEnumerable<PageType> Items { get; set; }
         public PageInfo PageInfo { get; set; }
 
-        public Page(IEnumerable<PageType> inputItems, int pageNumber = 1, int pageSize = 3)
+        public Page(IEnumerable<PageType> inputItems, int pageNumber, int pageSize)
         {
             PageInfo = new PageInfo(pageNumber, pageSize, inputItems.Count());
             Items = inputItems.Skip((pageNumber - 1) * pageSize).Take(pageSize);
