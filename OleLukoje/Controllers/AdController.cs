@@ -68,6 +68,7 @@ namespace OleLukoje.Controllers
             List<Review> reviews = db.Reviews.Where(review => review.AdId == idAd).ToList();
             reviews.Reverse();
             ViewBag.AdId = idAd;
+            
             return PartialView("_ReviewsPartial", reviews);
         }
 

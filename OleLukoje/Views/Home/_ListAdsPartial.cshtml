@@ -7,7 +7,7 @@
     foreach (Ad ad in Model.Items.ToList())
     {
         <div class="row">
-            <div class="container col-md-10" id="@ad.Id">
+            <div class="container col-md-12">
                 <div class="white-section">
                     <div class="row">
                         <div class="header col-md-8">
@@ -41,7 +41,7 @@
     }
     <br />
     <div class="row">
-        <div class="col-md-10 text-center">
+        <div class="col-md-12 text-center">
             <ul class="pagination">
                 @for (int i = 1; i <= Model.PageInfo.CountPages; i++)
                 {
@@ -67,6 +67,7 @@ else
 <script>
     $('#max').val('@ViewBag.MaxPrice');
     $('#min').val('@ViewBag.MinPrice');
+    $('#pageSize').val('@Model.PageInfo.PageSize');
 
     function GetPage(number) {
         $('#pageNumber').val(number);
