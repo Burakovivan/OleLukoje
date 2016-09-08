@@ -10,7 +10,7 @@
 <div class="col-md-8" style="border-right: 1px solid lightgrey">
     <div class="row">
         <div class="col-md-4">
-            <img src="~/Files/default.jpg" class="img-responsive" alt="@Model.Header">
+            <button onclick="GetPhotos(); document.getElementById('photoTab').click()"><img src="@ViewBag.photo" class="img-responsive" alt="@Model.Header"></button>
         </div>
         <div class="col-md-8">
             <div class="row">

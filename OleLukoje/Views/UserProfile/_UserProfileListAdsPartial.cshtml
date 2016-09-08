@@ -9,13 +9,15 @@
 
 @if (Model.Items != null && Model.Items.ToList().Count != 0)
 {
+    string photoPath = "/Files/default.png";
     foreach (Ad ad in Model.Items.ToList())
     {
+         photoPath = ad.Files.Any()?ad.Files.First().Path : photoPath;
         <div class="row" style="margin-bottom: 20px;">
             <div class=" col-md-9 col-sm-9" style="border: 1px solid lightgrey; border-radius: 5px 5px; margin-left: 30px;">
                 <div class="row">
                     <div class=" col-md-4 col-sm-4" style="border-right: 1px solid lightgrey; border-radius: 5px 5px;">
-                        <img src="~/Files/default.jpg" class="img-responsive" alt="@ad.Header" style="height: 200px; width: auto;">
+                        <img src="@photoPath" class="img-responsive" alt="@ad.Header" style="height: 200px; width: auto;">
                     </div>
                     <div class="col-md-8 col-sm-8">
                         <div class="row">
