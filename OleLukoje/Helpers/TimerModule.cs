@@ -24,8 +24,7 @@ namespace OleLukoje.Helpers
         {
             lock (synclock)
             {
-                DateTime now = DateTime.Now;
-                if (now.Hour == 2 && !check)
+                if (DateTime.Now.Hour == 2 && check == false)
                 {
                     using (OleLukojeContext db = new OleLukojeContext())
                     {
@@ -48,7 +47,7 @@ namespace OleLukoje.Helpers
                     }
                     check = true;
                 }
-                else
+                else if (DateTime.Now.Hour != 2)
                 {
                     check = false;
                 }
