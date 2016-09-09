@@ -201,6 +201,7 @@
     </Compile>
     <Compile Include="Helpers\Page\Page.cs" />
     <Compile Include="Helpers\Page\PageInfo.cs" />
+    <Compile Include="Helpers\TimerModule.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Ad.cs" />
     <Compile Include="Models\Category.cs" />
