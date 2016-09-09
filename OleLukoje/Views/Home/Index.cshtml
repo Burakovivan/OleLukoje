@@ -13,36 +13,65 @@
                 @{ Html.RenderAction("_FilterAds", "Home"); }
             </div>
         </div>
-        <div class="col-md-9">
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                    Sorted by...
-                </button>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="#" onclick="SortAds('@SortBy.byPriceMin')">Sort by price (min-max)</a>
-                    </li>
-                    <li>
-                        <a href="#" onclick="SortAds('@SortBy.byPriceMax')">Sort by price (max-min)</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#" onclick="SortAds('@SortBy.byHeaderA')">Sort by header (A-Z)</a>
-                    </li>
-                    <li>
-                        <a href="#" onclick="SortAds('@SortBy.byHeaderZ')">Sort by header (Z-A)</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#" onclick="SortAds('@SortBy.byDataOld')">Sort by date (old-new)</a>
-                    </li>
-                    <li>
-                        <a href="#" onclick="SortAds('@SortBy.byDataNew')">Sort by date (new-old)</a>
-                    </li>
-                </ul>
+        <div class="col-md-7">
+            <div class="row">
+                <div class="col-md-6 text-left">
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            Sorted by...
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#" onclick="SortAds('@SortBy.byPriceMin')">Sort by price (min-max)</a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="SortAds('@SortBy.byPriceMax')">Sort by price (max-min)</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#" onclick="SortAds('@SortBy.byHeaderA')">Sort by header (A-Z)</a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="SortAds('@SortBy.byHeaderZ')">Sort by header (Z-A)</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#" onclick="SortAds('@SortBy.byDataOld')">Sort by date (old-new)</a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="SortAds('@SortBy.byDataNew')">Sort by date (new-old)</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <input id="sortBy" name="sortBy" type="hidden" />
+                </div>
+                <div class="col-md-6 text-right">
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                            Page size...
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li>
+                                <a href="#" onclick="PageSize('1')">Page size - 1</a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="PageSize('5')">Page size - 5</a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="PageSize('10')">Page size - 10</a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="PageSize('20')">Page size - 20</a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="PageSize('50')">Page size - 50</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <input id="pageSize" name="pageSize" type="hidden" />
+                </div>
             </div>
             <hr style="border-bottom: 1px solid lightgrey">
-            <div id="sortParametr"></div>
             <div id="ListAds">
                 @if (ViewBag.Search == null)
                 {
@@ -60,8 +89,12 @@
 
 <script>
     function SortAds(value) {
-        sortParametr = '<input type="hidden" value="' + value + '" name="sortBy" />';
-        $('#sortParametr').empty().append(sortParametr)
+        $('#sortBy').val(value);
+        $('#getListAds').click();
+    }
+
+    function PageSize(value) {
+        $('#pageSize').val(value);
         $('#getListAds').click();
     }
 </script>
