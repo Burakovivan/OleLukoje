@@ -17,7 +17,7 @@
                 <a href="#information" aria-controls="information" role="tab" data-toggle="tab" onclick="GetInformation()">All information</a>
             </li>
             <li>
-                <a href="#photo" aria-controls="photo" role="tab" data-toggle="tab" onclick="GetPhoto()">Photo</a>
+                <a href="#photos" id="photoTab" aria-controls="photo" role="tab" data-toggle="tab" onclick="GetPhotos()">Photo</a>
             </li>
             <li>
                 <a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab" onclick="GetReviews()">Reviews <span id="countReviews" class="badge">@ViewBag.CountReviews</span></a>
@@ -32,7 +32,7 @@
                 <!-- ALL INFORMATION -->
                 @{ Html.RenderAction("_GetAdInformation", "Ad", new { idAd = ViewBag.Ad.Id }); }
             </div>
-            <div role="tabpanel" class="tab-pane" id="photo">
+            <div role="tabpanel" class="tab-pane" id="photos">
                 <!-- PHOTO -->
             </div>
             <div role="tabpanel" class="tab-pane" id="reviews">
@@ -151,13 +151,19 @@
         $("#Contact").val("");
         $("#Text").val("");
     }
+    var info = true;
+    var photos = false;
 
     function GetInformation(){
-        $('#information').load('@Url.Action("_GetAdInformation", "Ad", new { idAd = ViewBag.Ad.Id })')
+        if(!info)
+        {$('#information').load('@Url.Action("_GetAdInformation", "Ad", new { idAd = ViewBag.Ad.Id })');}
+        info = true;
     }
 
-    function GetPhoto(){
-
+    function GetPhotos(){
+        if(!photos)
+        {$('#photos').load('@Url.Action("_GetPhotos", "Ad", new { idAd = ViewBag.Ad.Id })');}
+        photos = true;
     }
 
     function GetReviews(){

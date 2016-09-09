@@ -21,7 +21,7 @@ namespace OleLukoje.Controllers
             {
                 if (file != null)
                 {
-                    string filePath = "~/Files/" + adId + "-" + files.Count + System.IO.Path.GetExtension(file.FileName);
+                    string filePath = "/Files/" + adId + "-" + files.Count + System.IO.Path.GetExtension(file.FileName);
                     file.SaveAs(Server.MapPath(filePath));
                     files.Add(new File { AdId = adId, Path = filePath });
                 }
@@ -59,7 +59,9 @@ namespace OleLukoje.Controllers
         [HttpGet]
         public ActionResult _GetAdInformation(int idAd)
         {
-            return PartialView("_AdInformationPartial", (Ad)db.Ads.First(ad => ad.Id == idAd));
+            Ad curr = db.Ads.First(ad => ad.Id == idAd);
+            ViewBag.photo = curr.Files.Any() ? curr.Files.First().Path : "/Files/default.png";
+            return PartialView("_AdInformationPartial", curr);
         }
 
         [HttpGet]
@@ -70,6 +72,13 @@ namespace OleLukoje.Controllers
             ViewBag.AdId = idAd;
             
             return PartialView("_ReviewsPartial", reviews);
+        }
+
+        [HttpGet]
+        public ActionResult _GetPhotos(int idAd)
+        {
+            List<string> photos = db.Files.Where(p => p.AdId.Equals(idAd)).Select(t => t.Path).ToList();
+            return PartialView("_GetPhotosPartial", photos);
         }
 
         [HttpPost]

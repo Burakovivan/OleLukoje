@@ -1,0 +1,56 @@
+﻿@using OleLukoje.Models
+@model List<string>
+@{string active = "class=\"active\"";}
+
+@*@foreach (var v in Model)
+    {
+        <div class="row">
+            <div class="col-sm-12">
+                <img src="@v" class="ad-photo">
+            </div>
+        </div>
+    }*@
+@if (Model.Any())
+{
+    <div class="row">
+        <div class="col-lg-offset-2 col-lg-8 col-md-offset-1 col-md-10 col-sm-offset-0 col-sm-12">
+
+            <div id="photosCarousel" class="carousel slide ad-photos" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <li data-target="#photosCarousel" data-slide-to="@i" @active></li>
+                        active = "";
+                    }
+                </ol>
+                @{ active = "active";}
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner " role="listbox">
+                    @foreach (var v in Model)
+                    {
+                        <div class="item  @active">
+                            <img src="@v">
+                        </div>
+                        active = "";
+                    }
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#photosCarousel" role="button" data-slide="prev">
+
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#photosCarousel" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+    </div>}
+else
+{
+    <h1 class="text-center">The Ad has no photos</h1>
+}
