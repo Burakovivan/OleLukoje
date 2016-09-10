@@ -4,39 +4,59 @@
 
 @if (Model.Items != null && Model.Items.ToList().Count != 0)
 {
+    string photoPath = "/Files/default.png";
     foreach (Ad ad in Model.Items.ToList())
     {
+        photoPath = ad.Files.Any() ? ad.Files.First().Path : photoPath;
+        int catCout = ad.Categories.Count;
         <div class="row">
-            <div class="container col-md-12">
-                <div class="white-section">
+            <div class="container col-xs-offset-1 col-xs-10 col-md-offset-0 col-md-12">
+
+                <div class="row list-ad-item">
                     <div class="row">
-                        <div class="header col-md-8">
-                            @Html.ActionLink(ad.Header, "SingleAdView", "Ad", new { Id = ad.Id }, null)
-                        </div>
-                        <div class="price col-md-4">
-                            @ad.Price ₴
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="author col-md-12">
-                            by <a>@ad.UserProfile.UserName</a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10">
-                            @foreach (var category in ad.Categories.ToList())
-                            {
-                                <div class="category">
-                                    @category.Name
+                        <div class="col-sm-12   list-ad-top-side ">
+                            <div class="row center-block">
+                                <div class="col-lg-4 col-md-5 col-sm-3 col-xs-4 ">
+                                    <img src="@photoPath" class="list-ad-photo center-block" />
+
                                 </div>
-                            }
+                                <div class="col-lg-8 col-md-7 col-sm-9 col-xs-8">
+                                    <div class="header"><div>@Html.ActionLink(ad.Header, "SingleAdView", "Ad", new { Id = ad.Id }, new { @class = "header" })</div></div>
+                                    @*<span>@ad.DateAd.ToLongDateString() at @ad.DateAd.ToLongTimeString()</span>*@
+                                    @*<p>by @Html.ActionLink(ad.UserProfile.UserName, "UserProfile", "UserProfile", new { userName = ad.UserProfile.UserName }, null)</p>*@
+
+                                    <div class="categories">
+                                        @foreach (var category in ad.Categories.ToList())
+                                        {
+                                            if (--catCout != 0)
+                                            {
+                                                <span>@category.Name, </span>
+                                            }
+                                            else
+                                            {<span> @category.Name </span>
+
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="col-md-2">
-                            @ad.DateAd.ToShortDateString()
+
+                    </div>
+                    <div class="row list-ad-bottom-side">
+                        <div class=" col-xs-6">
+                            <div class="list-ad-left-bottom-side">Date:@string.Format("{0:dd.MM.yyyy}", ad.DateAd)</div>
                         </div>
+                        <div class="col-xs-6">
+                            <div class=" list-ad-right-bottom-side ">@ad.Price₴</div>
+                        </div>
+
                     </div>
                 </div>
             </div>
+
+
         </div>
     }
     <br />

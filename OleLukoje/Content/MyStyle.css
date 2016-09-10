@@ -3,9 +3,13 @@
 }
 
 .header {
-    font-size: 3em;
+    font-size: 1.5em;
     color: #394d5f;
     font-family: Verdana;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    display:block;
 }
 
 .description {
@@ -18,8 +22,7 @@
 }
 
 .price {
-    text-align: right;
-    font-size: 3em;
+    font-size: 1.7em;
 }
 
 .author {
@@ -27,6 +30,49 @@
     color: #87857a;
     font-family: Verdana;
     font-style: italic;
+}
+
+.list-ad-photo {
+    max-width: 100%;
+    max-height: 9em;
+}
+
+.list-ad-item {
+    margin: 2em 0 0 1em;
+}
+
+.list-ad-bottom-side {
+    
+    border-top: 1px dotted;
+    border-top-color: white;
+    background-color: #337ab7;
+    border-radius: 0 0 0.2em 0.2em ;
+    
+}
+
+
+
+.list-ad-top-side {
+    border: 0.1em solid lightgray;
+    border-radius: 0.2em 0.2em 0 0;
+    padding: 1em 1em;
+    background: white;
+    height: 11em;
+}
+
+.list-ad-right-bottom-side {
+    text-align: right;
+    color: white;
+    font-size: 2em;
+    font-family: Verdana;
+}
+
+.list-ad-left-bottom-side {
+    font-style: italic;
+    text-align:left;
+    color: white;
+    font-size: 1.2em;
+    font-family: Verdana;
 }
 
 .category {
@@ -44,15 +90,19 @@
 }
 
 .categories {
-    margin-bottom: 20px;
-    border: 1px solid white;
-    border-radius: 10px 10px;
+    font-size: 1em;
+    font-style: italic;
+    background-color: rgba(219, 241, 231, 0.12);
+    width: auto;
+    margin-right: 0.4em;
+    margin-bottom: 0.4em;
+    padding: 0.2em;
+    text-align: center;
+    color: black;
+    display: inline-block;
 }
 
-.categories:hover {
-    border: 1px solid #5cff2c;
-    cursor: pointer;
-}
+
 
 .characteristic {
     margin-top: 20px;
@@ -64,10 +114,12 @@
     border-radius: 5px 5px;
 }
 
-.add_photo:hover {
-    border: 1px solid #87857a;
-    cursor: pointer;
-}
+    .add_photo:hover {
+        border: 1px solid #87857a;
+        cursor: pointer;
+    }
+
+
 
 .white-section {
     margin: 2em 0 0 0;
