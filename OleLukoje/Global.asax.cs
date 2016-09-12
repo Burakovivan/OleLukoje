@@ -18,6 +18,8 @@ namespace OleLukoje
     {
         protected void Application_Start()
         {
+            RouteTable.Routes.MapHubs();
+
             // set values in database
             Database.SetInitializer<OleLukojeContext>(new OleLukojeDbInitializer());
             OleLukojeContext context = new OleLukojeContext();

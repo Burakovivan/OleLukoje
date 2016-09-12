@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="~/Content/fa/css/font-awesome.css" />
 <link rel="stylesheet" href="~/Content/bootstrap.css" />
 <link rel="stylesheet" href="~/Content/MyStyle.css" />
+<link href="~/Content/Stars.css" rel="stylesheet" />
 
 <script src="~/Scripts/jquery-1.9.1.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
@@ -37,6 +38,11 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="reviews">
                 <!-- Reviews -->
+                <div class="row">
+                    <br />
+                    <div id="list_reviews" class="col-md-6"></div>
+                    <div id="add_reviews" class="col-md-6" style="background-color: #f1f1f1; border-radius: 10px 10px; border: 1px solid #dddddd"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -106,7 +112,6 @@
     </div>
 </div>
 <!-- END MODAL WINDOW -->
-
 <!-- MODAL WINDOW - order was sent -->
 <button id="ShowMessage" class="modalbox hidden" type="button" data-toggle="modal" data-target="#WasSend"></button>
 <div id="WasSend" class="modal fade">
@@ -167,7 +172,12 @@
     }
 
     function GetReviews(){
-        $('#reviews').load('@Url.Action("_GetReviews", "Ad", new { idAd = ViewBag.Ad.Id })')
+        $('#list_reviews').load('@Url.Action("_GetReviews", "Ad", new { idAd = ViewBag.Ad.Id })')
+        GetAddReviews();
+    }
+
+    function GetAddReviews(){
+        $('#add_reviews').load('@Url.Action("_GetAddReview", "Ad", new { idAd = ViewBag.Ad.Id })')
     }
 
     function SetStars(value) {
