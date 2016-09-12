@@ -30,7 +30,7 @@ namespace OleLukoje.Controllers
         }
 
         [HttpGet]
-        public ActionResult _ListAds(FilterAd filter, SortBy? sortBy, int pageNumber = 1, int pageSize = 1)
+        public ActionResult _ListAds(FilterAd filter, SortBy? sortBy, int pageNumber = 1, int pageSize = 1, byte tiled=0)
         {
             List<Ad> ads = db.Ads.Where(ad => ad.StateAd == State.Active).ToList();
             if (ads.Count != 0)
@@ -39,6 +39,7 @@ namespace OleLukoje.Controllers
             }
             ViewBag.MinPrice = GetMinPrice(ads);
             ViewBag.MaxPrice = GetMaxPrice(ads);
+            ViewBag.Tiled = tiled;
             return PartialView("_ListAdsPartial", new Page<Ad>(ads, pageNumber, pageSize));
         }
 

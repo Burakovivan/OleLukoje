@@ -4,18 +4,19 @@
 <script src="~/Scripts/bootstrap.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <link href="~/Content/MyStyle.css" rel="stylesheet" />
+   
 
 @using (@Ajax.BeginForm("_ListAds", "Home", null, new AjaxOptions { UpdateTargetId = "ListAds" }, new { method = "get" }))
 {
     <div class="row">
-        <div class="col-md-3" style="border-right: 1px solid lightgrey">
+        <div class="col-md-3 col-xs-12" style="border-right: 1px solid lightgrey">
             <div id="Filter">
                 @{ Html.RenderAction("_FilterAds", "Home"); }
             </div>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-8 col-xs-12">
             <div class="row">
-                <div class="col-md-6 text-left">
+                <div class="col-xs-4 text-left">
                     <div class="dropdown">
                         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                             Sorted by...
@@ -45,7 +46,10 @@
                     </div>
                     <input id="sortBy" name="sortBy" type="hidden" />
                 </div>
-                <div class="col-md-6 text-right">
+                <div class="col-xs-4">
+                    <div id="ts" onclick="TiledSwitch()" class="btn btn-danger col-xs-4 col-xs-offset-4">Tile: OFF</div>
+                </div>
+                <div class="col-xs-4 text-right">
                     <div class="dropdown">
                         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                             Page size...
@@ -84,6 +88,7 @@
             </div>
         </div>
     </div>
+    
     <input type="submit" class="hidden" id="getListAds" />
 }
 
@@ -97,4 +102,5 @@
         $('#pageSize').val(value);
         $('#getListAds').click();
     }
+    
 </script>

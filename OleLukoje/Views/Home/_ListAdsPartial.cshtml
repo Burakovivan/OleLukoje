@@ -2,87 +2,110 @@
 @using OleLukoje.Helpers.Page
 @model Page<Ad>
 
-@if (Model.Items != null && Model.Items.ToList().Count != 0)
-{
-    string photoPath = "/Files/default.png";
-    foreach (Ad ad in Model.Items.ToList())
-    {
-        photoPath = ad.Files.Any() ? ad.Files.First().Path : photoPath;
-        int catCout = ad.Categories.Count;
-        <div class="row">
-            <div class="container col-xs-offset-1 col-xs-10 col-md-offset-0 col-md-12">
+<div class="row">
+</div>
+<div class=" col-xs-offset-1 col-xs-10 col-md-offset-0 col-md-12">
+  
+    @if (Model.Items != null && Model.Items.ToList().Count != 0)
+    { 
+    <input type="hidden" class="hidden" id="tiled" name="tiled" value="@ViewBag.Tiled" />
 
-                <div class="row list-ad-item">
-                    <div class="row">
-                        <div class="col-sm-12   list-ad-top-side ">
-                            <div class="row center-block">
-                                <div class="col-lg-4 col-md-5 col-sm-3 col-xs-4 ">
-                                    <img src="@photoPath" class="list-ad-photo center-block" />
+        string photoPath = "/Files/default.png";
+        List<Ad> AdsLst = Model.Items.ToList();
+        Ad ad;
+        string[] classNames;
+        for (int k = 0; k < AdsLst.Count; k++)
+        {
+            ad = AdsLst[k];
+            photoPath = ad.Files.Any() ? ad.Files.First().Path : photoPath;
+            int catCout = ad.Categories.Count;
+            if (ViewBag.Tiled==1)
+            {
+                classNames = new[] {
+                    k % 2 == 0 ? "list-ad-item-tiled list-ad-item-tiled-even" : "list-ad-item-tiled list-ad-item-tiled-odd"
+                };
+            }
+            else
+            {
+                classNames = new[] { "list-ad-item" };
+            }
+                <div class="@classNames[0]">
 
-                                </div>
-                                <div class="col-lg-8 col-md-7 col-sm-9 col-xs-8">
-                                    <div class="header"><div>@Html.ActionLink(ad.Header, "SingleAdView", "Ad", new { Id = ad.Id }, new { @class = "header" })</div></div>
-                                    @*<span>@ad.DateAd.ToLongDateString() at @ad.DateAd.ToLongTimeString()</span>*@
-                                    @*<p>by @Html.ActionLink(ad.UserProfile.UserName, "UserProfile", "UserProfile", new { userName = ad.UserProfile.UserName }, null)</p>*@
-
-                                    <div class="categories">
-                                        @foreach (var category in ad.Categories.ToList())
-                                        {
-                                            if (--catCout != 0)
-                                            {
-                                                <span>@category.Name, </span>
+                    <div class="row list-ad-top-side">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4">
+                                <img src="@photoPath" onclick="goSingle(@ad.Id)" class="list-ad-photo center-block" />
+                            </div>
+                            <div class="col-lg-9 col-md-8 col-sm-8 col-xs-8 list-ad-right-side">
+                                <div class="row list-ad-sec-side bottom">
+                                    <div class="col-xs-5">
+                                        <div class="list-ad-left-sec-side">
+                                            @string.Format("{0:dd.MM.yyyy}", ad.DateAd)
+                                            <br />
+                                            @{int i = 0;
+                                              double? avg = ad.Reviews.Average(t => t.Stars);
+                                              for (; i < avg - 1; i++)
+                                              {
+                                                <i class="fa fa-star"></i>
+                                              }
+                                              if (avg - i <= 0.5)
+                                              {
+                                                <i class="fa fa-star-half-o"></i>
+                                                  i++;
+                                              }
+                                              for (; i < 5; i++)
+                                              {
+                                                <i class="fa fa-star-o"></i>
+                                              }
                                             }
-                                            else
-                                            {<span> @category.Name </span>
-
-                                            }
-                                        }
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <div class="list-ad-right-sec-side">@ad.Price₴</div>
                                     </div>
                                 </div>
+                                @Html.ActionLink(ad.Header, "SingleAdView", "Ad", new { Id = ad.Id }, new { @class = "list-ad-header" })
+                                <div class="categories">
+                                    @foreach (var category in ad.Categories.ToList())
+                                    {
+                                        if (--catCout != 0)
+                                        {<span>@category.Name, </span>}
+                                        else
+                                        {<span> @category.Name </span>}
+                                    }
+                                </div>
                             </div>
-
                         </div>
-
                     </div>
-                    <div class="row list-ad-bottom-side">
-                        <div class=" col-xs-6">
-                            <div class="list-ad-left-bottom-side">Date:@string.Format("{0:dd.MM.yyyy}", ad.DateAd)</div>
-                        </div>
-                        <div class="col-xs-6">
-                            <div class=" list-ad-right-bottom-side ">@ad.Price₴</div>
-                        </div>
 
-                    </div>
                 </div>
+           
+        }
+        <br />
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <ul class="pagination">
+                    @for (int i = 1; i <= Model.PageInfo.CountPages; i++)
+                    {
+                        if (i == Model.PageInfo.PageNumber)
+                        {
+                            <li><a href="#" onselect="true">@i</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="#" onclick="GetPage('@i')">@i</a></li>
+                        }
+                    }
+                </ul>
+                <input name="pageNumber" id="pageNumber" type="hidden" />
             </div>
-
-
         </div>
     }
-    <br />
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <ul class="pagination">
-                @for (int i = 1; i <= Model.PageInfo.CountPages; i++)
-                {
-                    if (i == Model.PageInfo.PageNumber)
-                    {
-                        <li><a href="#" onselect="true">@i</a></li>
-                    }
-                    else
-                    {
-                        <li><a href="#" onclick="GetPage('@i')">@i</a></li>
-                    }
-                }
-            </ul>
-            <input name="pageNumber" id="pageNumber" type="hidden" />
-        </div>
-    </div>
-}
-else
-{
-    <h1 class="text-center">Ads is not found</h1>
-}
+    else
+    {
+        <h1 class="text-center ">Ads is not found</h1>
+    }
+</div>
 
 <script>
     $('#max').val('@ViewBag.MaxPrice');
@@ -93,4 +116,45 @@ else
         $('#pageNumber').val(number);
         $('#getListAds').click();
     }
+
+    function goSingle(id) {
+        window.location = "ad/singleadview/" + id;
+    }
+
+    function TiledSwitch() {
+
+        if (document.getElementById('tiled').value == 0) {
+            document.getElementById("ts").className = "btn btn-success  col-xs-4 col-xs-offset-4";
+            document.getElementById("ts").innerHTML = "Tile: ON";
+        } else {
+            document.getElementById("ts").className = "btn btn-danger  col-xs-4 col-xs-offset-4";
+            document.getElementById("ts").innerHTML = "Tile: OFF";
+        }
+        $('#tiled').val(document.getElementById('tiled').value == 0 ? 1 : 0);
+        $('#getListAds').click();
+    }
+
+    //function TiledSwitch() {
+    //    if (document.getElementsByClassName("list-ad-item").length != 0) {
+
+    //        //for (var i = document.getElementsByClassName("list-ad-item").length - 1; i >= 0; i--) {
+    //        //    //console.log(ads.length + " " + i);
+    //        //    var el = document.getElementsByClassName("list-ad-item")[i];
+    //        //    el.className = i % 2 == 0 ? "list-ad-item-tiled list-ad-item-tiled-even" : "list-ad-item-tiled list-ad-item-tiled-odd";
+    //        //}
+    //        document.getElementById("ts").className = "btn btn-success  col-xs-4 col-xs-offset-4";
+    //        document.getElementById("ts").innerHTML = "Tile: ON";
+    //    }
+    //    else {
+    //        //var ads = document.getElementsByClassName("list-ad-item-tiled");
+    //        //for (var i = ads.length - 1; i >= 0; i--) {
+    //        //    //console.log(ads.length + " " + i);
+    //        //    ads[i].className = "list-ad-item";
+    //        //}
+    //        document.getElementById("ts").className = "btn btn-danger  col-xs-4 col-xs-offset-4";
+    //        document.getElementById("ts").innerHTML = "Tile: OFF";
+    //    }
+
+    //}
+
 </script>
