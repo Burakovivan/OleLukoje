@@ -9,53 +9,70 @@
 
 @if (Model.Items != null && Model.Items.ToList().Count != 0)
 {
-    string photoPath = "/Files/default.png";
+    string photoPath;
     foreach (Ad ad in Model.Items.ToList())
     {
-         photoPath = ad.Files.Any()?ad.Files.First().Path : photoPath;
-        <div class="row" style="margin-bottom: 20px;">
-            <div class=" col-md-9 col-sm-9" style="border: 1px solid lightgrey; border-radius: 5px 5px; margin-left: 30px;">
+        photoPath = ad.Files.Any() ? ad.Files.First().Path : "/Files/default.jpg";
+
+        <div class="row" style="margin-left: 30px">
+            <div class="col-md-10 col-sm-11">
+                @if (ad.UserProfile.UserName == User.Identity.Name)
+                {
+                    <div class="row" style="margin-bottom: 10px;">
+                        <div class="col-md-11 text-right">
+                            @if (ad.StateAd == State.TemporarilyBlocked)
+                            {
+                                using (Ajax.BeginForm("RefreshAd", "UserProfile", new { idAd = ad.Id }, new AjaxOptions { UpdateTargetId = "Profile_information" }, null))
+                                {
+                                    <button type="submit" class="btn btn-block" style="border: none;">
+                                        <i class="glyphicon glyphicon-refresh"> refresh</i>
+                                    </button>
+                                }
+                            }
+                            else
+                            {
+                                <i class="glyphicon glyphicon-time"> <span style="font-size: 14pt;">expires in @ad.DateAd.AddMonths(1).ToShortDateString()</span></i>
+                            }
+                        </div>
+                        <div class="col-md-1">
+                            @using (Ajax.BeginForm("DeleteAd", "UserProfile", new { idAd = ad.Id }, new AjaxOptions { UpdateTargetId = "Profile_information" }, null))
+                            {
+                                <button type="submit" class="btn btn-block btn-default" style="border: none;">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </button>
+                            }
+                        </div>
+                    </div>
+                }
                 <div class="row">
-                    <div class=" col-md-4 col-sm-4" style="border-right: 1px solid lightgrey; border-radius: 5px 5px;">
-                        <img src="@photoPath" class="img-responsive" alt="@ad.Header" style="height: 200px; width: auto;">
+                    <div class=" col-md-4 col-sm-4">
+                        <img src="@photoPath" class="img-responsive" alt="@ad.Header" style="height: 150px; width: auto; text-align: center;">
                     </div>
                     <div class="col-md-8 col-sm-8">
-                        <div class="row">
+                        <div class="row" style="font-size: 14pt;">
                             <div class="col-md-10 col-sm-6">
-                                <h2>
                                     @Html.ActionLink(ad.Header, "SingleAdView", "Ad", new { Id = ad.Id }, new { @style = "color: #0098d0;" })
-                                </h2>
                             </div>
                             <div class="col-md-2 col-sm-6 text-right">
-                                <h1 style="">@ad.Price ₴</h1>
+                                @ad.Price ₴
                             </div>
                         </div>
-                        <div class="row" style="font-size: 14pt; margin-top: 80px;">
-                            <div class="col-md-9 col-sm-6">
+                        <div class="row" style="font-size: 14pt; margin-top: 100px">
+                            <div class="col-md-6 col-sm-6">
                                 <span class="bfh-countries" data-country="@ad.UserProfile.Country" data-flags="true"></span>
                                 @if (ad.UserProfile.City != null)
                                 {
                                     <text>, <span class="bfh-states" data-country="@ad.UserProfile.Country" data-state="@ad.UserProfile.City"></span></text>
                                 }
                             </div>
-                            <div class="col-md-3 col-sm-6 text-right">
+                            <div class="col-md-6 col-sm-6 text-right">
                                 <span>@ad.DateAd.ToShortDateString()</span>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            @if (ad.UserProfile.UserName == User.Identity.Name)
-            {
-                <div class="col-md-1 col-sm-1">
-                    @using (Ajax.BeginForm("DeleteAd", "UserProfile", new { idAd = ad.Id }, new AjaxOptions { UpdateTargetId = "Profile_information" }, null))
-                    {
-                        <button type="submit" class="btn btn-block btn-danger" style="height: 200px;">
-                            <i class="glyphicon glyphicon-remove"></i>
-                        </button>
-                    }
+                <hr />
                 </div>
-            }
             <div class=" col-md-2 col-sm-1"></div>
         </div>
     }

@@ -80,5 +80,18 @@ namespace OleLukoje.Controllers
             List<Ad> ads = db.Ads.Where(ad => ad.UserProfile.UserName == User.Identity.Name).ToList();
             return PartialView("_UserProfileListAdsPartial", new Page<Ad>(ads, 1, 3));
         }
+
+        [HttpPost]
+        public PartialViewResult RefreshAd(int idAd)
+        {
+            lock (db)
+            {
+                Ad refreshAd = db.Ads.Single(ad => ad.Id == idAd);
+                refreshAd.StateAd = State.Active;
+                db.SaveChanges();
+            }
+            List<Ad> ads = db.Ads.Where(ad => ad.UserProfile.UserName == User.Identity.Name).ToList();
+            return PartialView("_UserProfileListAdsPartial", new Page<Ad>(ads, 1, 3));
+        }
     }
 }

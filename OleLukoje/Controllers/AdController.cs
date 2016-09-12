@@ -70,8 +70,14 @@ namespace OleLukoje.Controllers
             List<Review> reviews = db.Reviews.Where(review => review.AdId == idAd).ToList();
             reviews.Reverse();
             ViewBag.AdId = idAd;
-            
             return PartialView("_ReviewsPartial", reviews);
+        }
+            
+        [HttpGet]
+        public ActionResult _GetAddReview(int idAd)
+        {
+            ViewBag.AdId = idAd;
+            return PartialView("_AddReviewPartial");
         }
 
         [HttpGet]
@@ -80,6 +86,7 @@ namespace OleLukoje.Controllers
             List<string> photos = db.Files.Where(p => p.AdId.Equals(idAd)).Select(t => t.Path).ToList();
             return PartialView("_GetPhotosPartial", photos);
         }
+
 
         [HttpPost]
         [InitializeSimpleMembership]
