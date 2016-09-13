@@ -134,7 +134,16 @@
     display: block;
 }
 
+.add_categories {
+    margin-bottom: 20px;
+    border: 1px solid white;
+    border-radius: 10px 10px;
+}
 
+.add_categories:hover {
+    border: 1px solid #5cff2c;
+    cursor: pointer;
+}
 
 .characteristic {
     margin-top: 20px;
@@ -146,7 +155,7 @@
     border-radius: 5px 5px;
 }
 
-    .add_photo:hover {
+.add_photo:hover {
         border: 1px solid #87857a;
         cursor: pointer;
     }
