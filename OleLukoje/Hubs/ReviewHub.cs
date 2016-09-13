@@ -8,9 +8,9 @@ namespace OleLukoje.Hubs
 {
     public class ReviewHub : Hub
     {
-        public void Send()
+        public void Send(string adId)
         {
-            Clients.Others.newReview();
+            Clients.Others.newReview(adId);
         }
     }
 }

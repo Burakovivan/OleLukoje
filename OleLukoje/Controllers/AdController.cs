@@ -128,7 +128,7 @@ namespace OleLukoje.Controllers
             {
                 db.Reviews.Add(review);
                 db.SaveChanges();
-                reviews = db.Reviews.ToList();
+                reviews = db.Reviews.Where(r => r.AdId == review.AdId).ToList();
                 reviews.Reverse();
             }
             ViewBag.AdId = review.AdId;

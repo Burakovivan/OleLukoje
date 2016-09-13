@@ -7,6 +7,7 @@ namespace OleLukoje.Models
 {
     public enum SortBy
     {
+        byRating,
         byHeaderA,
         byHeaderZ,
         byPriceMin,
@@ -21,6 +22,10 @@ namespace OleLukoje.Models
         {
             switch (sortBy)
             {
+                case SortBy.byRating:
+                    {
+                        return ads.OrderBy(ad => ad.Reviews.Average(review => review.Stars)).ToList();
+                    }
                 case SortBy.byHeaderA:
                     {
                         return ads.OrderBy(ad => ad.Header).ToList();

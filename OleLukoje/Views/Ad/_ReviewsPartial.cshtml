@@ -14,10 +14,10 @@
     { <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
-                <div class="col-md-7">
+                <div class="col-md-6">
                     <h4>@review.UserName</h4>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-6 text-right">
                     <h4>@review.GetDateTime</h4>
                 </div>
             </div>
@@ -52,7 +52,7 @@
             </div>
         </div>
         <div class="panel-footer">
-            @if (review.Dignity != string.Empty)
+            @if (!string.IsNullOrEmpty(review.Dignity))
             {
                 <div class="row">
                     <div class="col-md-2">
@@ -64,7 +64,7 @@
                 </div>
                 <br />
             }
-            @if (review.Defects != string.Empty)
+            @if (!string.IsNullOrEmpty(review.Defects))
             {
                 <div class="row">
                     <div class="col-md-2">

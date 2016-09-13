@@ -30,7 +30,7 @@ namespace OleLukoje.Controllers
         }
 
         [HttpGet]
-        public ActionResult _ListAds(FilterAd filter, SortBy? sortBy, int pageNumber = 1, int pageSize = 1, byte tiled=0)
+        public ActionResult _ListAds(FilterAd filter, SortBy? sortBy, int pageNumber = 1, int pageSize = 1, byte tiled = 0)
         {
             List<Ad> ads = db.Ads.Where(ad => ad.StateAd == State.Active).ToList();
             if (ads.Count != 0)

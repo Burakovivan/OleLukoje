@@ -68,14 +68,20 @@
         // Reference the auto-generated proxy for the hub.
         var review = $.connection.reviewHub;
         // Create a function that the hub can call back to display messages.
-        review.client.newReview = function () {
-            $("#newReview").html('<div id="getNewReview" class="alert alert-info text-center" role="alert" onclick="GetReviews()"><p style="font-size: 14pt;">New review...</p></div>')
+        review.client.newReview = function (adId) {
+            if (adId == $("[name='AdId']").val() && $("#newReview") != null) {
+                if ($("#newReview").html() == "") {
+                    $("#newReview").empty().append('<div id="getNewReview" class="alert alert-info text-center" role="alert" onclick="GetReviews()"><p style="font-size: 14pt;">New review...</p></div>');
+                }
+                //var countReview = parseInt($("#countReviews").html()) + 1;
+                //$("#countReviews").empty().append(countReview);
+            }
         };
         // Start the connection.
         $.connection.hub.start().done(function () {
             $('#sendHub').click(function () {
                 // Call the Send method on the hub.
-                review.server.send();
+                review.server.send($("[name='AdId']").val());
                 $('#sendReview').click();
                 GetAddReviews();
             });

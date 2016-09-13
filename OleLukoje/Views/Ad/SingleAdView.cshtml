@@ -160,14 +160,16 @@
     var photos = false;
 
     function GetInformation(){
-        if(!info)
-        {$('#information').load('@Url.Action("_GetAdInformation", "Ad", new { idAd = ViewBag.Ad.Id })');}
+        if(!info){
+            $('#information').load('@Url.Action("_GetAdInformation", "Ad", new { idAd = ViewBag.Ad.Id })');
+        }
         info = true;
     }
 
     function GetPhotos(){
-        if(!photos)
-        {$('#photos').load('@Url.Action("_GetPhotos", "Ad", new { idAd = ViewBag.Ad.Id })');}
+        if(!photos){
+            $('#photos').load('@Url.Action("_GetPhotos", "Ad", new { idAd = ViewBag.Ad.Id })');
+        }
         photos = true;
     }
 
