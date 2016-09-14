@@ -9,7 +9,7 @@
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
 <div class="row">
-    <div class="col-sm-2">
+    @*<div class="col-sm-2">
         <div class="row">
             @Ajax.ActionLink("Information", "_UserProfileInfo", "UserProfile", new { UserName = ViewBag.UserName }, new AjaxOptions { UpdateTargetId = "Profile_information" }, new { @class = "btn btn-default btn-lg btn-block" })
         </div>
@@ -22,8 +22,9 @@
                 @Ajax.ActionLink("Applications", "_UserProfileApplication", "UserProfile", new { userName = ViewBag.UserName }, new AjaxOptions { UpdateTargetId = "Profile_information" }, new { @class = "btn btn-default btn-lg btn-block" })
             </div>
         }
-    </div>
-    <div class="col-sm-10" id="Profile_information">
+    </div>*@
+    <div class="col-xs-offset-1 col-xs-10" id="Profile_information">
         @{ Html.RenderAction("_UserProfileInfo", "UserProfile", new { userName= ViewBag.UserName} ); }
     </div>
 </div>
+

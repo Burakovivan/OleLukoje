@@ -180,9 +180,35 @@
     font-family: Batang;
 }
 
-.userprofile-content {
+#userprofile-username {
     font-size: 2em;
     font-family: Batang;
+}
+#userprofile-header{
+    width:100%;
+    border-bottom: 1px solid gray;
+    padding-bottom:0.5em;
+    height:3em;
+   
+}
+#userprofile-ads-btn{
+    float:right;
+}
+#userprofile-userinfo{
+    font-size:1.3em;
+}
+#userprofile-fullname{
+    padding-left:1em;
+    font-size:2em;
+    font-family:Batang ;
+    text-align:right;
+}
+
+.userprofile-contact-element{
+    width:100%;
+}
+.userprofile-contact-element a span {
+    float:right;
 }
 
 #inTurnFadingTextG {

@@ -24,7 +24,7 @@ namespace OleLukoje.Models
             {
                 case SortBy.byRating:
                     {
-                        return ads.OrderBy(ad => ad.Reviews.Average(review => review.Stars)).ToList();
+                        return ads.OrderByDescending(ad => ad.Reviews.Average(review => review.Stars)).ToList();
                     }
                 case SortBy.byHeaderA:
                     {

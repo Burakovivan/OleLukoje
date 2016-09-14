@@ -39,7 +39,11 @@ namespace OleLukoje.Controllers
             using (UsersContext usdb = new UsersContext())
             {
                 userProfile = usdb.UserProfiles.Single(u => u.UserName == userName);
+                ViewBag.AdsCount = userProfile.Ads.Count;
             }
+
+            ViewBag.Mobile = Request.Browser.IsMobileDevice;
+
             return PartialView("_UserProfileInfoPartial", userProfile);
         }
 

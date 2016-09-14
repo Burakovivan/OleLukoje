@@ -9,12 +9,12 @@
 @using (@Ajax.BeginForm("_ListAds", "Home", null, new AjaxOptions { UpdateTargetId = "ListAds" }, new { method = "get" }))
 {
     <div class="row">
-        <div class="col-md-3 col-xs-12" style="border-right: 1px solid lightgrey">
+        <div class="col-md-3 col-sm-5 col-xs-12" style="border-right: 1px solid lightgrey">
             <div id="Filter">
                 @{ Html.RenderAction("_FilterAds", "Home"); }
             </div>
         </div>
-        <div class="col-md-8 col-xs-12">
+        <div class="col-md-8 col-sm-7 col-xs-12">
             <div class="row">
                 <div class="col-xs-4 text-left">
                     <div class="dropdown">
