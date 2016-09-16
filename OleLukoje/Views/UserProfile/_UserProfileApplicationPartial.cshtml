@@ -2,43 +2,33 @@
 @using OleLukoje.Helpers.Page
 @model Page<Application>
 
-<div class="panel-group">
+<div class="panel-group" style="margin-top:1em;">
     @if (Model.Items.Count() != 0)
     {
         foreach (Application application in Model.Items.ToList())
         {
-            <div class="container col-md-10">
+            <div class="col-xs-12 col-md-6" style="margin-bottom:1em;">
                 <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        @application.Header
+                    <div class="panel-heading" style="font-size:1.3em;">
+                        <strong>@application.UserName</strong> : @application.Header
                     </div>
                     <div class="panel-body">
+                                <p class="userprofile-app-text">@application.Text</p>
                         <div class="row">
-                            <div class="col-md-1">
-                                Text:
+                            <div class="col-xs-1">
+                                
                             </div>
-                            <div class="col-md-10">
-                                @application.Text
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-1">
-                                Contact:
-                            </div>
-                            <div class="col-md-10">
-                                @application.Contact
+                            <div class="col-xs-10">
+                               
                             </div>
                         </div>
                     </div>
                     <div class="panel-footer">
                         <div class="row">
-                            <div class="col-md-1">
-                                Sender:
+                            <div class="col-xs-12 col-sm-6">
+                                Contact: @application.Contact
                             </div>
-                            <div class="col-md-9">
-                                @application.UserName
-                            </div>
-                            <div class="col-md-2">
+                            <div class="col-xs-12 col-sm-6 userprofile-app-date" >
                                 @application.GetDateTimeString
                             </div>
                         </div>
@@ -46,9 +36,7 @@
                 </div>
             </div>
         }
-        <br />
-        <div class="row">
-            <div class="col-md-10 text-center">
+            <div class="col-xs-12 text-center">
                 <ul class="pagination">
                     @for (int i = 1; i <= Model.PageInfo.CountPages; i++)
                     {
@@ -63,7 +51,6 @@
                     }
                 </ul>
             </div>
-        </div>
     }
     else
     {

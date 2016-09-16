@@ -7,95 +7,219 @@
 <script src="~/Scripts/bootstrap-formhelpers-countries.js"></script>
 <script src="~/Scripts/bootstrap-formhelpers-states.js"></script>
 
+@if (WebSecurity.CurrentUserName != ViewBag.UserName)
+{
+    <div id="userprofile-header" class="row" style="margin-right:0; margin-left:0;  padding-right:0; padding-left:0;">
+
+        <div id="userprofile-username">
+            @ViewBag.UserName's Ads
+        </div>
+
+
+    </div>
+}
 @if (Model.Items != null && Model.Items.ToList().Count != 0)
 {
-    string photoPath;
-    foreach (Ad ad in Model.Items.ToList())
-    {
-        photoPath = ad.Files.Any() ? ad.Files.First().Path : "/Files/default.jpg";
 
-        <div class="row" style="margin-left: 30px">
-            <div class="col-md-10 col-sm-11">
-                @if (ad.UserProfile.UserName == User.Identity.Name)
-                {
-                    <div class="row" style="margin-bottom: 10px;">
-                        <div class="col-md-11 text-right">
-                            @if (ad.StateAd == State.TemporarilyBlocked)
-                            {
-                                using (Ajax.BeginForm("RefreshAd", "UserProfile", new { idAd = ad.Id }, new AjaxOptions { UpdateTargetId = "Profile_information" }, null))
-                                {
-                                    <button type="submit" class="btn btn-block" style="border: none;">
-                                        <i class="glyphicon glyphicon-refresh"> refresh</i>
-                                    </button>
-                                }
-                            }
-                            else
-                            {
-                                <i class="glyphicon glyphicon-time"> <span style="font-size: 14pt;">expires in @ad.DateAd.AddMonths(1).ToShortDateString()</span></i>
-                            }
-                        </div>
-                        <div class="col-md-1">
-                            @using (Ajax.BeginForm("DeleteAd", "UserProfile", new { idAd = ad.Id }, new AjaxOptions { UpdateTargetId = "Profile_information" }, null))
-                            {
-                                <button type="submit" class="btn btn-block btn-default" style="border: none;">
-                                    <i class="glyphicon glyphicon-remove"></i>
-                                </button>
-                            }
-                        </div>
-                    </div>
-                }
+    string photoPath = "/Files/default.png";
+    List<Ad> AdsLst = Model.Items.ToList();
+    Ad ad;
+    string[] classNames;
+    for (int k = 0; k < AdsLst.Count; k++)
+    {
+        ad = AdsLst[k];
+        photoPath = ad.Files.Any() ? ad.Files.First().Path : photoPath;
+        int catCout = ad.Categories.Count;
+
+        classNames = new[] {
+                    k % 2 == 0 ? "list-ad-item-tiled list-ad-item-tiled-even" : "list-ad-item-tiled list-ad-item-tiled-odd"
+                };
+
+        <div class="@classNames[0]">
+
+            <div class="row list-ad-top-side">
                 <div class="row">
-                    <div class=" col-md-4 col-sm-4">
-                        <img src="@photoPath" class="img-responsive" alt="@ad.Header" style="height: 150px; width: auto; text-align: center;">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4">
+                        <img src="@photoPath" onclick="goSingle(@ad.Id)" class="list-ad-photo center-block" />
                     </div>
-                    <div class="col-md-8 col-sm-8">
-                        <div class="row" style="font-size: 14pt;">
-                            <div class="col-md-10 col-sm-6">
-                                    @Html.ActionLink(ad.Header, "SingleAdView", "Ad", new { Id = ad.Id }, new { @style = "color: #0098d0;" })
+                    <div class="col-lg-9 col-md-8 col-sm-8 col-xs-8 list-ad-right-side">
+                        <div class="row list-ad-sec-side bottom">
+                            <div class="col-xs-5">
+                                <div class="list-ad-left-sec-side">
+                                    @string.Format("{0:dd.MM.yyyy}", ad.DateAd)
+                                    <br />
+                                    @{int i = 0;
+                                    double? avg = ad.Reviews.Average(t => t.Stars);
+                                    for (; i < avg - 1; i++)
+                                    {
+                                        <i class="fa fa-star"></i>
+                                    }
+                                    if (avg - i <= 0.5)
+                                    {
+                                        <i class="fa fa-star-half-o"></i>
+                                        i++;
+                                    }
+                                    for (; i < 5; i++)
+                                    {
+                                        <i class="fa fa-star-o"></i>
+                                    }
+                                    }
+                                </div>
                             </div>
-                            <div class="col-md-2 col-sm-6 text-right">
-                                @ad.Price ₴
+                            <div class="col-xs-7">
+                                <div class="list-ad-right-sec-side">@ad.Price₴</div>
                             </div>
                         </div>
-                        <div class="row" style="font-size: 14pt; margin-top: 100px">
-                            <div class="col-md-6 col-sm-6">
-                                <span class="bfh-countries" data-country="@ad.UserProfile.Country" data-flags="true"></span>
-                                @if (ad.UserProfile.City != null)
-                                {
-                                    <text>, <span class="bfh-states" data-country="@ad.UserProfile.Country" data-state="@ad.UserProfile.City"></span></text>
-                                }
-                            </div>
-                            <div class="col-md-6 col-sm-6 text-right">
-                                <span>@ad.DateAd.ToShortDateString()</span>
-                            </div>
+                        @Html.ActionLink(ad.Header, "SingleAdView", "Ad", new { Id = ad.Id }, new { @class = "list-ad-header" })
+                        <div class="categories">
+                            @foreach (var category in ad.Categories.ToList())
+                            {
+                                if (--catCout != 0)
+                                {<span>@category.Name, </span>}
+                                else
+                                {<span> @category.Name </span>}
+                            }
                         </div>
+                        @if (ad.StateAd == State.TemporarilyBlocked)
+                        {
+                            using (Ajax.BeginForm("RefreshAd", "UserProfile", new { idAd = ad.Id }, new AjaxOptions { UpdateTargetId = "Profile_information" }, null))
+                            {
+                                <div class="userprofile-ads-expires">
+                                    Ad expired, refresh here →&nbsp;<button type="submit" class="btn userprofile-ads-refresh-btn" style="border: none;"><i class="glyphicon glyphicon-refresh"></i></button>
+                                </div>}
+                        }
+                        else
+                        {
+                            <div class="userprofile-ads-expires">
+                                <i class="glyphicon glyphicon-time"></i> <span>expires in @ad.DateAd.AddMonths(1).ToShortDateString()</span>
+                            </div>
+                        }
+                        @using (Ajax.BeginForm("DeleteAd", "UserProfile", new { idAd = ad.Id }, new AjaxOptions { UpdateTargetId = "Profile_information" }, null))
+                        {
+                            <button type="submit" class="btn  userprofile-ads-remove-btn">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </button>
+                        }
                     </div>
+
                 </div>
-                <hr />
-                </div>
-            <div class=" col-md-2 col-sm-1"></div>
+            </div>
+
         </div>
+
     }
     <br />
     <div class="row">
-        <div class="col-md-10 text-center">
+        <div class="col-md-12 text-center">
             <ul class="pagination">
                 @for (int i = 1; i <= Model.PageInfo.CountPages; i++)
                 {
                     if (i == Model.PageInfo.PageNumber)
                     {
-                        <li><a class="btn btn-primary disabled">@i</a></li>
+                        <li><a href="#" onselect="true">@i</a></li>
                     }
                     else
                     {
-                        <li>@Ajax.ActionLink(i.ToString(), "_UserProfileListAds", "UserProfile", new { userName = ViewBag.UserName, pageNumber = i }, new AjaxOptions { UpdateTargetId = "Profile_information" }, null)</li>
+                        <li><a href="#" onclick="GetPage('@i')">@i</a></li>
                     }
                 }
             </ul>
+            <input name="pageNumber" id="pageNumber" type="hidden" />
         </div>
     </div>
 }
 else
 {
-    <h2 class="text-center">Ads is not found</h2>
+    <h1 class="text-center ">Ads is not found</h1>
 }
+@*@if (Model.Items != null && Model.Items.ToList().Count != 0)
+    {
+        string photoPath;
+        foreach (Ad ad in Model.Items.ToList())
+        {
+            photoPath = ad.Files.Any() ? ad.Files.First().Path : "/Files/default.jpg";
+
+            <div class="row" >
+                <div class="col-xs-12">
+                    @if (ad.UserProfile.UserName == User.Identity.Name)
+                    {
+                        <div class="row" style="margin-bottom: 10px;">
+                            <div class="col-md-11 text-right">
+                                @if (ad.StateAd == State.TemporarilyBlocked)
+                                {
+                                    using (Ajax.BeginForm("RefreshAd", "UserProfile", new { idAd = ad.Id }, new AjaxOptions { UpdateTargetId = "Profile_information" }, null))
+                                    {
+                                        <button type="submit" class="btn btn-block" style="border: none;">
+                                            <i class="glyphicon glyphicon-refresh"> refresh</i>
+                                        </button>
+                                    }
+                                }
+                                else
+                                {
+                                    <i class="glyphicon glyphicon-time"> <span style="font-size: 14pt;">expires in @ad.DateAd.AddMonths(1).ToShortDateString()</span></i>
+                                }
+                            </div>
+                            <div class="col-md-1">
+                                @using (Ajax.BeginForm("DeleteAd", "UserProfile", new { idAd = ad.Id }, new AjaxOptions { UpdateTargetId = "Profile_information" }, null))
+                                {
+                                    <button type="submit" class="btn btn-block btn-default" style="border: none;">
+                                        <i class="glyphicon glyphicon-remove"></i>
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    }
+                    <div class="row">
+                        <div class=" col-md-4 col-sm-4">
+                            <img src="@photoPath" class="img-responsive" alt="@ad.Header" style="height: 150px; width: auto; text-align: center;">
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="row" style="font-size: 14pt;">
+                                <div class="col-md-10 col-sm-6">
+                                        @Html.ActionLink(ad.Header, "SingleAdView", "Ad", new { Id = ad.Id }, new { @style = "color: #0098d0;" })
+                                </div>
+                                <div class="col-md-2 col-sm-6 text-right">
+                                    @ad.Price ₴
+                                </div>
+                            </div>
+                            <div class="row" style="font-size: 14pt; margin-top: 100px">
+                                <div class="col-md-6 col-sm-6">
+                                    <span class="bfh-countries" data-country="@ad.UserProfile.Country" data-flags="true"></span>
+                                    @if (ad.UserProfile.City != null)
+                                    {
+                                        <text>, <span class="bfh-states" data-country="@ad.UserProfile.Country" data-state="@ad.UserProfile.City"></span></text>
+                                    }
+                                </div>
+                                <div class="col-md-6 col-sm-6 text-right">
+                                    <span>@ad.DateAd.ToShortDateString()</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    </div>
+            </div>
+        }
+        <br />
+        <div class="row">
+            <div class="col-md-10 text-center">
+                <ul class="pagination">
+                    @for (int i = 1; i <= Model.PageInfo.CountPages; i++)
+                    {
+                        if (i == Model.PageInfo.PageNumber)
+                        {
+                            <li><a class="btn btn-primary disabled">@i</a></li>
+                        }
+                        else
+                        {
+                            <li>@Ajax.ActionLink(i.ToString(), "_UserProfileListAds", "UserProfile", new { userName = ViewBag.UserName, pageNumber = i }, new AjaxOptions { UpdateTargetId = "Profile_information" }, null)</li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h2 class="text-center">Ads is not found</h2>
+    }*@

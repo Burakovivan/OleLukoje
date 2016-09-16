@@ -44,21 +44,23 @@
 }
 
     .list-ad-photo:hover {
-        cursor:pointer;
+        cursor: pointer;
     }
 
 .list-ad-item {
     margin: 1em 0 0 0;
 }
+
 @media(min-width:1250px) {
     .list-ad-item-tiled {
         width: 45%;
         display: inline-block;
         margin-top: 1em;
     }
+
     .list-ad-item-tiled-odd {
-    margin-left:9%;
-}
+        margin-left: 9%;
+    }
 }
 
 @media(max-width:1249px) {
@@ -140,10 +142,10 @@
     border-radius: 10px 10px;
 }
 
-.add_categories:hover {
-    border: 1px solid #5cff2c;
-    cursor: pointer;
-}
+    .add_categories:hover {
+        border: 1px solid #5cff2c;
+        cursor: pointer;
+    }
 
 .characteristic {
     margin-top: 20px;
@@ -155,7 +157,7 @@
     border-radius: 5px 5px;
 }
 
-.add_photo:hover {
+    .add_photo:hover {
         border: 1px solid #87857a;
         cursor: pointer;
     }
@@ -184,31 +186,94 @@
     font-size: 2em;
     font-family: Batang;
 }
-#userprofile-header{
-    width:100%;
+
+#userprofile-header {
+    width: 100%;
     border-bottom: 1px solid gray;
-    padding-bottom:0.5em;
-    height:3em;
-   
-}
-#userprofile-ads-btn{
-    float:right;
-}
-#userprofile-userinfo{
-    font-size:1.3em;
-}
-#userprofile-fullname{
-    padding-left:1em;
-    font-size:2em;
-    font-family:Batang ;
-    text-align:right;
+    padding-bottom: 0.5em;
+    height: 3em;
 }
 
-.userprofile-contact-element{
-    width:100%;
+#userprofile-ads-btn {
+    float: right;
 }
-.userprofile-contact-element a span {
+
+#userprofile-userinfo {
+    font-size: 1.3em;
+}
+
+
+#userprofile-fullname {
+    padding-left: 1em;
+    font-size: 2em;
+    font-family: Batang;
+    text-align: right;
+}
+
+.userprofile-contact-element {
+    width: 100%;
+}
+
+    .userprofile-contact-element a span {
+        float: right;
+    }
+
+.userprofile-app-date {
+    text-align:right;
+}
+.userprofile-app-text{
+    text-align:justify; 
+    font-family:'Segoe UI';
+    font-size:1.3em;
+}
+
+.userprofile-ads-remove-btn{
+    border: none;
+    padding:0;
+    background-color:red;
+    color:white;
+    width:1.8em;
+    height:1.8em;
     float:right;
+}
+.userprofile-ads-refresh-btn{
+    border: none;
+    padding:0;
+    background-color:gray;
+    color:white;
+    width:1.8em;
+    height:1.8em;
+    float:right;
+    
+}
+.userprofile-ads-expires{
+    font-size:1.1em;
+    font-family:'Segoe UI';
+    float:left;
+}
+
+@media (max-width: 767px) {
+    .userprofile-tabs {
+        width: 50%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .userprofile-tabs {
+        width: 30%;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .userprofile-tabs {
+        width: 21%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .userprofile-tabs {
+        width: 16%;
+    }
 }
 
 #inTurnFadingTextG {

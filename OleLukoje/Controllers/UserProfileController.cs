@@ -21,8 +21,11 @@ namespace OleLukoje.Controllers
         {
             userName = userName ?? WebSecurity.CurrentUserName;
             ViewBag.UserName = userName;
+            
             using (UsersContext usdb = new UsersContext())
             {
+                ViewBag.AdsCount = usdb.UserProfiles.Single(t => t.UserName == userName).Ads.Count();
+                ViewBag.ApplicationsCount = usdb.UserProfiles.Single(t => t.UserName == userName).Ads.Sum(t => t.Applications.Count);
                 if (!usdb.UserProfiles.Any(u => u.UserName == userName))
                 {
                     return View("UserNotFound");
