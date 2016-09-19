@@ -5,59 +5,55 @@
 <script src="~/Scripts/bootstrap-formhelpers.min.js"></script>
 <script src="~/Scripts/bootstrap-formhelpers-countries.js"></script>
 <script src="~/Scripts/bootstrap-formhelpers-states.js"></script>
-<div class="row">
-    <div id="userprofile-header" class="col-xs-12">
-        <div id="userprofile-username" class="col-xs-12 col-sm-6 col-md-8"><strong>@Model.UserName</strong></div>
-        <div id="userprofile-fullname" class="col-xs-12 col-sm-6 col-md-4">
-            @if (Model.Name != null || Model.Surname != null)
-            {
-                @Model.Name @Model.Surname
-            }
-        </div>
-    </div>
 
-    <div class="panel panel-primary col-xs-12" style="margin-top:2em; padding-left:0; padding-right:0;" id="userprofile-userinfo">
-        <div class="panel-heading">Contacts</div>
-        <div class="panel-body">
-            @if (Model.Country != null || Model.City != null)
-            {
-                <div class="userprofile-contact-element">
-                    <span>From: <span style="float:right;"><span class="bfh-countries" data-country="@Model.Country" data-flags="true"></span>, @Model.City</span></span>
+
+            <div id="userprofile-header" class="col-xs-12">
+                <div id="userprofile-username" class="col-xs-12 col-sm-6 col-md-6"><strong>@Model.UserName</strong></div>
+                <div id="userprofile-fullname" class="col-xs-12 col-sm-6 col-md-6">
+                    @if (Model.Name != null || Model.Surname != null)
+                    {
+                        @Model.Name @Model.Surname
+                    }
                 </div>
-            }
-
-
-            <div class="userprofile-contact-element">
-                <span>
-                    Email:
-                    <a style="float:right;" href="mailto:@Model.Email"><i class="fa fa-envelope-o" style="color:#337ab7;"></i> @Model.Email</a>
-                </span>
             </div>
-            @if (Model.Phone.Length > 5)
-            {
-                if (ViewBag.Mobile)
-                {
+
+            <div class="panel panel-primary col-xs-12 " style="margin-top:2em; padding-left:0; padding-right:0;" id="userprofile-userinfo">
+                <div class="panel-heading">Contacts</div>
+                <div class="panel-body">
+                    @if (Model.Country != null || Model.City != null)
+                    {
+                        <div class="userprofile-contact-element">
+                            <span ><span class="bfh-countries" data-country="@Model.Country" data-flags="true"></span>, @Model.City</span>
+                        </div>
+                    }
+
+
                     <div class="userprofile-contact-element">
-                        Phone:<a style="float:right;" href="tell:@Model.Phone">@Model.Phone <i class="fa fa-mobile" style="color:#337ab7;"></i></a>
+                        
+                            <a  href="mailto:@Model.Email">@Model.Email</a> <i class="fa fa-envelope" style="color:#fda190;"></i>
+                        
                     </div>
-                }
-                else
-                {
-                    <div class="userprofile-contact-element">
-                        Phone:<a style="float:right;" href="callto:@Model.Phone"><i class="fa fa-mobile" style="color:#337ab7;"></i> @Model.Phone </a>
-                    </div>
-                }
-            }
-            @if (Model.Organization != null)
-            {
-                <div class="userprofile-contact-element">
-                    Organization:<div style="float:right;"><i class="fa fa-briefcase" style="color:#337ab7;"></i> @Model.Organization </div>
+                    @if (Model.Phone.Length > 5)
+                    {
+                        if (ViewBag.Mobile)
+                        {
+                            <div class="userprofile-contact-element">
+                               <a href="tell:@Model.Phone">@Model.Phone</a> <i class="fa fa-mobile" style="color:#337ab7; "></i>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="userprofile-contact-element">
+                                <a href="callto:@Model.Phone">@Model.Phone</a> <i class="fa fa-phone fa-flip-horizontal" style="color:#71b43f; "></i>
+                            </div>
+                        }
+                    }
+                    @if (Model.Organization != null)
+                    {
+                        <div class="userprofile-contact-element">
+                            <div>@Model.Organization <i class="fa fa-briefcase" style="color:#5c1c01;"></i></div>
+                        </div>
+                    }
                 </div>
-            }
-        </div>
 
-    </div>
-</div>
-
-
-
+            </div>

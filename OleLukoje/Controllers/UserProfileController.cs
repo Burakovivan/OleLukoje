@@ -2,6 +2,7 @@
 using OleLukoje.Helpers.Page;
 using OleLukoje.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -60,6 +61,7 @@ namespace OleLukoje.Controllers
             using (OleLukojeContext db = new OleLukojeContext())
             {
                 applications = db.Applications.Where(application => application.Ad.UserProfile.UserName == userName).ToList();
+                ViewBag.Ads = applications.Select(t => t.Ad.Header).ToList();
             }
             return PartialView("_UserProfileApplicationPartial", new Page<Application>(applications, pageNumber, 3));
         }

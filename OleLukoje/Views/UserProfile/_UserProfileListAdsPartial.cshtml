@@ -6,16 +6,13 @@
 <script src="~/Scripts/bootstrap-formhelpers.min.js"></script>
 <script src="~/Scripts/bootstrap-formhelpers-countries.js"></script>
 <script src="~/Scripts/bootstrap-formhelpers-states.js"></script>
-
-@if (WebSecurity.CurrentUserName != ViewBag.UserName)
+@{bool myPage = WebSecurity.CurrentUserName == ViewBag.UserName;}
+@if (!myPage)
 {
-    <div id="userprofile-header" class="row" style="margin-right:0; margin-left:0;  padding-right:0; padding-left:0;">
-
+    <div id="userprofile-header"  style="margin-right:0; margin-left:0;  padding-right:0; padding-left:0;">
         <div id="userprofile-username">
             @ViewBag.UserName's Ads
         </div>
-
-
     </div>
 }
 @if (Model.Items != null && Model.Items.ToList().Count != 0)
@@ -37,7 +34,7 @@
 
         <div class="@classNames[0]">
 
-            <div class="row list-ad-top-side">
+            <div class="list-ad-top-side">
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4">
                         <img src="@photoPath" onclick="goSingle(@ad.Id)" class="list-ad-photo center-block" />
@@ -80,25 +77,28 @@
                                 {<span> @category.Name </span>}
                             }
                         </div>
-                        @if (ad.StateAd == State.TemporarilyBlocked)
+                        @if (myPage)
                         {
-                            using (Ajax.BeginForm("RefreshAd", "UserProfile", new { idAd = ad.Id }, new AjaxOptions { UpdateTargetId = "Profile_information" }, null))
+                            if (ad.StateAd == State.TemporarilyBlocked)
+                            {
+                                using (Ajax.BeginForm("RefreshAd", "UserProfile", new { idAd = ad.Id }, new AjaxOptions { UpdateTargetId = "Profile_information" }, null))
+                                {
+                                    <div class="userprofile-ads-expires">
+                                        Ad expired, refresh here →&nbsp;<button type="submit" class="btn userprofile-ads-refresh-btn" style="border: none;"><i class="glyphicon glyphicon-refresh"></i></button>
+                                    </div>}
+                            }
+                            else
                             {
                                 <div class="userprofile-ads-expires">
-                                    Ad expired, refresh here →&nbsp;<button type="submit" class="btn userprofile-ads-refresh-btn" style="border: none;"><i class="glyphicon glyphicon-refresh"></i></button>
-                                </div>}
-                        }
-                        else
-                        {
-                            <div class="userprofile-ads-expires">
-                                <i class="glyphicon glyphicon-time"></i> <span>expires in @ad.DateAd.AddMonths(1).ToShortDateString()</span>
-                            </div>
-                        }
-                        @using (Ajax.BeginForm("DeleteAd", "UserProfile", new { idAd = ad.Id }, new AjaxOptions { UpdateTargetId = "Profile_information" }, null))
-                        {
-                            <button type="submit" class="btn  userprofile-ads-remove-btn">
-                                <i class="glyphicon glyphicon-remove"></i>
-                            </button>
+                                    <i class="glyphicon glyphicon-time"></i> <span>expires in @ad.DateAd.AddMonths(1).ToShortDateString()</span>
+                                </div>
+                            }
+                            using (Ajax.BeginForm("DeleteAd", "UserProfile", new { idAd = ad.Id }, new AjaxOptions { UpdateTargetId = "Profile_information" }, null))
+                            {
+                                <button type="submit" class="btn  userprofile-ads-remove-btn">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </button>
+                            }
                         }
                     </div>
 

@@ -191,7 +191,7 @@
     width: 100%;
     border-bottom: 1px solid gray;
     padding-bottom: 0.5em;
-    height: 3em;
+  
 }
 
 #userprofile-ads-btn {
@@ -236,6 +236,9 @@
     height:1.8em;
     float:right;
 }
+    .userprofile-ads-remove-btn:hover {
+        color:white;
+    }
 .userprofile-ads-refresh-btn{
     border: none;
     padding:0;

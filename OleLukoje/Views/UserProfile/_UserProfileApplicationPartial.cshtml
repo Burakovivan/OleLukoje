@@ -1,19 +1,22 @@
 ﻿@using OleLukoje.Models
 @using OleLukoje.Helpers.Page
 @model Page<Application>
-
+@{string header = "";}
 <div class="panel-group" style="margin-top:1em;">
     @if (Model.Items.Count() != 0)
     {
-        foreach (Application application in Model.Items.ToList())
+        for(int i = 0; i < Model.Items.Count(); i++ )
         {
+            
             <div class="col-xs-12 col-md-6" style="margin-bottom:1em;">
-                <div class="panel panel-primary">
+                <div class="panel panel-primary" style="height:100%;">
                     <div class="panel-heading" style="font-size:1.3em;">
-                        <strong>@application.UserName</strong> : @application.Header
+                        <strong>@Model.Items.ElementAt(i).UserName</strong> : @Model.Items.ElementAt(i).Header
                     </div>
                     <div class="panel-body">
-                                <p class="userprofile-app-text">@application.Text</p>
+                                <p class="userprofile-app-text">@Model.Items.ElementAt(i).Text</p>
+                        @{header = ViewBag.Ads[i];}
+                                @Html.ActionLink(header, "SingleAdView", "Ad", new { Id = Model.Items.ElementAt(i).AdId }, new object { });
                         <div class="row">
                             <div class="col-xs-1">
                                 
@@ -26,10 +29,10 @@
                     <div class="panel-footer">
                         <div class="row">
                             <div class="col-xs-12 col-sm-6">
-                                Contact: @application.Contact
+                                Contact: @Model.Items.ElementAt(i).Contact
                             </div>
                             <div class="col-xs-12 col-sm-6 userprofile-app-date" >
-                                @application.GetDateTimeString
+                                @Model.Items.ElementAt(i).GetDateTimeString
                             </div>
                         </div>
                     </div>

@@ -9,35 +9,34 @@
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
 <div class="row">
-    <div class="col-sm-2">
-       
+
+    <div class="col-xs-offset-1 col-xs-10 " id="Profile_information">
         <div class="row">
+            
+                @{ Html.RenderAction("_UserProfileInfo", "UserProfile", new { userName = ViewBag.UserName }); }
+         
+
+                @if (WebSecurity.CurrentUserName == ViewBag.UserName)
+                {
+                    <ul class="nav nav-tabs">
+                        <li class="active userprofile-tabs"><a data-toggle="tab" href="#ads">My Ads<span class="badge" style="float:right;">@ViewBag.AdsCount</span></a></li>
+                        <li class=" userprofile-tabs" style="float:right;"><a data-toggle="tab" href="#apps">My Applications<span class="badge" style="float:right;">@ViewBag.ApplicationsCount</span></a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="ads" class="tab-pane fade in active">
+                            @{Html.RenderAction("_UserProfileListAds", "UserProfile", new { userName = ViewBag.UserName });}
+                        </div>
+                        <div id="apps" class="tab-pane fade">
+                            @{Html.RenderAction("_UserProfileApplication", "UserProfile", new { userName = ViewBag.UserName });}
+                        </div>
+
+                    </div>
+                }
+                else
+                {
+                    Html.RenderAction("_UserProfileListAds", "UserProfile", new { userName = ViewBag.UserName });
+                }
         </div>
-        @if (ViewBag.UserName == User.Identity.Name)
-        {
-            <div class="row">
-            </div>
-        }
-    </div>
-    <div class="col-xs-offset-1 col-xs-10" id="Profile_information">
-        @{ Html.RenderAction("_UserProfileInfo", "UserProfile", new { userName= ViewBag.UserName} ); }
-        
-        <ul class="nav nav-tabs">
-            <li class="active userprofile-tabs"><a data-toggle="tab" href="#ads">My Ads<span class="badge" style="float:right;">@ViewBag.AdsCount</span></a></li>
-            <li class=" userprofile-tabs" style="float:right;"><a data-toggle="tab" href="#apps">My Applications<span class="badge" style="float:right;">@ViewBag.ApplicationsCount</span></a></li>
-        </ul>
-
-        <div class="tab-content">
-            <div id="ads" class="tab-pane fade in active">
-                @{Html.RenderAction("_UserProfileListAds", "UserProfile", new { userName = ViewBag.UserName });}
-            </div>
-            <div id="apps" class="tab-pane fade">
-                @{Html.RenderAction("_UserProfileApplication", "UserProfile", new { userName = ViewBag.UserName });}
-            </div>
-           
-        </div>
-
-
     </div>
 </div>
-
